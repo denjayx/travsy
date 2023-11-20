@@ -1465,20 +1465,15 @@
                                 "type": "string",
                                 "example": "081234567890"
                             },
-                            "domicile": {
-                                "type": "object",
-                                "properties": {
-                                    "province": {
-                                        "description": "Diterima jika: memilih dari dropdown list",
-                                        "type": "string",
-                                        "example": "Jawa Tengah"
-                                    },
-                                    "city": {
-                                        "description": "Diterima jika: memilih dari dropdown list",
-                                        "type": "string",
-                                        "example": "Semarang"
-                                    }
-                                }
+                            "province": {
+                                "description": "Diterima jika: memilih dari dropdown list",
+                                "type": "string",
+                                "example": "Jawa Tengah"
+                            },
+                            "city": {
+                                "description": "Diterima jika: memilih dari dropdown list",
+                                "type": "string",
+                                "example": "Semarang"
                             },
                             "gender": {
                                 "description": "Diterima jika: terdiri dari tipe data enum yaitu L atau P, L = laki-laki, P = perempuan",
