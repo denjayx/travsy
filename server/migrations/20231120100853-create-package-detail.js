@@ -1,4 +1,3 @@
-'use strict';
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -61,7 +60,7 @@ module.exports = {
       name: 'pk_package_details_package_id_destination_id',
     });
   },
-  async down(queryInterface, Sequelize) {
+  async down(queryInterface) {
     await queryInterface.removeConstraint(
       'package_details',
       'pk_package_details_package_id_destination_id',

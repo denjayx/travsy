@@ -1,3 +1,4 @@
+// Desc: Abstract class for response errors
 class ResponseError extends Error {
   constructor(message, code) {
     super(message);
