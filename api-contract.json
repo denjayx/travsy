@@ -105,20 +105,25 @@
                                                     "type": "string",
                                                     "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
                                                 },
-                                                "avatarUrl": {
-                                                    "description": "Diterima jika: image URL",
-                                                    "type": "string",
-                                                    "example": "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
-                                                },
-                                                "firstName": {
-                                                    "description": "Diterima jika: 3-20 character, must consist of lowercase and uppercase",
-                                                    "type": "string",
-                                                    "example": "John"
-                                                },
-                                                "lastName": {
-                                                    "description": "Diterima jika: 3-20 character, must consist of lowercase and uppercase",
-                                                    "type": "string",
-                                                    "example": "Doe"
+                                                "user": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "avatarUrl": {
+                                                            "description": "Diterima jika: image URL",
+                                                            "type": "string",
+                                                            "example": "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
+                                                        },
+                                                        "firstName": {
+                                                            "description": "Diterima jika: 3-20 character, must consist of lowercase and uppercase",
+                                                            "type": "string",
+                                                            "example": "John"
+                                                        },
+                                                        "lastName": {
+                                                            "description": "Diterima jika: 3-20 character, must consist of lowercase and uppercase",
+                                                            "type": "string",
+                                                            "example": "Doe"
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }
@@ -349,31 +354,11 @@
                                             "items": {
                                                 "type": "object",
                                                 "properties": {
-                                                    "id": {
-                                                        "description": "Id transaksi",
-                                                        "type": "number",
-                                                        "example": 1
+                                                    "tourGuide": {
+                                                        "$ref": "#/components/schemas/ownerName"
                                                     },
-                                                    "package": {
-                                                        "type": "object",
-                                                        "properties": {
-                                                            "name": {
-                                                                "description": "Nama paket wisata",
-                                                                "type": "string",
-                                                                "example": "Paket Wisata Tanah Lot"
-                                                            }
-                                                        }
-                                                    },
-                                                    "status": {
-                                                        "description": "Status transaksi dalam bentuk enum, terdiri dari: menunggu, terkonfirmasi, ditolak, selesai",
-                                                        "type": "string",
-                                                        "example": "menunggu"
-                                                    },
-                                                    "orderDate": {
-                                                        "description": "Tanggal pemesanan",
-                                                        "type": "string",
-                                                        "format": "date",
-                                                        "example": "2023-01-01"
+                                                    "transaction": {
+                                                        "$ref": "#/components/schemas/miniTransaction"
                                                     }
                                                 }
                                             }
@@ -443,7 +428,15 @@
                                             "example": "Berhasil mendapatkan detail riwayat transaksi user"
                                         },
                                         "data": {
-                                            "$ref": "#/components/schemas/transaction"
+                                            "type": "object",
+                                            "properties": {
+                                                "tourGuide": {
+                                                    "$ref": "#/components/schemas/ownerName"
+                                                },
+                                                "transaction": {
+                                                    "$ref": "#/components/schemas/transaction"
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -831,7 +824,18 @@
                                             "example": "Data daftar pesanan berhasil didapatkan"
                                         },
                                         "data": {
-                                            "$ref": "#/components/schemas/transaction"
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "tourist": {
+                                                        "$ref": "#/components/schemas/ownerName"
+                                                    },
+                                                    "transaction": {
+                                                        "$ref": "#/components/schemas/miniTransaction"
+                                                    }
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -840,6 +844,174 @@
                     },
                     "401": {
                         "$ref": "#/components/responses/unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/serverError"
+                    }
+                }
+            }
+        },
+        "/users/{username}/orders/{orderId}": {
+            "get": {
+                "tags": ["Transaction"],
+                "summary": "Mendapatkan detail pemesanan yang didapatkan user",
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "description": "Username user",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "orderId",
+                        "in": "path",
+                        "description": "Id order",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Berhasil mendapatkan detail pemesanan yang didapatkan user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Berhasil mendapatkan data detail pemesanan"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "tourist": {
+                                                    "$ref": "#/components/schemas/ownerName"
+                                                },
+                                                "transaction": {
+                                                    "$ref": "#/components/schemas/transaction"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/serverError"
+                    }
+                }
+            },
+            "patch": {
+                "tags": ["Transaction"],
+                "summary": "Mengubah status pemesanan yang didapatkan user",
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "description": "Username user",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "orderId",
+                        "in": "path",
+                        "description": "Id order",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "status": {
+                                        "description": "Diterima jika: pending, accepted, rejected, completed, canceled",
+                                        "type": "string",
+                                        "example": "accepted"
+                                    }
+                                },
+                                "required": ["status"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Berhasil mengubah status pemesanan yang didapatkan user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Berhasil mengubah status pemesanan"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "tourist": {
+                                                    "$ref": "#/components/schemas/ownerName"
+                                                },
+                                                "transaction": {
+                                                    "$ref": "#/components/schemas/transaction"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/badRequest"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/forbidden"
                     },
                     "404": {
                         "$ref": "#/components/responses/notFound"
@@ -951,34 +1123,42 @@
                                             "items": {
                                                 "type": "object",
                                                 "properties": {
-                                                    "id": {
-                                                        "type": "number",
-                                                        "example": 1
+                                                    "tourGuide": {
+                                                        "$ref": "#/components/schemas/ownerName"
                                                     },
-                                                    "thumbnailUrl": {
-                                                        "type": "string",
-                                                        "example": "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
-                                                    },
-                                                    "name": {
-                                                        "type": "string",
-                                                        "example": "Paket Wisata Tanah Lot"
-                                                    },
-                                                    "price": {
-                                                        "type": "number",
-                                                        "example": 500000
-                                                    },
-                                                    "description": {
-                                                        "type": "string",
-                                                        "example": "Paket wisata ke Tanah Lot dengan durasi 3 hari 2 malam"
-                                                    },
-                                                    "destinations": {
-                                                        "type": "array",
-                                                        "items": {
-                                                            "type": "object",
-                                                            "properties": {
-                                                                "name": {
-                                                                    "type": "string",
-                                                                    "example": "Tanah Lot"
+                                                    "package": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "number",
+                                                                "example": 1
+                                                            },
+                                                            "thumbnailUrl": {
+                                                                "type": "string",
+                                                                "example": "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Paket Wisata Tanah Lot"
+                                                            },
+                                                            "price": {
+                                                                "type": "number",
+                                                                "example": 500000
+                                                            },
+                                                            "description": {
+                                                                "type": "string",
+                                                                "example": "Paket wisata ke Tanah Lot dengan durasi 3 hari 2 malam"
+                                                            },
+                                                            "destinations": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "type": "object",
+                                                                    "properties": {
+                                                                        "name": {
+                                                                            "type": "string",
+                                                                            "example": "Tanah Lot"
+                                                                        }
+                                                                    }
                                                                 }
                                                             }
                                                         }
@@ -1033,7 +1213,15 @@
                                             "example": "Berhasil mendapatkan data detail paket wisata"
                                         },
                                         "data": {
-                                            "$ref": "#/components/schemas/package"
+                                            "type": "object",
+                                            "properties": {
+                                                "tourGuide": {
+                                                    "$ref": "#/components/schemas/ownerName"
+                                                },
+                                                "package": {
+                                                    "$ref": "#/components/schemas/package"
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -1272,6 +1460,21 @@
                     }
                 }
             },
+            "ownerName": {
+                "type": "object",
+                "properties": {
+                    "firstName": {
+                        "description": "Nama depan",
+                        "type": "string",
+                        "example": "John"
+                    },
+                    "lastName": {
+                        "description": "Nama belakang",
+                        "type": "string",
+                        "example": "Doe"
+                    }
+                }
+            },
             "package": {
                 "type": "object",
                 "properties": {
@@ -1380,6 +1583,37 @@
                         "description": "Total harga",
                         "type": "number",
                         "example": 1000000
+                    }
+                }
+            },
+            "miniTransaction": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "description": "Id transaksi",
+                        "type": "number",
+                        "example": 1
+                    },
+                    "package": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "description": "Nama paket wisata",
+                                "type": "string",
+                                "example": "Paket Wisata Tanah Lot"
+                            }
+                        }
+                    },
+                    "status": {
+                        "description": "Status transaksi dalam bentuk enum, terdiri dari: menunggu, terkonfirmasi, ditolak, selesai",
+                        "type": "string",
+                        "example": "menunggu"
+                    },
+                    "orderDate": {
+                        "description": "Tanggal pemesanan",
+                        "type": "string",
+                        "format": "date",
+                        "example": "2023-01-01"
                     }
                 }
             }
