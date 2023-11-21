@@ -63,11 +63,6 @@ module.exports = {
   async down(queryInterface) {
     await queryInterface.removeConstraint(
       'package_details',
-      'pk_package_details_package_id_destination_id',
-    );
-
-    await queryInterface.removeConstraint(
-      'package_details',
       'fk_package_details_destination_id',
     );
 
