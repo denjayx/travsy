@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Transaction.init(
     {
-      bookingId: {
+      transactionId: {
         allowNull: false,
         primaryKey: true,
         type: DataTypes.UUID,

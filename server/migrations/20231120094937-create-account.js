@@ -6,7 +6,6 @@ module.exports = {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4,
         field: 'account_id',
       },
       email: {
@@ -23,7 +22,7 @@ module.exports = {
       role: {
         allowNull: false,
         type: Sequelize.ENUM,
-        values: ['tourGuide', 'tourist'],
+        values: ['tour guide', 'tourist'],
       },
       createdAt: {
         allowNull: false,

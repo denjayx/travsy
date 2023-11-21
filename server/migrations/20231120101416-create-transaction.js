@@ -2,12 +2,11 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('transactions', {
-      bookingId: {
+      transactionId: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4,
-        field: 'booking_id',
+        field: 'transaction_id',
       },
       packageId: {
         allowNull: false,
@@ -60,7 +59,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-        field: 'updated_id',
+        field: 'updated_at',
       },
       deletedAt: {
         type: Sequelize.DATE,

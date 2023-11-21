@@ -42,7 +42,7 @@
                                                 "example": "$Pander#800@"
                                             },
                                             "role": {
-                                                "description": "Diterima jika: terdiri dari tipe data enum yaitu tourist atau tourguide",
+                                                "description": "Diterima jika: terdiri dari tipe data enum yaitu tourist atau tour guide",
                                                 "type": "string",
                                                 "example": "tourist"
                                             }
@@ -123,7 +123,7 @@
                                                     "type": "object",
                                                     "properties": {
                                                         "role": {
-                                                            "description": "Diterima jika: tipe data enum yaitu tourist atau tourguide",
+                                                            "description": "Diterima jika: tipe data enum yaitu tourist atau tour guide",
                                                             "type": "string",
                                                             "example": "tourist"
                                                         }
