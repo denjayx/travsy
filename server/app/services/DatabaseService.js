@@ -12,7 +12,7 @@ class DatabaseService {
   }
 
   // Desc: Do transaction with given isolation level
-  async #doTransaction(callback, isolationLevel) {
+  async doTransaction(callback, isolationLevel) {
     if (
       ![
         'READ_UNCOMMITTED',

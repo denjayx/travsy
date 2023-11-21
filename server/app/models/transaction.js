@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
           allowNull: false,
         },
       });
-      this.Tourist = Transaction.belongsTo(models.Tourist, {
+      this.Tourist = Transaction.belongsTo(models.User, {
         onUpdate: 'cascade',
         onDelete: 'cascade',
         foreignKey: {
