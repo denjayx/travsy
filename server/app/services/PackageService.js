@@ -1,0 +1,47 @@
+const DatabaseService = require('./DatabaseService');
+
+class PackageService extends DatabaseService {
+  // static async getPackageList(filter) {
+  //   const expectedFilter = [
+  //     'search',
+  //     'city',
+  //     'pmin',
+  //     'pmax',
+  //     'ndest',
+  //     'sdate',
+  //     'edate',
+  //     'sort',
+  //   ];
+  //   Object.keys(filter).forEach((key) => {
+  //     if (!expectedFilter.includes(key)) {
+  //       throw new Error(`Invalid filter key: ${key}`);
+  //     }
+  //   });
+  //   const {
+  //     search = '',
+  //     city = '',
+  //     pmin = '',
+  //     pmax = '',
+  //     ndest = '',
+  //     sdate = '',
+  //     edate = '',
+  //     sort = '',
+  //   } = filter;
+  //   const getFilteredPackages = async (transaction) => {
+  //     const packages = await this.(
+  //       search,
+  //       city,
+  //       pmin,
+  //       pmax,
+  //       ndest,
+  //       sdate,
+  //       edate,
+  //       sort,
+  //       transaction,
+  //     );
+  //     return packages;
+  //   };
+  // }
+}
+
+module.exports = PackageService;

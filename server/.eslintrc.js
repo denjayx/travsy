@@ -25,5 +25,6 @@ module.exports = {
     'global-require': 'off',
     'implicit-arrow-linebreak': 'off',
     'operator-linebreak': 'off',
+    'class-methods-use-this': 'off',
   },
 };
