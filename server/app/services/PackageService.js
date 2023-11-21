@@ -3,6 +3,7 @@ const { Op } = require('sequelize');
 const { Package, Destination, City } = require('../models');
 
 class PackageService extends DatabaseService {
+  // menggunakan username
   static async getPackageList(filter) {
     const expectedFilter = [
       'search',
@@ -38,6 +39,19 @@ class PackageService extends DatabaseService {
       return packages;
     };
   }
+  static async insertPackage(filter) {
+    
+  }
+  static async getPackageDetails(filter) {
+    
+  }
+  static async modifyPackage(filter) {
+    
+  }
+  static async deletePackage(filter) {
+    
+  }
+
 }
 
 module.exports = PackageService;
