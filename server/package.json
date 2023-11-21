@@ -1,5 +1,5 @@
 {
-  "name": "express-boilerplate",
+  "name": "travsy-server",
   "version": "1.0.0",
   "description": "Backend RESTful API server that make you happy",
   "main": "index.js",
@@ -7,8 +7,8 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier . --write",
-    "start": "NODE_ENV=production node app",
-    "dev": "NODE_ENV=development nodemon app",
+    "start": "node app",
+    "dev": "nodemon app",
     "migrate:up": "sequelize-cli db:migrate",
     "migrate:down": "sequelize-cli db:migrate:undo:all",
     "seed:up": "sequelize-cli db:seed:all",

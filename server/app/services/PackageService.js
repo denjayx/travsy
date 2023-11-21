@@ -39,19 +39,19 @@ class PackageService extends DatabaseService {
       return packages;
     };
   }
-  static async insertPackage(filter) {
-    
+  static async insertPackage(filter) {}
+  static async getPackageDetails(id) {
+    try {
+      const result = await PackageDetails.findOne({ where: { id } });
+      return result;
+    } catch (error) {
+      // Handle error
+      console.error('Error fetching package details:', error);
+      throw new Error('Failed to fetch package details');
+    }
   }
-  static async getPackageDetails(filter) {
-    
-  }
-  static async modifyPackage(filter) {
-    
-  }
-  static async deletePackage(filter) {
-    
-  }
-
+  static async modifyPackage(filter) {}
+  static async deletePackage(filter) {}
 }
 
 module.exports = PackageService;
