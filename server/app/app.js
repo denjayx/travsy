@@ -5,6 +5,7 @@ const {
   exampleController,
   exampleControllerError,
   packageListController,
+  getUserController,
 } = require('./controllers');
 
 const app = express();
@@ -16,6 +17,7 @@ app.get('/', (req, res) => {
   res.json({ message: 'Welcome to Travsy' });
 });
 
+app.route('/user/:username').get(getUserController);
 app.route('/packages').get(packageListController);
 
 app.route('/example').get(exampleController);
