@@ -1,6 +1,6 @@
 const { Op } = require('sequelize');
 const DatabaseService = require('./DatabaseService');
-const { Package } = require('../models');
+const { Package, Transaction } = require('../models');
 
 class PackageService extends DatabaseService {
   static getInstance() {
@@ -29,7 +29,7 @@ class PackageService extends DatabaseService {
       }
     });
 
-    const { search = '', pmin = 0, pmax = 0 } = filter;
+    const { search = '', pmin = 0, pmax = 0, sort = '' } = filter;
 
     const whereClauses = [];
 
@@ -48,14 +48,49 @@ class PackageService extends DatabaseService {
     }
 
     const findPackagesWithFilters = async (transaction) => {
-      const packages = await Package.findAll(
+      let packages = await Package.findAll(
         {
+          include: [
+            {
+              model: Transaction,
+              attributes: ['transactionId'],
+              required: true,
+            },
+          ],
           where: {
             [Op.and]: whereClauses,
           },
         },
         { transaction },
       );
+
+      if (sort !== '') {
+        const sortFilter = sort.split(':');
+
+        const sortAscending = () =>
+          packages.sort(
+            (a, b) => a.Transactions.length - b.Transactions.length,
+          );
+
+        const sortDescending = () =>
+          packages.sort(
+            (a, b) => b.Transactions.length - a.Transactions.length,
+          );
+
+        if (sortFilter.length !== 2) {
+          throw new Error('Invalid sort filter');
+        }
+
+        if (!['popular'].includes(sortFilter[0])) {
+          throw new Error('Invalid sort key');
+        }
+
+        if (!['asc', 'desc'].includes(sortFilter[1])) {
+          throw new Error('Invalid sort order');
+        }
+
+        packages = sortFilter[1] === 'asc' ? sortAscending() : sortDescending();
+      }
 
       return packages;
     };
@@ -67,7 +102,9 @@ class PackageService extends DatabaseService {
 
     return result;
   }
+
   static async insertPackage(filter) {}
+
   static async getPackageDetails(id) {
     try {
       const result = await PackageDetails.findOne({ where: { id } });
@@ -78,7 +115,9 @@ class PackageService extends DatabaseService {
       throw new Error('Failed to fetch package details');
     }
   }
+
   static async modifyPackage(filter) {}
+
   static async deletePackage(filter) {}
 }
 
