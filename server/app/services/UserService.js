@@ -10,6 +10,25 @@ class UserService {
     return UserService.instance;
   }
 
+  async insertUser(data) {
+    const createUser = async (transaction) => {
+      const user = await User.create(data, {
+        transaction,
+      });
+
+      return user;
+    };
+
+    const user = await sequelize.transaction(
+      {
+        isolationLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED,
+      },
+      async (transaction) => createUser(transaction),
+    );
+
+    return user;
+  }
+
   async getUserByUsername(username) {
     const findUserWithAccount = async (transaction) => {
       const user = await User.findByPk(username, {
