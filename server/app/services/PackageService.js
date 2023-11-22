@@ -1,8 +1,11 @@
-const { Op } = require('sequelize');
-const DatabaseService = require('./DatabaseService');
-const { Package, Transaction } = require('../models');
+const { Op, Transaction } = require('sequelize');
+const {
+  Package,
+  Transaction: TransactionModel,
+  sequelize,
+} = require('../models');
 
-class PackageService extends DatabaseService {
+class PackageService {
   static getInstance() {
     if (!PackageService.instance) {
       PackageService.instance = new PackageService();
@@ -52,7 +55,7 @@ class PackageService extends DatabaseService {
         {
           include: [
             {
-              model: Transaction,
+              model: TransactionModel,
               attributes: ['transactionId'],
               required: true,
             },
@@ -95,9 +98,11 @@ class PackageService extends DatabaseService {
       return packages;
     };
 
-    const result = await this.doTransaction(
-      findPackagesWithFilters,
-      'READ_COMMITTED',
+    const result = await sequelize.transaction(
+      {
+        isolationLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED,
+      },
+      async (transaction) => findPackagesWithFilters(transaction),
     );
 
     return result;
