@@ -25,4 +25,4 @@ const modifyUserController = async (req, res, next) => {
   }
 };
 
-module.exports = { modifyUserController };
+module.exports = modifyUserController;
