@@ -8,6 +8,7 @@ const {
   getUserController,
   modifyUserController,
   registerController,
+  getPackageDetailController,
 } = require('./controllers');
 
 const app = express();
@@ -21,7 +22,9 @@ app.get('/', (req, res) => {
 
 app.route('/register').post(registerController);
 app.route('/user/:username').get(getUserController).put(modifyUserController);
+
 app.route('/packages').get(packageListController);
+app.route('/packages/:packageId').get(getPackageDetailController);
 
 app.route('/example').get(exampleController);
 app.route('/example-error').get(exampleControllerError);

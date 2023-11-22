@@ -1,6 +1,7 @@
 const { Op, Transaction } = require('sequelize');
 const {
   Package,
+  Destination,
   Transaction: TransactionModel,
   sequelize,
 } = require('../models');
@@ -110,15 +111,34 @@ class PackageService {
 
   static async insertPackage(filter) {}
 
-  static async getPackageDetails(id) {
-    try {
-      const result = await PackageDetails.findOne({ where: { id } });
-      return result;
-    } catch (error) {
-      // Handle error
-      console.error('Error fetching package details:', error);
-      throw new Error('Failed to fetch package details');
-    }
+  static async getPackageDetail(id) {
+    const findPackagesById = async (transaction) => {
+      try {
+        const packageDetail = await Package.findByPk(id, {
+          include: [
+            {
+              model: Destination,
+              required: true,
+            },
+          ],
+          transaction,
+        });
+        return packageDetail;
+      } catch (error) {
+        // Handle error
+        console.error('Error fetching package details:', error);
+        throw new Error('Failed to fetch package details');
+      }
+    };
+
+    const result = await sequelize.transaction(
+      {
+        isolationLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED,
+      },
+      async (transaction) => findPackagesById(transaction),
+    );
+
+    return result;
   }
 
   static async modifyPackage(filter) {}
