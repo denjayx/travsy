@@ -17,4 +17,4 @@ const getUserController = async (req, res, next) => {
   }
 };
 
-module.exports = { getUserController };
+module.exports = getUserController;

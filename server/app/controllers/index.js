@@ -12,11 +12,9 @@ try {
     )
     .forEach((file) => {
       try {
-        const controllers = require(path.join(__dirname, file));
+        const controller = require(path.join(__dirname, file));
 
-        Object.keys(controllers).forEach((key) => {
-          module.exports[key] = controllers[key];
-        });
+        module.exports[controller.name] = controller;
       } catch (error) {
         console.error(`Error importing module from ${file}:`, error);
       }

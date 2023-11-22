@@ -16,4 +16,4 @@ const packageListController = async (req, res, next) => {
   }
 };
 
-module.exports = { packageListController };
+module.exports = packageListController;
