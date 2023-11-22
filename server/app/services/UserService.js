@@ -1,4 +1,3 @@
-// const DatabaseService = require('./DatabaseService');
 const { Transaction } = require('sequelize');
 const { User, sequelize } = require('../models');
 
@@ -35,6 +34,20 @@ class UserService {
     );
 
     return result;
+  }
+
+  async modifyUser(username, data) {
+    const updateData = async (transaction) => {
+      const user = await User.findByPk(username, { transaction });
+      await user.update(data, { transaction });
+    };
+
+    await sequelize.transaction(
+      {
+        isolationLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED,
+      },
+      async (transaction) => updateData(transaction),
+    );
   }
 }
 
