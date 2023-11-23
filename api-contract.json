@@ -1091,15 +1091,6 @@
                             "format": "date",
                             "example": "2023-01-05"
                         }
-                    },
-                    {
-                        "name": "sort",
-                        "in": "query",
-                        "description": "Parameter query untuk sorting (format: fieldname:asc/desc)",
-                        "schema": {
-                            "type": "string",
-                            "example": "popular:desc"
-                        }
                     }
                 ],
                 "responses": {
@@ -1176,6 +1167,40 @@
                     },
                     "500": {
                         "$ref": "#/components/responses/serverError"
+                    }
+                }
+            }
+        },
+        "/packages/popular": {
+            "get": {
+                "tags": ["Package"],
+                "summary": "Mendapatkan daftar paket wisata populer",
+                "responses": {
+                    "200": {
+                        "description": "Berhasil mendapatkan daftar paket wisata populer",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Berhasil mendapatkan daftar paket wisata populer"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/miniPackage"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -1478,6 +1503,11 @@
             "package": {
                 "type": "object",
                 "properties": {
+                    "packageId": {
+                        "description": "Id paket wisata",
+                        "type": "string",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
                     "name": {
                         "description": "Diterima jika: 3-50 karakter",
                         "type": "string",
@@ -1533,13 +1563,50 @@
                     }
                 }
             },
+            "miniPackage": {
+                "type": "object",
+                "properties": {
+                    "packageId": {
+                        "type": "string",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "thumbnailUrl": {
+                        "type": "string",
+                        "example": "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Paket Wisata Tanah Lot"
+                    },
+                    "price": {
+                        "type": "number",
+                        "example": 500000
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Paket wisata ke Tanah Lot dengan durasi 3 hari 2 malam"
+                    },
+                    "destinations": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string",
+                                    "example": "Tanah Lot"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "transaction": {
                 "type": "object",
                 "properties": {
-                    "id": {
+                    "transactionId": {
                         "description": "Id transaksi",
-                        "type": "number",
-                        "example": 1
+                        "type": "string",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
                     },
                     "package": {
                         "type": "object",
@@ -1589,10 +1656,9 @@
             "miniTransaction": {
                 "type": "object",
                 "properties": {
-                    "id": {
-                        "description": "Id transaksi",
-                        "type": "number",
-                        "example": 1
+                    "transactionId": {
+                        "type": "string",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
                     },
                     "package": {
                         "type": "object",
