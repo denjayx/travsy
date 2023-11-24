@@ -12,22 +12,6 @@ module.exports = {
         type: Sequelize.UUID,
         field: 'destination_id',
       },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-        field: 'created_at',
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-        field: 'updated_at',
-      },
-      deletedAt: {
-        type: Sequelize.DATE,
-        field: 'deleted_at',
-      },
     });
 
     await queryInterface.addConstraint('package_details', {
