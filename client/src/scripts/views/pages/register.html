@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>register</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100">
+
+  <div class="max-w-md mx-auto mt-8">
+    <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" id="loginForm">
+      <div class="text-left mb-4">
+        <img class="mb-4" src="../../../public/images/logo.png" alt="Logo">
+        <p class="text-xl text-teal-900 font-bold">Buat Akun Travsy.</p>
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
+          Email
+        </label>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="emailkamu@gmail.com" type="text" placeholder="emailkamu@gmail.com"
+        >
+      </div>
+      <div class="mb-6">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="namapengguna">
+          Nama Pengguna
+        </label>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+          id="namapengguna" type="password" placeholder="namapengguna"
+        >
+      </div>
+      <div class="mb-6">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="katasandi">
+          Kata Sandi
+        </label>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+          id="katasandi" type="password" placeholder="katasandi"
+        >
+      </div>
+      <div class="mb-6">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="katasandi">
+          Kata sandi saat ini
+        </label>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+          id="katasandi" type="password" placeholder="katasandi"
+        >
+      </div>
+      <div class="flex items-center justify-center mb-6">
+        <button
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full h-12 btn-shadow"
+          type="button"
+          onclick="buatAkun()"
+          style="box-shadow: 2px 8px 12.7px 0 rgba(75, 207, 255, 0.15);"
+        >
+          Buat Akun
+        </button>
+      </div>
+      <label class="block text-gray-700 text-sm font-bold mb-2 text-center" id="registerLink">
+        Daftar jadi Tour Guide <a href="./register.html" class="text-blue-500">Buat akun</a>
+      </label>
+    </form>
+  </div>
+
+  <script>
+    function signIn() {
+      alert("Sign-in logic would go here!");
+    }
+
+    document.getElementById("registerLink").addEventListener("click", function (event) {
+      event.preventDefault();
+      alert("Redirect to register page would go here!");
+    });
+  </script>
+
+</body>
+
+</html>
