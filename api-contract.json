@@ -17,22 +17,36 @@
                             "schema": {
                                 "type": "object",
                                 "properties": {
-                                    "username": {
-                                        "description": "Diterima jika: terdiri dari 3-20 karakter, hanya huruf kecil, angka, underscore, dan harus unik",
-                                        "type": "string",
-                                        "example": "johndoe"
+                                    "user": {
+                                        "type": "object",
+                                        "properties": {
+                                            "username": {
+                                                "type": "string",
+                                                "example": "johndoe"
+                                            }
+                                        }
                                     },
-                                    "email": {
-                                        "description": "Diterima jika: email valid dan unik",
-                                        "type": "string",
-                                        "format": "email",
-                                        "example": "johndoe@gmail.com"
-                                    },
-                                    "password": {
-                                        "description": "Diterima jika: terdiri dari 5-25 character, merupakan kombinasi dari huruf kecil, huruf besar, angka, dan simbol",
-                                        "type": "string",
-                                        "format": "password",
-                                        "example": "$Pander#800@"
+                                    "account": {
+                                        "type": "object",
+                                        "properties": {
+                                            "email": {
+                                                "description": "Diterima jika: email valid dan unik",
+                                                "type": "string",
+                                                "format": "email",
+                                                "example": "johndoe@gmail.com"
+                                            },
+                                            "password": {
+                                                "description": "Diterima jika: terdiri dari 5-25 character, merupakan kombinasi dari huruf kecil, huruf besar, angka, dan simbol",
+                                                "type": "string",
+                                                "format": "password",
+                                                "example": "$Pander#800@"
+                                            },
+                                            "role": {
+                                                "description": "Diterima jika: terdiri dari tipe data enum yaitu tourist atau tour guide",
+                                                "type": "string",
+                                                "example": "tourist"
+                                            }
+                                        }
                                     }
                                 },
                                 "required": ["username", "email", "password"]
@@ -104,6 +118,16 @@
                                                     "description": "Token JWT",
                                                     "type": "string",
                                                     "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+                                                },
+                                                "account": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "role": {
+                                                            "description": "Diterima jika: tipe data enum yaitu tourist atau tour guide",
+                                                            "type": "string",
+                                                            "example": "tourist"
+                                                        }
+                                                    }
                                                 },
                                                 "user": {
                                                     "type": "object",
@@ -1397,45 +1421,50 @@
             "user": {
                 "type": "object",
                 "properties": {
-                    "avatarUrl": {
-                        "description": "Diterima jika: image URL",
-                        "type": "string",
-                        "example": "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
-                    },
-                    "firstName": {
-                        "description": "Diterima jika: terdiri dari 3-20 karakter huruf besar dan kapital, tidak boleh ada angka, spasi, dan simbol",
-                        "type": "string",
-                        "example": "John"
-                    },
-                    "lastName": {
-                        "description": "Diterima jika: terdiri dari 3-20 karakter huruf besar dan kapital, tidak boleh ada angka, spasi, dan simbol",
-                        "type": "string",
-                        "example": "Doe"
-                    },
-                    "biography": {
-                        "description": "Diterima jika: terdiri dari 3-100 karakter",
-                        "type": "string",
-                        "example": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-                    },
-                    "nik": {
-                        "description": "Diterima jika: 16 digit angka",
-                        "type": "string",
-                        "example": "1234567890123456"
-                    },
-                    "email": {
-                        "description": "Diterima jika: email sesuai format dan unik",
-                        "type": "string",
-                        "format": "email",
-                        "example": "johndoe@gmail.com"
-                    },
-                    "phoneNumber": {
-                        "description": "Diterima jika: 10-13 digit angka",
-                        "type": "string",
-                        "example": "081234567890"
-                    },
-                    "domicile": {
+                    "account": {
                         "type": "object",
                         "properties": {
+                            "email": {
+                                "description": "Diterima jika: email sesuai format dan unik",
+                                "type": "string",
+                                "format": "email",
+                                "example": "johndoe@gmail.com"
+                            }
+                        }
+                    },
+                    "user": {
+                        "type": "object",
+                        "properties": {
+                            "avatarUrl": {
+                                "description": "Diterima jika: image URL",
+                                "type": "string",
+                                "example": "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
+                            },
+                            "firstName": {
+                                "description": "Diterima jika: terdiri dari 3-20 karakter huruf besar dan kapital, tidak boleh ada angka, spasi, dan simbol",
+                                "type": "string",
+                                "example": "John"
+                            },
+                            "lastName": {
+                                "description": "Diterima jika: terdiri dari 3-20 karakter huruf besar dan kapital, tidak boleh ada angka, spasi, dan simbol",
+                                "type": "string",
+                                "example": "Doe"
+                            },
+                            "biography": {
+                                "description": "Diterima jika: terdiri dari 3-100 karakter",
+                                "type": "string",
+                                "example": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                            },
+                            "nik": {
+                                "description": "Diterima jika: 16 digit angka",
+                                "type": "string",
+                                "example": "1234567890123456"
+                            },
+                            "phoneNumber": {
+                                "description": "Diterima jika: 10-13 digit angka",
+                                "type": "string",
+                                "example": "081234567890"
+                            },
                             "province": {
                                 "description": "Diterima jika: memilih dari dropdown list",
                                 "type": "string",
@@ -1445,18 +1474,18 @@
                                 "description": "Diterima jika: memilih dari dropdown list",
                                 "type": "string",
                                 "example": "Semarang"
+                            },
+                            "gender": {
+                                "description": "Diterima jika: terdiri dari tipe data enum yaitu L atau P, L = laki-laki, P = perempuan",
+                                "type": "string",
+                                "example": "L"
+                            },
+                            "cardNumber": {
+                                "description": "Diterima jika: 16 digit angka",
+                                "type": "string",
+                                "example": "1234567890123456"
                             }
                         }
-                    },
-                    "gender": {
-                        "description": "Diterima jika: terdiri dari tipe data enum yaitu L atau P, L = laki-laki, P = perempuan",
-                        "type": "string",
-                        "example": "L"
-                    },
-                    "cardNumber": {
-                        "description": "Diterima jika: 16 digit angka",
-                        "type": "string",
-                        "example": "1234567890123456"
                     }
                 }
             },
@@ -1513,7 +1542,7 @@
                                     "type": "string",
                                     "example": "Tanah Lot"
                                 },
-                                "image": {
+                                "imageUrl": {
                                     "description": "Diterima jika: image URL",
                                     "type": "string",
                                     "example": "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
