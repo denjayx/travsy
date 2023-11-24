@@ -36,6 +36,18 @@ module.exports = {
         type: Sequelize.INTEGER,
         field: 'service_duration',
       },
+      destinationCount: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+        field: 'destination_count',
+      },
+      transactionCount: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+        field: 'transaction_count',
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

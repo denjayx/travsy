@@ -2,27 +2,12 @@ const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class Transaction extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
       this.Package = Transaction.belongsTo(models.Package, {
-        onUpdate: 'cascade',
-        onDelete: 'cascade',
-        foreignKey: {
-          name: 'packageId',
-          allowNull: false,
-        },
+        foreignKey: 'packageId',
       });
       this.Tourist = Transaction.belongsTo(models.User, {
-        onUpdate: 'cascade',
-        onDelete: 'cascade',
-        foreignKey: {
-          name: 'touristId',
-          allowNull: false,
-        },
+        foreignKey: 'touristId',
       });
     }
   }
