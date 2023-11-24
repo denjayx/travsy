@@ -1,6 +1,6 @@
 function TourPackage() {
   return /* html */ `
-    <h2>TourPackagepage</h2>
+    <h2>Halaman Paket Wisata</h2>
   `;
 }
 
