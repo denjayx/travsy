@@ -5,6 +5,7 @@ const {
   Transaction: TransactionModel,
   sequelize,
 } = require('../models');
+const BadRequestError = require('../errors/BadRequestError');
 
 class PackageService {
   static getInstance() {
@@ -24,79 +25,130 @@ class PackageService {
       'ndest',
       'sdate',
       'edate',
-      'sort',
     ];
 
     Object.keys(filter).forEach((key) => {
       if (!expectedFilter.includes(key)) {
-        throw new Error(`Invalid filter key: ${key}`);
+        throw new BadRequestError(
+          `Error filter: filter ${key} tidak dapat ditemukan`,
+        );
       }
     });
 
-    const { search = '', pmin = 0, pmax = 0, sort = '' } = filter;
-
-    const whereClauses = [];
-
-    whereClauses.push({
-      packageName: {
-        [Op.like]: `%${search}%`,
-      },
-    });
-
-    if (pmax !== 0) {
-      whereClauses.push({
-        price: {
-          [Op.between]: [pmin, pmax],
-        },
-      });
-    }
+    const { search, city, pmin, pmax, ndest, sdate, edate } = filter;
 
     const findPackagesWithFilters = async (transaction) => {
-      let packages = await Package.findAll(
-        {
-          include: [
+      const whereConditionsDestination = [];
+      const whereConditionsPackage = [];
+
+      if (sdate && edate) {
+        if (sdate > edate) {
+          throw new BadRequestError(
+            'Error filter: tanggal mulai tidak boleh lebih besar dari tanggal berakhir',
+          );
+        }
+
+        try {
+          const availablePackages = await Package.findAll(
             {
-              model: TransactionModel,
-              attributes: ['transactionId'],
-              required: true,
+              include: [
+                {
+                  model: TransactionModel,
+                  attributes: ['startDate', 'endDate'],
+                  where: {
+                    startDate: {
+                      [Op.lt]: sdate,
+                    },
+                    endDate: {
+                      [Op.gt]: edate,
+                    },
+                  },
+                  required: true,
+                },
+              ],
+              attributes: ['id'],
             },
-          ],
-          where: {
-            [Op.and]: whereClauses,
-          },
-        },
-        { transaction },
-      );
-
-      if (sort !== '') {
-        const sortFilter = sort.split(':');
-
-        const sortAscending = () =>
-          packages.sort(
-            (a, b) => a.Transactions.length - b.Transactions.length,
+            { transaction },
           );
 
-        const sortDescending = () =>
-          packages.sort(
-            (a, b) => b.Transactions.length - a.Transactions.length,
+          const packageIds = availablePackages.map(
+            (packageObj) => packageObj.id,
           );
 
-        if (sortFilter.length !== 2) {
-          throw new Error('Invalid sort filter');
+          whereConditionsPackage.push({
+            package_id: {
+              [Op.in]: packageIds,
+            },
+          });
+        } catch (error) {
+          throw new BadRequestError('Failed to fetch available packages');
         }
-
-        if (!['popular'].includes(sortFilter[0])) {
-          throw new Error('Invalid sort key');
-        }
-
-        if (!['asc', 'desc'].includes(sortFilter[1])) {
-          throw new Error('Invalid sort order');
-        }
-
-        packages = sortFilter[1] === 'asc' ? sortAscending() : sortDescending();
       }
 
-      return packages;
+      if (search) {
+        whereConditionsDestination.push({
+          destinationName: {
+            [Op.like]: `%${search}%`,
+          },
+        });
+      }
+
+      if (city) {
+        whereConditionsDestination.push({
+          city: {
+            [Op.eq]: city,
+          },
+        });
+      }
+
+      if (pmin && pmax) {
+        if (pmax < pmin) {
+          throw new BadRequestError(
+            'Error filter: harga maksimum tidak boleh lebih kecil dari harga minimum',
+          );
+        }
+
+        whereConditionsPackage.push({
+          price: {
+            [Op.between]: [pmin, pmax],
+          },
+        });
+      }
+
+      if (ndest) {
+        whereConditionsPackage.push({
+          destination_count: {
+            [Op.eq]: ndest,
+          },
+        });
+      }
+
+      try {
+        const packages = await Package.findAll(
+          {
+            include: [
+              {
+                model: Destination,
+                attributes: ['destinationName', 'city'],
+                where: {
+                  [Op.and]: whereConditionsDestination,
+                },
+                required: true,
+              },
+            ],
+            where: {
+              [Op.and]: whereConditionsPackage,
+            },
+            transaction,
+          },
+          { transaction },
+        );
+
+        return packages;
+      } catch (error) {
+        console.error(error);
+        throw new BadRequestError('Failed to fetch packages');
+      }
     };
 
     const result = await sequelize.transaction(
@@ -125,8 +177,6 @@ class PackageService {
         });
         return packageDetail;
       } catch (error) {
-        // Handle error
-        console.error('Error fetching package details:', error);
         throw new Error('Failed to fetch package details');
       }
     };
