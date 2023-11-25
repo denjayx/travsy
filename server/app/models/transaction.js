@@ -13,11 +13,11 @@ module.exports = (sequelize, DataTypes) => {
   }
   Transaction.init(
     {
-      transactionId: {
-        allowNull: false,
+      id: {
         primaryKey: true,
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
+        field: 'transaction_id',
       },
       packageId: {
         allowNull: false,
