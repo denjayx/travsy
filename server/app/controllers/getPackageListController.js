@@ -1,10 +1,14 @@
 const PackageService = require('../services/PackageService');
 
-const packageListController = async (req, res, next) => {
+const getPackageListController = async (req, res, next) => {
   try {
     const filter = req.query;
     const service = PackageService.getInstance();
-    const resultPackageList = await service.getPackageList(filter);
+    const resultPackageList = await service.getPackageList({
+      ...filter,
+      pmin: parseInt(filter.pmin, 10),
+      pmax: parseInt(filter.pmax, 10),
+    });
 
     res.status(200).json({
       status: 'success',
@@ -16,4 +20,4 @@ const packageListController = async (req, res, next) => {
   }
 };
 
-module.exports = packageListController;
+module.exports = getPackageListController;
