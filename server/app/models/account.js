@@ -8,11 +8,12 @@ module.exports = (sequelize, DataTypes) => {
   }
   Account.init(
     {
-      accountId: {
+      id: {
         allowNull: false,
         primaryKey: true,
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
+        field: 'account_id',
       },
       email: {
         allowNull: false,

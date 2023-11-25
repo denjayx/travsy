@@ -10,11 +10,11 @@ module.exports = (sequelize, DataTypes) => {
   }
   Destination.init(
     {
-      destinationId: {
-        allowNull: false,
+      id: {
         primaryKey: true,
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
+        field: 'destination_id',
       },
       destinationName: {
         allowNull: false,

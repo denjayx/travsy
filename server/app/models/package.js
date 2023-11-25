@@ -14,11 +14,11 @@ module.exports = (sequelize, DataTypes) => {
   }
   Package.init(
     {
-      packageId: {
-        allowNull: false,
+      id: {
         primaryKey: true,
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
+        field: 'package_id',
       },
       tourGuideId: {
         allowNull: false,
