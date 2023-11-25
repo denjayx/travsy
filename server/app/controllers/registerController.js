@@ -21,7 +21,7 @@ const registerController = async (req, res, next) => {
     const createdAccount = await accountServiceInstance.insertAccount(account);
     await userServiceInstance.insertUser({
       ...user,
-      accountId: createdAccount.accountId,
+      accountId: createdAccount.id,
     });
 
     res.status(201).json({

@@ -24,6 +24,7 @@ class AccountService {
 
         return account;
       } catch (error) {
+        console.error(error);
         throw new ServerError();
       }
     };
