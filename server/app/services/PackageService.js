@@ -3,10 +3,12 @@ const {
   Package,
   Destination,
   Transaction: TransactionModel,
+  User,
   sequelize,
 } = require('../models');
 const BadRequestError = require('../errors/BadRequestError');
 const ServerError = require('../errors/ServerError');
+const NotFoundError = require('../errors/NotFoundError');
 
 class PackageService {
   // Desc: Implementasi singleton
@@ -207,6 +209,24 @@ class PackageService {
 
   static async insertPackage(filter) {}
 
+  // menemkan package berdasarkan username
+  async getPackageByUsername(tourGuideId) {
+    try {
+      const userPackages = await Package.findAll({ where: { tourGuideId } });
+      if (!userPackages.length) {
+        throw new NotFoundError('Package tidak ditemukan');
+      }
+      return userPackages;
+    } catch (error) {
+      console.error(error);
+      if (error instanceof NotFoundError) {
+        throw error;
+      }
+      throw new ServerError();
+    }
+  }
+
+  // get detail package by id
   static async getPackageDetail(id) {
     const findPackagesById = async (transaction) => {
       try {
