@@ -1,6 +1,7 @@
-const { Transaction } = require('sequelize');
+const { Transaction, ValidationError } = require('sequelize');
 const { Account, sequelize } = require('../models');
 const ServerError = require('../errors/ServerError');
+const BadRequestError = require('../errors/BadRequestError');
 const NotFoundError = require('../errors/NotFoundError');
 
 class AccountService {
@@ -26,6 +27,9 @@ class AccountService {
 
         return account;
       } catch (error) {
+        if (error instanceof ValidationError) {
+          throw new BadRequestError(error.message);
+        }
         throw new ServerError();
       }
     };
