@@ -3,10 +3,11 @@ const cors = require('cors');
 const errorHandler = require('./middlewares/errorHandler');
 const {
   getPackageListController,
+  getPopularPackageListController,
+  getPackageDetailController,
   getUserController,
   modifyUserController,
   registerController,
-  getPackageDetailController,
 } = require('./controllers');
 
 // Create Express app
@@ -25,6 +26,7 @@ app.route('/register').post(registerController);
 app.route('/user/:username').get(getUserController).put(modifyUserController);
 
 app.route('/packages').get(getPackageListController);
+app.route('/packages/popular').get(getPopularPackageListController);
 app.route('/packages/:packageId').get(getPackageDetailController);
 
 // Error handler

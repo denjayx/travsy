@@ -6,6 +6,7 @@ const {
   sequelize,
 } = require('../models');
 const BadRequestError = require('../errors/BadRequestError');
+const ServerError = require('../errors/ServerError');
 
 class PackageService {
   // Desc: Implementasi singleton
@@ -157,6 +158,48 @@ class PackageService {
         isolationLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED,
       },
       async (transaction) => findPackagesWithFilters(transaction),
+    );
+
+    return result;
+  }
+
+  // Desc: service for get popular package list with limit 4 data
+  async getPopularPackageList(limit) {
+    const findPopularPackages = async (transaction) => {
+      try {
+        const packages = await Package.findAll({
+          include: [
+            {
+              model: Destination,
+              attributes: ['destinationName', 'city'],
+              required: true,
+            },
+          ],
+          order: [['transaction_count', 'DESC']],
+          limit: limit || 4,
+          attributes: [
+            'id',
+            'thumbnailUrl',
+            'packageName',
+            'price',
+            'description',
+            'transaction_count',
+          ],
+          transaction,
+        });
+
+        return packages;
+      } catch (error) {
+        console.error(error);
+        throw new ServerError();
+      }
+    };
+
+    const result = await sequelize.transaction(
+      {
+        isolationLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED,
+      },
+      async (transaction) => findPopularPackages(transaction),
     );
 
     return result;
