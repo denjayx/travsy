@@ -6,17 +6,23 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Travsy - Solusi Healing Tanpa Pusing</title>
 	</head>
-	<body>
-		<div class="logo">
-			<img src="./src/public/logo.svg" alt="logo">
-		</div>
-		<nav>
-			<ul>
-				<li><a href="/">Home</a></li>
-				<li><a href="/tour-package">Paket Wisata</a></li>
-				<li><a href="/tour-history">Riwayat Wisata</a></li>
-			</ul>
-		</nav>
+	<body class="bg-primary-50">
+		<header class="container py-6 flex gap-8">
+			<div class="logo">
+				<img width="120px" src="./src/public/logo.svg" alt="logo">
+			</div>
+			<nav class="flex justify-between w-full items-center">
+				<ul class="flex gap-6">
+					<li><a href="/">Home</a></li>
+					<li><a href="/tour-package">Paket Wisata</a></li>
+					<li><a href="/tour-history">Riwayat Wisata</a></li>
+				</ul>
+				<div id="authBtn" class="flex gap-2">
+					<a href="#" class="btn-primary">Login</a>
+					<a href="#" class="btn-secondary">Register</a>
+				</div>
+			</nav>
+		</header>
 		<main id="app"></main>
 		<script type="module" src="index.js"></script>
 	</body>
