@@ -1,5 +1,6 @@
 const PackageService = require('../services/PackageService');
 
+// Desc: controller for get package list
 const getPackageListController = async (req, res, next) => {
   try {
     const filter = req.query;

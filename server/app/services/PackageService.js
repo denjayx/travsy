@@ -8,6 +8,7 @@ const {
 const BadRequestError = require('../errors/BadRequestError');
 
 class PackageService {
+  // Desc: Implementasi singleton
   static getInstance() {
     if (!PackageService.instance) {
       PackageService.instance = new PackageService();
@@ -16,6 +17,7 @@ class PackageService {
     return PackageService.instance;
   }
 
+  // Desc: service for get package list with filter
   async getPackageList(filter) {
     const expectedFilter = [
       'search',
@@ -146,7 +148,6 @@ class PackageService {
 
         return packages;
       } catch (error) {
-        console.error(error);
         throw new BadRequestError('Failed to fetch packages');
       }
     };

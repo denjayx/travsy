@@ -1,5 +1,6 @@
 const UserService = require('../services/UserService');
 
+// Desc: controller for get user by username
 const getUserController = async (req, res, next) => {
   try {
     const { username } = req.params;
@@ -12,7 +13,6 @@ const getUserController = async (req, res, next) => {
       data: resultUser,
     });
   } catch (error) {
-    console.log(error.message);
     next(error);
   }
 };

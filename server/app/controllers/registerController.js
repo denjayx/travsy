@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const AccountService = require('../services/AccountService');
 const UserService = require('../services/UserService');
 
+// Desc: controller for register
 const registerController = async (req, res, next) => {
   const { account, user } = req.body;
 

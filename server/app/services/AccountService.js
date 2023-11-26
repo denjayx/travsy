@@ -4,6 +4,7 @@ const ServerError = require('../errors/ServerError');
 const NotFoundError = require('../errors/NotFoundError');
 
 class AccountService {
+  // Desc: Implementasi singleton
   static getInstance() {
     if (!AccountService.instance) {
       AccountService.instance = new AccountService();
@@ -12,6 +13,7 @@ class AccountService {
     return AccountService.instance;
   }
 
+  // Desc: service for create new account
   async insertAccount(data) {
     const createAccount = async (transaction) => {
       try {
@@ -24,7 +26,6 @@ class AccountService {
 
         return account;
       } catch (error) {
-        console.error(error);
         throw new ServerError();
       }
     };
@@ -39,6 +40,7 @@ class AccountService {
     return account;
   }
 
+  // Desc: service for modify account
   async modifyAccount(accountId, data) {
     const updateData = async (transaction) => {
       try {

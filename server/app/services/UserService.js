@@ -4,6 +4,7 @@ const ServerError = require('../errors/ServerError');
 const NotFoundError = require('../errors/NotFoundError');
 
 class UserService {
+  // Desc: Implementasi singleton
   static getInstance() {
     if (!UserService.instance) {
       UserService.instance = new UserService();
@@ -12,6 +13,7 @@ class UserService {
     return UserService.instance;
   }
 
+  // Desc: service for create new user
   async insertUser(data) {
     const createUser = async (transaction) => {
       try {
@@ -35,6 +37,7 @@ class UserService {
     return user;
   }
 
+  // Desc: service for get user by username
   async getUserByUsername(username) {
     const findUserWithAccount = async (transaction) => {
       try {
@@ -56,7 +59,6 @@ class UserService {
 
         return { account, user };
       } catch (error) {
-        console.error(error);
         if (error instanceof NotFoundError) {
           throw error;
         }
@@ -74,6 +76,7 @@ class UserService {
     return result;
   }
 
+  // Desc: service for modify user
   async modifyUser(username, data) {
     const updateData = async (transaction) => {
       try {

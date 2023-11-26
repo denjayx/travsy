@@ -1,5 +1,6 @@
 const PackageService = require('../services/PackageService');
 
+// Desc: controller for get package detail
 const getPackageDetailController = async (req, res, next) => {
   try {
     const { packageId } = req.params;
@@ -12,7 +13,6 @@ const getPackageDetailController = async (req, res, next) => {
       data: result,
     });
   } catch (error) {
-    console.log(error.message);
     next(error);
   }
 };

@@ -1,6 +1,7 @@
 const UserService = require('../services/UserService');
 const AccountService = require('../services/AccountService');
 
+// Desc: controller for modify user
 const modifyUserController = async (req, res, next) => {
   const { username } = req.params;
   const { account, user } = req.body;
