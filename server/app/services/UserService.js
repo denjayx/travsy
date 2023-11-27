@@ -1,5 +1,5 @@
 const { Transaction } = require('sequelize');
-const { User: UserModel, Account, sequelize } = require('../models');
+const { User, Account, sequelize } = require('../models');
 const ServerError = require('../errors/ServerError');
 const NotFoundError = require('../errors/NotFoundError');
 
@@ -17,7 +17,7 @@ class UserService {
   async getUserByUsername(username) {
     const findUserWithAccount = async (transaction) => {
       try {
-        const userAndAccount = await UserModel.findByPk(username, {
+        const userAndAccount = await User.findByPk(username, {
           attributes: {
             exclude: ['accountId', 'createdAt', 'updatedAt', 'deletedAt'],
           },
@@ -41,22 +41,23 @@ class UserService {
       }
     };
 
-    const { Account: AccountResult, ...User } = await sequelize.transaction(
-      {
-        isolationLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED,
-      },
-      async (transaction) =>
-        (await findUserWithAccount(transaction)).dataValues,
-    );
+    const { Account: AccountResult, ...UserResult } =
+      await sequelize.transaction(
+        {
+          isolationLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED,
+        },
+        async (transaction) =>
+          (await findUserWithAccount(transaction)).dataValues,
+      );
 
-    return { account: AccountResult, user: User };
+    return { account: AccountResult, user: UserResult };
   }
 
   // Desc: service for modify user
   async modifyUserIncludeAccount(username, data, account) {
     const updateData = async (transaction) => {
       try {
-        const updatedCount = await UserModel.update(
+        const updatedCount = await User.update(
           { ...data, Account: account },
           { where: { username }, transaction },
         );
