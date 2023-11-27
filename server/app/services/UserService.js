@@ -1,5 +1,5 @@
 const { Transaction } = require('sequelize');
-const { User, sequelize } = require('../models');
+const { User: UserModel, Account, sequelize } = require('../models');
 const ServerError = require('../errors/ServerError');
 const NotFoundError = require('../errors/NotFoundError');
 
@@ -17,23 +17,22 @@ class UserService {
   async getUserByUsername(username) {
     const findUserWithAccount = async (transaction) => {
       try {
-        const user = await User.findByPk(username, {
+        const userAndAccount = await UserModel.findByPk(username, {
           attributes: {
-            exclude: ['createdAt', 'updatedAt', 'deletedAt'],
+            exclude: ['accountId', 'createdAt', 'updatedAt', 'deletedAt'],
+          },
+          include: {
+            model: Account,
+            attributes: ['email'],
           },
           transaction,
         });
 
-        if (!user) {
+        if (!userAndAccount) {
           throw new NotFoundError('User tidak ditemukan');
         }
 
-        const account = await user.getAccount({
-          attributes: ['email'],
-          transaction,
-        });
-
-        return { account, user };
+        return userAndAccount;
       } catch (error) {
         if (error instanceof NotFoundError) {
           throw error;
@@ -42,25 +41,28 @@ class UserService {
       }
     };
 
-    const result = await sequelize.transaction(
+    const { Account: AccountResult, ...User } = await sequelize.transaction(
       {
         isolationLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED,
       },
-      async (transaction) => findUserWithAccount(transaction),
+      async (transaction) =>
+        (await findUserWithAccount(transaction)).dataValues,
     );
 
-    return result;
+    return { account: AccountResult, user: User };
   }
 
   // Desc: service for modify user
-  async modifyUser(username, data) {
+  async modifyUserIncludeAccount(username, data, account) {
     const updateData = async (transaction) => {
       try {
-        const user = await User.findByPk(username, { transaction });
-        if (user === undefined) {
+        const updatedCount = await UserModel.update(
+          { ...data, Account: account },
+          { where: { username }, transaction },
+        );
+        if (!updatedCount) {
           throw new NotFoundError('User tidak ditemukan');
         }
-        await user.update(data, { transaction });
       } catch (error) {
         if (error instanceof NotFoundError) {
           throw error;

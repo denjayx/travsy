@@ -61,7 +61,6 @@ class AccountService {
           },
         );
       } catch (error) {
-        console.error(error);
         if (error instanceof ValidationError) {
           throw new BadRequestError('Akun sudah terdaftar');
         }
@@ -74,31 +73,6 @@ class AccountService {
         isolationLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED,
       },
       async (transaction) => insertData(transaction),
-    );
-  }
-
-  // Desc: service for modify account
-  async modifyAccount(accountId, data) {
-    const updateData = async (transaction) => {
-      try {
-        const account = await Account.findByPk(accountId, { transaction });
-        if (!account) {
-          throw new NotFoundError('User tidak ditemukan');
-        }
-        await account.update(data, { transaction });
-      } catch (error) {
-        if (error instanceof NotFoundError) {
-          throw error;
-        }
-        throw new ServerError();
-      }
-    };
-
-    await sequelize.transaction(
-      {
-        isolationLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED,
-      },
-      async (transaction) => updateData(transaction),
     );
   }
 }

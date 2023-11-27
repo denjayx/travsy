@@ -5,12 +5,12 @@ const getUserController = async (req, res, next) => {
   try {
     const { username } = req.params;
     const userService = UserService.getInstance();
-    const resultUser = await userService.getUserByUsername(username);
+    const { account, user } = await userService.getUserByUsername(username);
 
     res.status(200).json({
       status: 'success',
       message: 'Berhasil mendapatkan data user',
-      data: resultUser,
+      data: { account, user },
     });
   } catch (error) {
     next(error);
