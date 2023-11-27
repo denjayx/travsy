@@ -2,12 +2,13 @@ const express = require('express');
 const cors = require('cors');
 const errorHandler = require('./middlewares/errorHandler');
 const {
+  registerController,
+  loginController,
   getPackageListController,
   getPopularPackageListController,
   getPackageDetailController,
   getUserController,
   modifyUserController,
-  registerController,
 } = require('./controllers');
 
 // Create Express app
@@ -23,6 +24,7 @@ app.get('/', (req, res) => {
 });
 
 app.route('/register').post(registerController);
+app.route('/login').post(loginController);
 app.route('/user/:username').get(getUserController).put(modifyUserController);
 
 app.route('/packages').get(getPackageListController);
