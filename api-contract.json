@@ -109,7 +109,7 @@
                                         },
                                         "message": {
                                             "type": "string",
-                                            "example": "User berhasil login"
+                                            "example": "Login berhasil"
                                         },
                                         "data": {
                                             "type": "object",
@@ -119,15 +119,10 @@
                                                     "type": "string",
                                                     "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
                                                 },
-                                                "account": {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "role": {
-                                                            "description": "Diterima jika: tipe data enum yaitu tourist atau tour guide",
-                                                            "type": "string",
-                                                            "example": "tourist"
-                                                        }
-                                                    }
+                                                "role": {
+                                                    "description": "Diterima jika: tipe data enum yaitu tourist atau tour guide",
+                                                    "type": "string",
+                                                    "example": "tourist"
                                                 },
                                                 "user": {
                                                     "type": "object",
@@ -158,6 +153,12 @@
                     },
                     "400": {
                         "$ref": "#/components/responses/badRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
                     },
                     "500": {
                         "$ref": "#/components/responses/serverError"
