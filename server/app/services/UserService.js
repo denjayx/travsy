@@ -13,30 +13,6 @@ class UserService {
     return UserService.instance;
   }
 
-  // Desc: service for create new user
-  async insertUser(data) {
-    const createUser = async (transaction) => {
-      try {
-        const user = await User.create(data, {
-          transaction,
-        });
-
-        return user;
-      } catch (error) {
-        throw new ServerError();
-      }
-    };
-
-    const user = await sequelize.transaction(
-      {
-        isolationLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED,
-      },
-      async (transaction) => createUser(transaction),
-    );
-
-    return user;
-  }
-
   // Desc: service for get user by username
   async getUserByUsername(username) {
     const findUserWithAccount = async (transaction) => {

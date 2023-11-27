@@ -1,5 +1,5 @@
 const { Transaction, ValidationError } = require('sequelize');
-const { Account, sequelize } = require('../models');
+const { Account, User, sequelize } = require('../models');
 const ServerError = require('../errors/ServerError');
 const BadRequestError = require('../errors/BadRequestError');
 const NotFoundError = require('../errors/NotFoundError');
@@ -49,34 +49,32 @@ class AccountService {
     return account;
   }
 
-  // Desc: service for create new account
-  async insertAccount(data) {
-    const createAccount = async (transaction) => {
+  // Desc: service for create new account include user
+  async createAccountIncludeUser(dataAccount, dataUser) {
+    const insertData = async (transaction) => {
       try {
-        const account = await Account.create(data, {
-          attributes: {
-            exclude: ['createdAt', 'updatedAt', 'deletedAt'],
+        await Account.create(
+          { ...dataAccount, User: dataUser },
+          {
+            include: User,
+            transaction,
           },
-          transaction,
-        });
-
-        return account;
+        );
       } catch (error) {
+        console.error(error);
         if (error instanceof ValidationError) {
-          throw new BadRequestError(error.message);
+          throw new BadRequestError('Akun sudah terdaftar');
         }
         throw new ServerError();
       }
     };
 
-    const account = await sequelize.transaction(
+    await sequelize.transaction(
       {
         isolationLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED,
       },
-      async (transaction) => createAccount(transaction),
+      async (transaction) => insertData(transaction),
     );
-
-    return account;
   }
 
   // Desc: service for modify account
