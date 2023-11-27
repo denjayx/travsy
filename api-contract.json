@@ -221,7 +221,7 @@
                 }
             }
         },
-        "/users/{username}": {
+        "/user/{username}": {
             "get": {
                 "tags": ["User"],
                 "summary": "Mendapatkan detail user berdasarkan username",
@@ -239,7 +239,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Berhasil mendapatkan detail user",
+                        "description": "Berhasil mendapatkan data user",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -251,7 +251,7 @@
                                         },
                                         "message": {
                                             "type": "string",
-                                            "example": "User berhasil didapatkan"
+                                            "example": "Berhasil mendapatkan data user"
                                         },
                                         "data": {
                                             "$ref": "#/components/schemas/user"
@@ -337,7 +337,7 @@
                 }
             }
         },
-        "/users/{username}/histories": {
+        "/user/{username}/histories": {
             "get": {
                 "tags": ["Transaction"],
                 "summary": "Mendapatkan riwayat transaksi user",
@@ -405,7 +405,7 @@
                 }
             }
         },
-        "/users/{username}/histories/{transactionId}": {
+        "/user/{username}/histories/{transactionId}": {
             "get": {
                 "tags": ["Transaction"],
                 "summary": "Mendapatkan detail riwayat transaksi user",
@@ -480,7 +480,7 @@
                 }
             }
         },
-        "/users/{username}/packages": {
+        "/user/{username}/packages": {
             "get": {
                 "tags": ["Package"],
                 "summary": "Mendapatkan paket wisata dari user",
@@ -605,7 +605,7 @@
                 }
             }
         },
-        "/users/{username}/packages/{packageId}": {
+        "/user/{username}/packages/{packageId}": {
             "get": {
                 "tags": ["Package"],
                 "summary": "Mendapatkan detail paket wisata dari user",
@@ -811,7 +811,7 @@
                 }
             }
         },
-        "/users/{username}/orders": {
+        "/user/{username}/orders": {
             "get": {
                 "tags": ["Transaction"],
                 "summary": "Mendapatkan daftar pemesanan yang didapatkan user",
@@ -879,7 +879,7 @@
                 }
             }
         },
-        "/users/{username}/orders/{orderId}": {
+        "/user/{username}/orders/{orderId}": {
             "get": {
                 "tags": ["Transaction"],
                 "summary": "Mendapatkan detail pemesanan yang didapatkan user",
@@ -1461,6 +1461,16 @@
                     "user": {
                         "type": "object",
                         "properties": {
+                            "username": {
+                                "description": "Diterima jika: 3-20 karakter huruf kecil, angka, dan underscore, tidak boleh ada spasi dan simbol",
+                                "type": "string",
+                                "example": "johndoe"
+                            },
+                            "accountId": {
+                                "description": "Id akun",
+                                "type": "number",
+                                "example": 1
+                            },
                             "avatarUrl": {
                                 "description": "Diterima jika: image URL",
                                 "type": "string",
@@ -1486,7 +1496,7 @@
                                 "type": "string",
                                 "example": "1234567890123456"
                             },
-                            "phoneNumber": {
+                            "phone": {
                                 "description": "Diterima jika: 10-13 digit angka",
                                 "type": "string",
                                 "example": "081234567890"

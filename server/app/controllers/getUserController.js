@@ -4,8 +4,8 @@ const UserService = require('../services/UserService');
 const getUserController = async (req, res, next) => {
   try {
     const { username } = req.params;
-    const service = UserService.getInstance();
-    const resultUser = await service.getUserByUsername(username);
+    const userService = UserService.getInstance();
+    const resultUser = await userService.getUserByUsername(username);
 
     res.status(200).json({
       status: 'success',
