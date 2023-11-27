@@ -3,10 +3,12 @@ const {
   Package,
   Destination,
   Transaction: TransactionModel,
+  User,
   sequelize,
 } = require('../models');
 const BadRequestError = require('../errors/BadRequestError');
 const ServerError = require('../errors/ServerError');
+const NotFoundError = require('../errors/NotFoundError');
 
 class PackageService {
   // Desc: Implementasi singleton
@@ -207,32 +209,47 @@ class PackageService {
 
   static async insertPackage(filter) {}
 
-  static async getPackageDetail(id) {
-    const findPackagesById = async (transaction) => {
-      try {
-        const packageDetail = await Package.findByPk(id, {
-          include: [
-            {
-              model: Destination,
-              required: true,
-            },
-          ],
-          transaction,
-        });
-        return packageDetail;
-      } catch (error) {
-        throw new Error('Failed to fetch package details');
+  // menemkan package berdasarkan username
+  async getPackageByUsername(tourGuideId) {
+    try {
+      const userPackages = await Package.findAll({ where: { tourGuideId } });
+      if (!userPackages.length) {
+        throw new NotFoundError('Package tidak ditemukan');
       }
-    };
+      return userPackages;
+    } catch (error) {
+      console.error(error);
+      if (error instanceof NotFoundError) {
+        throw error;
+      }
+      throw new ServerError();
+    }
+  }
 
-    const result = await sequelize.transaction(
-      {
-        isolationLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED,
-      },
-      async (transaction) => findPackagesById(transaction),
-    );
+  // get detail package by id
+  async getPackageDetail(id) {
+    try {
+      const packageDetail = await Package.findByPk(id, {
+        include: [
+          {
+            model: Destination,
+            required: true,
+          },
+        ],
+      });
 
-    return result;
+      if (!packageDetail) {
+        throw new NotFoundError('Package Not Found');
+      }
+
+      return packageDetail;
+    } catch (error) {
+      console.error(error);
+      if (error instanceof NotFoundError) {
+        throw error;
+      }
+      throw new ServerError('Failed to fetch package details');
+    }
   }
 
   static async modifyPackage(filter) {}
