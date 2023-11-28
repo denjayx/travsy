@@ -20,7 +20,13 @@ class UserService {
       try {
         const userAndAccount = await User.findByPk(username, {
           attributes: {
-            exclude: ['accountId', 'createdAt', 'updatedAt', 'deletedAt'],
+            exclude: [
+              'username',
+              'accountId',
+              'createdAt',
+              'updatedAt',
+              'deletedAt',
+            ],
           },
           include: {
             model: Account,

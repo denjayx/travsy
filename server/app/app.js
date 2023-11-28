@@ -1,13 +1,13 @@
 const express = require('express');
 const cors = require('cors');
-const errorHandler = require('./middlewares/errorHandler');
+const { errorHandler, verifyAuthorization } = require('./middlewares');
 const {
   registerController,
   loginController,
   getPackageListController,
   getPopularPackageListController,
   getPackageDetailController,
-  getUserController,
+  getUserProfileController,
   modifyUserController,
   getPackagesByUserController,
 } = require('./controllers');
@@ -26,7 +26,11 @@ app.get('/', (req, res) => {
 
 app.route('/register').post(registerController);
 app.route('/login').post(loginController);
-app.route('/user/:username').get(getUserController).put(modifyUserController);
+
+app
+  .route('/profile')
+  .get(verifyAuthorization, getUserProfileController)
+  .put(modifyUserController);
 app.route('/user/:username/packages').get(getPackagesByUserController);
 
 app.route('/packages').get(getPackageListController);
