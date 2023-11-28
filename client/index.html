@@ -7,24 +7,44 @@
 		<title>Travsy - Solusi Healing Tanpa Pusing</title>
 	</head>
 	<body class="bg-primary-50">
-		<header class="container py-6 flex gap-8">
-			<div class="logo">
-				<img width="120px" src="./src/public/logo.svg" alt="logo">
+		<header class="container py-6 flex gap-12 justify-between">
+			<div class="logo flex items-center">
+				<a href="/"><img width="120px" src="./src/public/logo.svg" alt="logo" /></a>
 			</div>
-			<nav class="flex justify-between w-full items-center">
-				<ul class="flex gap-6">
-					<li><a href="/">Home</a></li>
-					<li><a href="/tour-package">Paket Wisata</a></li>
-					<li><a href="/tour-history">Riwayat Wisata</a></li>
-				</ul>
-				<div id="authBtn" class="flex gap-2">
-					<a href="#" class="btn-primary">Login</a>
-					<a href="#" class="btn-secondary">Register</a>
+			<nav class="justify-between lg:w-full items-center flex">
+				<div x-data="{ open: false }" class="lg:hidden">
+					<button @click="open = ! open" class="bg-white p-1 border border-primary-200 rounded-lg">
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-primary-800">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+						</svg>
+					</button>
+					<div x-show="open" @click.outside="open = false" class="flex justify-center items-center">
+						<ul class="flex flex-col gap-2 text-primary-800 absolute bg-white py-4 px-8 border border-primary-200 rounded-xl inset-x-0 top-20 mx-4 md:mx-8">
+							<li><a class="hover:text-primary-700 py-3 w-full block" href="/">Beranda</a></li>
+							<li><a class="hover:text-primary-700 py-3 w-full block" href="/tour-package">Paket Wisata</a></li>
+							<li><a class="hover:text-primary-700 py-3 w-full block" href="/tour-history">Riwayat Wisata</a></li>
+							<div id="authBtn" class="gap-2 lg:flex">
+								<a href="#" class="text-primary-600 block w-full py-3">Login</a>
+								<a href="#" class="text-primary-600 font-semibold block w-full py-3">Register</a>
+							</div>
+						</ul>
+					</div>
+				</div>
+				<div class="hidden lg:flex justify-between w-full">
+					<ul class="flex gap-6 text-gray-600">
+						<li><a href="/" class="block hover:text-primary-700 py-3">Beranda</a></li>
+						<li><a href="/tour-package" class="block hover:text-primary-700 py-3">Paket Wisata</a></li>
+						<li><a href="/tour-history" class="block hover:text-primary-700 py-3">Riwayat</a></li>
+					</ul>
+					<ul class="flex gap-2">
+						<li><a href="" class="block btn-primary">Masuk</a></li>
+						<li><a href="" class="block btn-secondary">Daftar</a></li>
+					</ul>
 				</div>
 			</nav>
 		</header>
 		<main id="app"></main>
 		<script type="module" src="index.js"></script>
+		<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
 	</body>
 </html>
-
