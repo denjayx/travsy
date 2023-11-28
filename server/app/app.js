@@ -29,10 +29,9 @@ app.route('/register').post(registerController);
 app.route('/login').post(loginController);
 
 app
-  .use(verifyAuthorization)
   .route('/profile')
-  .get(getUserProfileController)
-  .put(modifyUserController);
+  .get(verifyAuthorization, getUserProfileController)
+  .put(verifyAuthorization, modifyUserController);
 
 app.route('/user/:username/packages').get(getPackagesByUserController);
 
