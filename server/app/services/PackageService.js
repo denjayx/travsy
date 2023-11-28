@@ -242,42 +242,53 @@ class PackageService {
 
   // get detail package by id
   async getPackageDetail(id) {
-    try {
-      const packageDetail = await Package.findByPk(id, {
-        include: [
-          {
-            model: Destination,
-            attributes: {
-              exclude: ['createdAt', 'updatedAt', 'deletedAt'],
+    const findPackageDetail = async (transaction) => {
+      try {
+        const packageDetail = await Package.findByPk(id, {
+          include: [
+            {
+              model: Destination,
+              attributes: {
+                exclude: ['createdAt', 'updatedAt', 'deletedAt'],
+              },
+
+              required: true,
             },
-
-            required: true,
-          },
-        ],
-        attributes: {
-          exclude: [
-            'tourGuideId',
-            'destinationCount',
-            'transactionCount',
-            'createdAt',
-            'updatedAt',
-            'deletedAt',
           ],
-        },
-      });
+          attributes: {
+            exclude: [
+              'tourGuideId',
+              'destinationCount',
+              'transactionCount',
+              'createdAt',
+              'updatedAt',
+              'deletedAt',
+            ],
+          },
+          transaction,
+        });
 
-      if (!packageDetail) {
-        throw new NotFoundError('Package Not Found');
-      }
+        if (!packageDetail) {
+          throw new NotFoundError('Package Not Found');
+        }
 
-      return packageDetail;
-    } catch (error) {
-      console.error(error);
-      if (error instanceof NotFoundError) {
-        throw error;
+        return packageDetail;
+      } catch (error) {
+        if (error instanceof NotFoundError) {
+          throw error;
+        }
+        throw new ServerError('Failed to fetch package details');
       }
-      throw new ServerError('Failed to fetch package details');
-    }
+    };
+
+    const packageDetail = await sequelize.transaction(
+      {
+        isolationLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED,
+      },
+      async (transaction) => findPackageDetail(transaction),
+    );
+
+    return packageDetail;
   }
 
   static async modifyPackage(filter) {}
