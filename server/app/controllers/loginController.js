@@ -21,7 +21,9 @@ const loginController = async (req, res, next) => {
       throw new UnauthorizedError('Password salah');
     }
 
-    const user = await account.getUser();
+    const user = await account.getUser({
+      attributes: ['avatarUrl', 'firstName', 'lastName'],
+    });
 
     const token = jwt.sign(
       {
@@ -40,12 +42,7 @@ const loginController = async (req, res, next) => {
       data: {
         token,
         role: account.role,
-        user: {
-          username: user.username,
-          avatarUrl: user.avatarUrl,
-          firstName: user.firstName,
-          lastName: user.lastName,
-        },
+        user,
       },
     });
   } catch (error) {
