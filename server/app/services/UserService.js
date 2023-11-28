@@ -1,7 +1,8 @@
-const { Transaction } = require('sequelize');
+const { Transaction, ValidationError } = require('sequelize');
 const { User, Account, sequelize } = require('../models');
 const ServerError = require('../errors/ServerError');
 const NotFoundError = require('../errors/NotFoundError');
+const BadRequestError = require('../errors/BadRequestError');
 
 class UserService {
   // Desc: Implementasi singleton
@@ -54,30 +55,43 @@ class UserService {
   }
 
   // Desc: service for modify user
-  async modifyUserIncludeAccount(username, data, account) {
+  async modifyUserIncludeAccount(username, userData, accountData) {
     const updateData = async (transaction) => {
       try {
-        const updatedCount = await User.update(
-          { ...data, Account: account },
-          { where: { username }, transaction },
-        );
-        if (!updatedCount) {
+        const affectedCount = await User.update(userData, {
+          where: { username },
+          transaction,
+        });
+
+        if (!affectedCount[0]) {
           throw new NotFoundError('User tidak ditemukan');
         }
+
+        const userUpdated = await User.findByPk(username, { transaction });
+
+        await Account.update(accountData, {
+          where: { id: userUpdated.accountId },
+          transaction,
+        });
       } catch (error) {
         if (error instanceof NotFoundError) {
           throw error;
+        } else if (error instanceof ValidationError) {
+          throw new BadRequestError(error.message);
+        } else {
+          throw new ServerError();
         }
-        throw new ServerError();
       }
     };
 
-    await sequelize.transaction(
+    const modifiedData = await sequelize.transaction(
       {
         isolationLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED,
       },
       async (transaction) => updateData(transaction),
     );
+
+    return modifiedData;
   }
 }
 

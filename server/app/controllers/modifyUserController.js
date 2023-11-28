@@ -2,12 +2,18 @@ const UserService = require('../services/UserService');
 
 // Desc: controller for modify user
 const modifyUserController = async (req, res, next) => {
-  const { username } = req.params;
-  const { account, user } = req.body;
+  const {
+    account: accountData,
+    user: { username, ...userData },
+  } = req.body;
 
   try {
     const userServiceInstance = UserService.getInstance();
-    await userServiceInstance.modifyUserIncludeAccount(username, user, account);
+    await userServiceInstance.modifyUserIncludeAccount(
+      username,
+      userData,
+      accountData,
+    );
     const updatedData = await userServiceInstance.getUserByUsername(username);
 
     res.status(200).json({
