@@ -221,7 +221,7 @@
                 }
             }
         },
-        "/user/{username}": {
+        "/profile": {
             "get": {
                 "tags": ["User"],
                 "summary": "Mendapatkan detail user berdasarkan username",
@@ -254,7 +254,7 @@
                                             "example": "Berhasil mendapatkan data user"
                                         },
                                         "data": {
-                                            "$ref": "#/components/schemas/user"
+                                            "$ref": "#/components/schemas/profile"
                                         }
                                     }
                                 }
@@ -293,7 +293,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/user"
+                                "$ref": "#/components/schemas/profile"
                             }
                         }
                     }
@@ -315,7 +315,7 @@
                                             "example": "Data user berhasil dirubah"
                                         },
                                         "data": {
-                                            "$ref": "#/components/schemas/user"
+                                            "$ref": "#/components/schemas/profile"
                                         }
                                     }
                                 }
@@ -1444,7 +1444,7 @@
             }
         },
         "schemas": {
-            "user": {
+            "profile": {
                 "type": "object",
                 "properties": {
                     "account": {
@@ -1461,16 +1461,6 @@
                     "user": {
                         "type": "object",
                         "properties": {
-                            "username": {
-                                "description": "Diterima jika: 3-20 karakter huruf kecil, angka, dan underscore, tidak boleh ada spasi dan simbol",
-                                "type": "string",
-                                "example": "johndoe"
-                            },
-                            "accountId": {
-                                "description": "Id akun",
-                                "type": "number",
-                                "example": 1
-                            },
                             "avatarUrl": {
                                 "description": "Diterima jika: image URL",
                                 "type": "string",

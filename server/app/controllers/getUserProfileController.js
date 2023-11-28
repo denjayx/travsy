@@ -1,9 +1,9 @@
 const UserService = require('../services/UserService');
 
 // Desc: controller for get user by username
-const getUserController = async (req, res, next) => {
+const getUserProfileController = async (req, res, next) => {
   try {
-    const { username } = req.params;
+    const { username } = req.user;
     const userService = UserService.getInstance();
     const { account, user } = await userService.getUserByUsername(username);
 
@@ -17,4 +17,4 @@ const getUserController = async (req, res, next) => {
   }
 };
 
-module.exports = getUserController;
+module.exports = getUserProfileController;
