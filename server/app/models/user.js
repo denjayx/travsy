@@ -9,28 +9,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       this.Account = User.belongsTo(models.Account, {
-        onUpdate: 'cascade',
-        onDelete: 'cascade',
-        foreignKey: {
-          name: 'accountId',
-          allowNull: false,
-        },
+        foreignKey: 'accountId',
       });
       this.Packages = User.hasMany(models.Package, {
-        onUpdate: 'cascade',
-        onDelete: 'cascade',
-        foreignKey: {
-          name: 'tourGuideId',
-          allowNull: false,
-        },
+        foreignKey: 'tourGuideId',
       });
       this.Transactions = User.hasMany(models.Transaction, {
-        onUpdate: 'cascade',
-        onDelete: 'cascade',
-        foreignKey: {
-          name: 'touristId',
-          allowNull: false,
-        },
+        foreignKey: 'touristId',
       });
     }
   }

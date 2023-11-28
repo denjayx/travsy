@@ -251,13 +251,11 @@ class PackageService {
               attributes: {
                 exclude: ['createdAt', 'updatedAt', 'deletedAt'],
               },
-
               required: true,
             },
           ],
           attributes: {
             exclude: [
-              'tourGuideId',
               'destinationCount',
               'transactionCount',
               'createdAt',
