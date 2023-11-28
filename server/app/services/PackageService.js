@@ -247,9 +247,23 @@ class PackageService {
         include: [
           {
             model: Destination,
+            attributes: {
+              exclude: ['createdAt', 'updatedAt', 'deletedAt'],
+            },
+
             required: true,
           },
         ],
+        attributes: {
+          exclude: [
+            'tourGuideId',
+            'destinationCount',
+            'transactionCount',
+            'createdAt',
+            'updatedAt',
+            'deletedAt',
+          ],
+        },
       });
 
       if (!packageDetail) {

@@ -1533,12 +1533,12 @@
             "package": {
                 "type": "object",
                 "properties": {
-                    "packageId": {
+                    "id": {
                         "description": "Id paket wisata",
                         "type": "string",
                         "example": "123e4567-e89b-12d3-a456-426614174000"
                     },
-                    "name": {
+                    "packageName": {
                         "description": "Diterima jika: 3-50 karakter",
                         "type": "string",
                         "example": "Paket Wisata Tanah Lot"
@@ -1558,7 +1558,7 @@
                         "type": "string",
                         "example": "Paket wisata ke Tanah Lot dengan durasi 3 hari 2 malam"
                     },
-                    "duration": {
+                    "serviceDuration": {
                         "description": "Diterima jika: angka",
                         "type": "number",
                         "example": 3
@@ -1568,7 +1568,12 @@
                         "items": {
                             "type": "object",
                             "properties": {
-                                "name": {
+                                "id": {
+                                    "description": "Id destinasi wisata",
+                                    "type": "string",
+                                    "example": "123e4567-e89b-12d3-a456-426614174000"
+                                },
+                                "destinationName": {
                                     "description": "Diterima jika: 3-50 karakter",
                                     "type": "string",
                                     "example": "Tanah Lot"
