@@ -27,7 +27,7 @@ const loginController = async (req, res, next) => {
 
     const token = jwt.sign(
       {
-        id: user.username,
+        username: user.username,
       },
       jwtSecret,
       {
