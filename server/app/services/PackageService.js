@@ -207,7 +207,21 @@ class PackageService {
     return result;
   }
 
-  static async insertPackage(filter) {}
+  async createPackageByUser(username, packageData) {
+    try {
+      const user = await User.findOne({ where: { username } });
+      if (!user) {
+        throw new NotFoundError('Username not found');
+      }
+      const newPackage = await Package.create({
+        ...packageData,
+        tourGuideId: user,
+      });
+      return newPackage;
+    } catch (error) {
+      throw new ServerError('Failed create package', error);
+    }
+  }
 
   // menemkan package berdasarkan username
   async getPackageByUsername(tourGuideId) {

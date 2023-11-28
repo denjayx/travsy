@@ -9,6 +9,7 @@ const {
   modifyUserController,
   registerController,
   getPackagesByUserController,
+  insertPackageByUserController,
 } = require('./controllers');
 
 // Create Express app
@@ -26,6 +27,7 @@ app.get('/', (req, res) => {
 app.route('/register').post(registerController);
 app.route('/user/:username').get(getUserController).put(modifyUserController);
 app.route('/user/:username/packages').get(getPackagesByUserController);
+app.route('/user/:username/packages').post(insertPackageByUserController);
 
 app.route('/packages').get(getPackageListController);
 app.route('/packages/popular').get(getPopularPackageListController);
