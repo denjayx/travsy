@@ -22,12 +22,14 @@ const loginController = async (req, res, next) => {
     }
 
     const user = await account.getUser({
-      attributes: ['avatarUrl', 'firstName', 'lastName'],
+      attributes: ['username', 'avatarUrl', 'firstName', 'lastName'],
     });
+
+    const { username, ...userData } = user.dataValues;
 
     const token = jwt.sign(
       {
-        username: user.username,
+        username,
       },
       jwtSecret,
       {
@@ -42,7 +44,7 @@ const loginController = async (req, res, next) => {
       data: {
         token,
         role: account.role,
-        user,
+        user: userData,
       },
     });
   } catch (error) {
