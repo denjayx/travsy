@@ -1,6 +1,5 @@
 const bcrypt = require('bcrypt');
 const AccountService = require('../services/AccountService');
-const UserService = require('../services/UserService');
 
 // Desc: controller for register
 const registerController = async (req, res, next) => {
@@ -16,14 +15,8 @@ const registerController = async (req, res, next) => {
     const saltRounds = 10;
     account.password = await hashPassword(account.password, saltRounds);
 
-    const accountServiceInstance = AccountService.getInstance();
-    const userServiceInstance = UserService.getInstance();
-
-    const createdAccount = await accountServiceInstance.insertAccount(account);
-    await userServiceInstance.insertUser({
-      ...user,
-      accountId: createdAccount.id,
-    });
+    const accountService = AccountService.getInstance();
+    await accountService.createAccountIncludeUser(account, user);
 
     res.status(201).json({
       status: 'success',

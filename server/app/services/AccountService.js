@@ -1,5 +1,5 @@
 const { Transaction, ValidationError } = require('sequelize');
-const { Account, sequelize } = require('../models');
+const { Account, User, sequelize } = require('../models');
 const ServerError = require('../errors/ServerError');
 const BadRequestError = require('../errors/BadRequestError');
 const NotFoundError = require('../errors/NotFoundError');
@@ -14,21 +14,26 @@ class AccountService {
     return AccountService.instance;
   }
 
-  // Desc: service for create new account
-  async insertAccount(data) {
-    const createAccount = async (transaction) => {
+  // Desc: service for get account by email
+  async getAccountByEmail(email) {
+    const findAccount = async (transaction) => {
       try {
-        const account = await Account.create(data, {
+        const account = await Account.findOne({
+          where: { email },
           attributes: {
             exclude: ['createdAt', 'updatedAt', 'deletedAt'],
           },
           transaction,
         });
 
+        if (!account) {
+          throw new NotFoundError('Akun tidak ditemukan');
+        }
+
         return account;
       } catch (error) {
-        if (error instanceof ValidationError) {
-          throw new BadRequestError(error.message);
+        if (error instanceof NotFoundError) {
+          throw error;
         }
         throw new ServerError();
       }
@@ -38,24 +43,26 @@ class AccountService {
       {
         isolationLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED,
       },
-      async (transaction) => createAccount(transaction),
+      async (transaction) => findAccount(transaction),
     );
 
     return account;
   }
 
-  // Desc: service for modify account
-  async modifyAccount(accountId, data) {
-    const updateData = async (transaction) => {
+  // Desc: service for create new account include user
+  async createAccountIncludeUser(dataAccount, dataUser) {
+    const insertData = async (transaction) => {
       try {
-        const account = await Account.findByPk(accountId, { transaction });
-        if (!account) {
-          throw new NotFoundError('User tidak ditemukan');
-        }
-        await account.update(data, { transaction });
+        await Account.create(
+          { ...dataAccount, User: dataUser },
+          {
+            include: User,
+            transaction,
+          },
+        );
       } catch (error) {
-        if (error instanceof NotFoundError) {
-          throw error;
+        if (error instanceof ValidationError) {
+          throw new BadRequestError('Akun sudah terdaftar');
         }
         throw new ServerError();
       }
@@ -65,7 +72,7 @@ class AccountService {
       {
         isolationLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED,
       },
-      async (transaction) => updateData(transaction),
+      async (transaction) => insertData(transaction),
     );
   }
 }

@@ -109,7 +109,7 @@
                                         },
                                         "message": {
                                             "type": "string",
-                                            "example": "User berhasil login"
+                                            "example": "Login berhasil"
                                         },
                                         "data": {
                                             "type": "object",
@@ -119,15 +119,10 @@
                                                     "type": "string",
                                                     "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
                                                 },
-                                                "account": {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "role": {
-                                                            "description": "Diterima jika: tipe data enum yaitu tourist atau tour guide",
-                                                            "type": "string",
-                                                            "example": "tourist"
-                                                        }
-                                                    }
+                                                "role": {
+                                                    "description": "Diterima jika: tipe data enum yaitu tourist atau tour guide",
+                                                    "type": "string",
+                                                    "example": "tourist"
                                                 },
                                                 "user": {
                                                     "type": "object",
@@ -158,6 +153,12 @@
                     },
                     "400": {
                         "$ref": "#/components/responses/badRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
                     },
                     "500": {
                         "$ref": "#/components/responses/serverError"
@@ -220,7 +221,7 @@
                 }
             }
         },
-        "/users/{username}": {
+        "/profile": {
             "get": {
                 "tags": ["User"],
                 "summary": "Mendapatkan detail user berdasarkan username",
@@ -238,7 +239,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Berhasil mendapatkan detail user",
+                        "description": "Berhasil mendapatkan data user",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -250,10 +251,10 @@
                                         },
                                         "message": {
                                             "type": "string",
-                                            "example": "User berhasil didapatkan"
+                                            "example": "Berhasil mendapatkan data user"
                                         },
                                         "data": {
-                                            "$ref": "#/components/schemas/user"
+                                            "$ref": "#/components/schemas/profile"
                                         }
                                     }
                                 }
@@ -292,7 +293,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/user"
+                                "$ref": "#/components/schemas/profile"
                             }
                         }
                     }
@@ -314,7 +315,7 @@
                                             "example": "Data user berhasil dirubah"
                                         },
                                         "data": {
-                                            "$ref": "#/components/schemas/user"
+                                            "$ref": "#/components/schemas/profile"
                                         }
                                     }
                                 }
@@ -336,7 +337,7 @@
                 }
             }
         },
-        "/users/{username}/histories": {
+        "/user/{username}/histories": {
             "get": {
                 "tags": ["Transaction"],
                 "summary": "Mendapatkan riwayat transaksi user",
@@ -404,7 +405,7 @@
                 }
             }
         },
-        "/users/{username}/histories/{transactionId}": {
+        "/user/{username}/histories/{transactionId}": {
             "get": {
                 "tags": ["Transaction"],
                 "summary": "Mendapatkan detail riwayat transaksi user",
@@ -479,7 +480,7 @@
                 }
             }
         },
-        "/users/{username}/packages": {
+        "/user/{username}/packages": {
             "get": {
                 "tags": ["Package"],
                 "summary": "Mendapatkan paket wisata dari user",
@@ -604,7 +605,7 @@
                 }
             }
         },
-        "/users/{username}/packages/{packageId}": {
+        "/user/{username}/packages/{packageId}": {
             "get": {
                 "tags": ["Package"],
                 "summary": "Mendapatkan detail paket wisata dari user",
@@ -810,7 +811,7 @@
                 }
             }
         },
-        "/users/{username}/orders": {
+        "/user/{username}/orders": {
             "get": {
                 "tags": ["Transaction"],
                 "summary": "Mendapatkan daftar pemesanan yang didapatkan user",
@@ -878,7 +879,7 @@
                 }
             }
         },
-        "/users/{username}/orders/{orderId}": {
+        "/user/{username}/orders/{orderId}": {
             "get": {
                 "tags": ["Transaction"],
                 "summary": "Mendapatkan detail pemesanan yang didapatkan user",
@@ -1443,7 +1444,7 @@
             }
         },
         "schemas": {
-            "user": {
+            "profile": {
                 "type": "object",
                 "properties": {
                     "account": {
@@ -1485,7 +1486,7 @@
                                 "type": "string",
                                 "example": "1234567890123456"
                             },
-                            "phoneNumber": {
+                            "phone": {
                                 "description": "Diterima jika: 10-13 digit angka",
                                 "type": "string",
                                 "example": "081234567890"

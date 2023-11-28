@@ -28,5 +28,6 @@ module.exports = {
     'operator-linebreak': 'off',
     'class-methods-use-this': 'off',
     'object-curly-newline': 'off',
+    'import/no-extraneous-dependencies': 'off',
   },
 };
