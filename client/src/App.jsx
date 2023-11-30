@@ -1,7 +1,10 @@
-export default function App() {
+import Navbar from "./scripts/views/components/Navbar/Navbar"
+
+function App() {
+
   return (
-    <h1 className="text-3xl font-bold underline text-primary-500">
-      Hello world!
-    </h1>
+    <Navbar />
   )
 }
+
+export default App

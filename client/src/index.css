@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  .btn-primary {
+    @apply py-3 px-6 rounded-full border border-primary-500 bg-gray-0 text-primary-500;
+  }
+
+  .btn-secondary {
+    @apply py-3 px-6 rounded-full border border-primary-500 bg-primary-500 text-gray-0;
+  }
+}
