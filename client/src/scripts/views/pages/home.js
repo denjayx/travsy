@@ -1,6 +1,8 @@
 function Home() {
   return /* html */ `
-    <h2 class="text-primary-500">Homepage</h2>
+ <h2>homepages</h2>
+  
+
   `;
 }
 

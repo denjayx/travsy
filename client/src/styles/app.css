@@ -1,3 +1,85 @@
-@tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .all-\[unset\] {
+    all: unset;
+  }
+}
+
+:root {
+  --btn-shadow: 2px 8px 12.699999809265137px 0px rgba(0, 152, 205, 0.15);
+  --gray-600: rgba(148, 151, 153, 1);
+  --gray-700: rgba(117, 121, 123, 1);
+  --gray-800: rgba(99, 100, 102, 1);
+  --gray-950: rgba(52, 53, 55, 1);
+  --primary-100: rgba(223, 245, 255, 1);
+  --primary-300: rgba(121, 224, 255, 1);
+  --primary-50: rgba(240, 250, 255, 1);
+  --primary-500: rgba(7, 188, 240, 1);
+  --primary-600: rgba(0, 152, 205, 1);
+  --primary-700: rgba(0, 121, 166, 1);
+  --primary-800: rgba(3, 102, 137, 1);
+  --primary-950: rgba(6, 53, 75, 1);
+  --text-2xl-bold-font-family: "Inter-Bold", Helvetica;
+  --text-2xl-bold-font-size: 48px;
+  --text-2xl-bold-font-style: normal;
+  --text-2xl-bold-font-weight: 700;
+  --text-2xl-bold-letter-spacing: 0px;
+  --text-2xl-bold-line-height: 120.00000476837158%;
+  --text-4xl-bold-font-family: "Inter-Bold", Helvetica;
+  --text-4xl-bold-font-size: 64px;
+  --text-4xl-bold-font-style: normal;
+  --text-4xl-bold-font-weight: 700;
+  --text-4xl-bold-letter-spacing: -2px;
+  --text-4xl-bold-line-height: 120.00000476837158%;
+  --text-base-regular-font-family: "Inter-Regular", Helvetica;
+  --text-base-regular-font-size: 16px;
+  --text-base-regular-font-style: normal;
+  --text-base-regular-font-weight: 400;
+  --text-base-regular-letter-spacing: 0px;
+  --text-base-regular-line-height: 24px;
+  --text-base-semi-bold-font-family: "Inter-SemiBold", Helvetica;
+  --text-base-semi-bold-font-size: 16px;
+  --text-base-semi-bold-font-style: normal;
+  --text-base-semi-bold-font-weight: 600;
+  --text-base-semi-bold-letter-spacing: 0px;
+  --text-base-semi-bold-line-height: 24px;
+  --text-lg-semi-bold-font-family: "Inter-SemiBold", Helvetica;
+  --text-lg-semi-bold-font-size: 24px;
+  --text-lg-semi-bold-font-style: normal;
+  --text-lg-semi-bold-font-weight: 600;
+  --text-lg-semi-bold-letter-spacing: 0px;
+  --text-lg-semi-bold-line-height: 120.00000476837158%;
+  --text-md-regular-font-family: "Inter-Regular", Helvetica;
+  --text-md-regular-font-size: 20px;
+  --text-md-regular-font-style: normal;
+  --text-md-regular-font-weight: 400;
+  --text-md-regular-letter-spacing: 0px;
+  --text-md-regular-line-height: 120.00000476837158%;
+  --text-md-semi-bold-font-family: "Inter-SemiBold", Helvetica;
+  --text-md-semi-bold-font-size: 20px;
+  --text-md-semi-bold-font-style: normal;
+  --text-md-semi-bold-font-weight: 600;
+  --text-md-semi-bold-letter-spacing: 0px;
+  --text-md-semi-bold-line-height: 120.00000476837158%;
+  --text-sm-regular-font-family: "Inter-Regular", Helvetica;
+  --text-sm-regular-font-size: 12px;
+  --text-sm-regular-font-style: normal;
+  --text-sm-regular-font-weight: 400;
+  --text-sm-regular-letter-spacing: 0px;
+  --text-sm-regular-line-height: 120.00000476837158%;
+  --text-xl-bold-font-family: "Inter-Bold", Helvetica;
+  --text-xl-bold-font-size: 32px;
+  --text-xl-bold-font-style: normal;
+  --text-xl-bold-font-weight: 700;
+  --text-xl-bold-letter-spacing: 0px;
+  --text-xl-bold-line-height: 120.00000476837158%;
+  --text-xs-regular-font-family: "Inter-Regular", Helvetica;
+  --text-xs-regular-font-size: 8px;
+  --text-xs-regular-font-style: normal;
+  --text-xs-regular-font-weight: 400;
+  --text-xs-regular-letter-spacing: 0px;
+  --text-xs-regular-line-height: 120.00000476837158%;
+  --white: rgba(255, 255, 255, 1);
+}
