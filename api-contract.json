@@ -1,0 +1,1773 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "title": "Travsy API",
+        "version": "1.0",
+        "description": "Spesifikasi API untuk aplikasi travel Travsy"
+    },
+    "servers": [{ "url": "http://localhost:3000" }],
+    "paths": {
+        "/register": {
+            "post": {
+                "tags": ["Authentication"],
+                "summary": "Mendaftarkan user baru",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "user": {
+                                        "type": "object",
+                                        "properties": {
+                                            "username": {
+                                                "type": "string",
+                                                "example": "johndoe"
+                                            }
+                                        }
+                                    },
+                                    "account": {
+                                        "type": "object",
+                                        "properties": {
+                                            "email": {
+                                                "description": "Diterima jika: email valid dan unik",
+                                                "type": "string",
+                                                "format": "email",
+                                                "example": "johndoe@gmail.com"
+                                            },
+                                            "password": {
+                                                "description": "Diterima jika: terdiri dari 5-25 character, merupakan kombinasi dari huruf kecil, huruf besar, angka, dan simbol",
+                                                "type": "string",
+                                                "format": "password",
+                                                "example": "$Pander#800@"
+                                            },
+                                            "role": {
+                                                "description": "Diterima jika: terdiri dari tipe data enum yaitu tourist atau tour guide",
+                                                "type": "string",
+                                                "example": "tourist"
+                                            }
+                                        }
+                                    }
+                                },
+                                "required": ["username", "email", "password"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "$ref": "#/components/responses/created"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/badRequest"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/serverError"
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "tags": ["Authentication"],
+                "summary": "User login",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "description": "Diterima jika: email valid",
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "johndoe@gmail.com"
+                                    },
+                                    "password": {
+                                        "description": "Diterima jika: password valid",
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "$Pander#800@"
+                                    }
+                                },
+                                "required": ["email", "password"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User berhasil login",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User berhasil login"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "token": {
+                                                    "description": "Token JWT",
+                                                    "type": "string",
+                                                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+                                                },
+                                                "account": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "role": {
+                                                            "description": "Diterima jika: tipe data enum yaitu tourist atau tour guide",
+                                                            "type": "string",
+                                                            "example": "tourist"
+                                                        }
+                                                    }
+                                                },
+                                                "user": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "avatarUrl": {
+                                                            "description": "Diterima jika: image URL",
+                                                            "type": "string",
+                                                            "example": "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
+                                                        },
+                                                        "firstName": {
+                                                            "description": "Diterima jika: 3-20 character, must consist of lowercase and uppercase",
+                                                            "type": "string",
+                                                            "example": "John"
+                                                        },
+                                                        "lastName": {
+                                                            "description": "Diterima jika: 3-20 character, must consist of lowercase and uppercase",
+                                                            "type": "string",
+                                                            "example": "Doe"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/badRequest"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/serverError"
+                    }
+                }
+            }
+        },
+        "/logout": {
+            "post": {
+                "tags": ["Authentication"],
+                "summary": "Logout user",
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "username": {
+                                        "type": "string",
+                                        "example": "johndoe"
+                                    }
+                                },
+                                "required": ["username"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User berhasil logout",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Berhasil logout"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/unauthorized"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/serverError"
+                    }
+                }
+            }
+        },
+        "/users/{username}": {
+            "get": {
+                "tags": ["User"],
+                "summary": "Mendapatkan detail user berdasarkan username",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "description": "Username user",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "johndoe"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Berhasil mendapatkan detail user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User berhasil didapatkan"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/user"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/serverError"
+                    }
+                }
+            },
+            "put": {
+                "tags": ["User"],
+                "summary": "Merubah data user",
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "description": "Username user",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "johndoe"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/user"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Berhasil merubah data user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data user berhasil dirubah"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/user"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/badRequest"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/serverError"
+                    }
+                }
+            }
+        },
+        "/users/{username}/histories": {
+            "get": {
+                "tags": ["Transaction"],
+                "summary": "Mendapatkan riwayat transaksi user",
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "description": "Username user",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Berhasil mendapatkan riwayat transaksi user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data riwayat transaksi berhasil didapatkan"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "tourGuide": {
+                                                        "$ref": "#/components/schemas/ownerName"
+                                                    },
+                                                    "transaction": {
+                                                        "$ref": "#/components/schemas/miniTransaction"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/serverError"
+                    }
+                }
+            }
+        },
+        "/users/{username}/histories/{transactionId}": {
+            "get": {
+                "tags": ["Transaction"],
+                "summary": "Mendapatkan detail riwayat transaksi user",
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "description": "Username user",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "transactionId",
+                        "in": "path",
+                        "description": "Id transaksi",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Berhasil mendapatkan detail riwayat transaksi user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Berhasil mendapatkan detail riwayat transaksi user"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "tourGuide": {
+                                                    "$ref": "#/components/schemas/ownerName"
+                                                },
+                                                "transaction": {
+                                                    "$ref": "#/components/schemas/transaction"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/serverError"
+                    }
+                }
+            }
+        },
+        "/users/{username}/packages": {
+            "get": {
+                "tags": ["Package"],
+                "summary": "Mendapatkan paket wisata dari user",
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "description": "Username user",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Berhasil mendapatkan paket wisata dari user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data paket wisata berhasil didapatkan"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "number",
+                                                        "example": 1
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "Paket Wisata Tanah Lot"
+                                                    },
+                                                    "price": {
+                                                        "type": "number",
+                                                        "example": 500000
+                                                    },
+                                                    "duration": {
+                                                        "type": "number",
+                                                        "example": 3
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/serverError"
+                    }
+                }
+            },
+            "post": {
+                "tags": ["Package"],
+                "summary": "Membuat paket wisata baru untuk user",
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "description": "Username user",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/package"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "$ref": "#/components/responses/created"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/badRequest"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/serverError"
+                    }
+                }
+            }
+        },
+        "/users/{username}/packages/{packageId}": {
+            "get": {
+                "tags": ["Package"],
+                "summary": "Mendapatkan detail paket wisata dari user",
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "description": "Username user",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "packageId",
+                        "in": "path",
+                        "description": "Id package",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Berhasil mendapatkan detail paket wisata dari user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data paket detail wisata berhasil didapatkan"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/package"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/serverError"
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Package"],
+                "summary": "Merubah data paket wisata dari user",
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "description": "Username user",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "packageId",
+                        "in": "path",
+                        "description": "Id package",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/package"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Berhasil merubah data paket wisata dari user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data paket wisata berhasil dirubah"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/package"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/badRequest"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/serverError"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Package"],
+                "summary": "Menghapus paket wisata dari user",
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "description": "Username user",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "packageId",
+                        "in": "path",
+                        "description": "Id package",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Berhasil menghapus paket wisata dari user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data paket wisata berhasil dihapus"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/serverError"
+                    }
+                }
+            }
+        },
+        "/users/{username}/orders": {
+            "get": {
+                "tags": ["Transaction"],
+                "summary": "Mendapatkan daftar pemesanan yang didapatkan user",
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "description": "Username user",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Berhasil mendapatkan daftar pesanan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data daftar pesanan berhasil didapatkan"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "tourist": {
+                                                        "$ref": "#/components/schemas/ownerName"
+                                                    },
+                                                    "transaction": {
+                                                        "$ref": "#/components/schemas/miniTransaction"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/serverError"
+                    }
+                }
+            }
+        },
+        "/users/{username}/orders/{orderId}": {
+            "get": {
+                "tags": ["Transaction"],
+                "summary": "Mendapatkan detail pemesanan yang didapatkan user",
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "description": "Username user",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "orderId",
+                        "in": "path",
+                        "description": "Id order",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Berhasil mendapatkan detail pemesanan yang didapatkan user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Berhasil mendapatkan data detail pemesanan"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "tourist": {
+                                                    "$ref": "#/components/schemas/ownerName"
+                                                },
+                                                "transaction": {
+                                                    "$ref": "#/components/schemas/transaction"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/serverError"
+                    }
+                }
+            },
+            "patch": {
+                "tags": ["Transaction"],
+                "summary": "Mengubah status pemesanan yang didapatkan user",
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "description": "Username user",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "orderId",
+                        "in": "path",
+                        "description": "Id order",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "status": {
+                                        "description": "Diterima jika: pending, accepted, rejected, completed, canceled",
+                                        "type": "string",
+                                        "example": "accepted"
+                                    }
+                                },
+                                "required": ["status"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Berhasil mengubah status pemesanan yang didapatkan user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Berhasil mengubah status pemesanan"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "tourist": {
+                                                    "$ref": "#/components/schemas/ownerName"
+                                                },
+                                                "transaction": {
+                                                    "$ref": "#/components/schemas/transaction"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/badRequest"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/serverError"
+                    }
+                }
+            }
+        },
+        "/packages": {
+            "get": {
+                "tags": ["Package"],
+                "summary": "Mendapatkan daftar paket wisata",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Parameter query untuk pencarian paket",
+                        "schema": {
+                            "type": "string",
+                            "example": "tanah%20lot"
+                        }
+                    },
+                    {
+                        "name": "city",
+                        "in": "query",
+                        "description": "Parameter query untuk filterisasi berdasarkan kota di provinsi bali",
+                        "schema": {
+                            "type": "string",
+                            "example": "denpasar"
+                        }
+                    },
+                    {
+                        "name": "pmin",
+                        "in": "query",
+                        "description": "Parameter query untuk filterisasi berdasarkan harga minimal",
+                        "schema": {
+                            "type": "number",
+                            "example": 500000
+                        }
+                    },
+                    {
+                        "name": "pmax",
+                        "in": "query",
+                        "description": "Parameter query unntuk filterisasi berdasarkan harga maksimal",
+                        "schema": {
+                            "type": "number",
+                            "example": 1000000
+                        }
+                    },
+                    {
+                        "name": "ndest",
+                        "in": "query",
+                        "description": "Parameter query untuk filterisasi jumlah destinasi wisata",
+                        "schema": {
+                            "type": "number",
+                            "example": 3
+                        }
+                    },
+                    {
+                        "name": "sdate",
+                        "in": "query",
+                        "description": "Parameter query untuk filterisasi tanggal mulai wisata (format: YYYY-MM-DD)",
+                        "schema": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "2023-01-01"
+                        }
+                    },
+                    {
+                        "name": "edate",
+                        "in": "query",
+                        "description": "Parameter query untuk filterisasi tanggal selesai wisata (format: YYYY-MM-DD)",
+                        "schema": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "2023-01-05"
+                        }
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "Parameter query untuk sorting (format: fieldname:asc/desc)",
+                        "schema": {
+                            "type": "string",
+                            "example": "popular:desc"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Berhasil mendapatkan daftar paket wisata",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Berhasil mendapatkan daftar paket wisata"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "tourGuide": {
+                                                        "$ref": "#/components/schemas/ownerName"
+                                                    },
+                                                    "package": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "number",
+                                                                "example": 1
+                                                            },
+                                                            "thumbnailUrl": {
+                                                                "type": "string",
+                                                                "example": "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Paket Wisata Tanah Lot"
+                                                            },
+                                                            "price": {
+                                                                "type": "number",
+                                                                "example": 500000
+                                                            },
+                                                            "description": {
+                                                                "type": "string",
+                                                                "example": "Paket wisata ke Tanah Lot dengan durasi 3 hari 2 malam"
+                                                            },
+                                                            "destinations": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "type": "object",
+                                                                    "properties": {
+                                                                        "name": {
+                                                                            "type": "string",
+                                                                            "example": "Tanah Lot"
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/badRequest"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/serverError"
+                    }
+                }
+            }
+        },
+        "/packages/{packageId}": {
+            "get": {
+                "tags": ["Package"],
+                "summary": "Mendapatkan detail paket wisata berdasarkan id",
+                "parameters": [
+                    {
+                        "name": "packageId",
+                        "in": "path",
+                        "description": "Id package",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Berhasil mendapatkan data detail paket wisata",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Berhasil mendapatkan data detail paket wisata"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "tourGuide": {
+                                                    "$ref": "#/components/schemas/ownerName"
+                                                },
+                                                "package": {
+                                                    "$ref": "#/components/schemas/package"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/serverError"
+                    }
+                }
+            }
+        },
+        "/packages/{packageId}/pay": {
+            "post": {
+                "tags": ["Transaction"],
+                "summary": "Membeli paket wisata",
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "packageId",
+                        "in": "path",
+                        "description": "Id package",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "username": {
+                                        "description": "Username pembeli",
+                                        "type": "string",
+                                        "example": "johndoe"
+                                    },
+                                    "startDate": {
+                                        "description": "Diterima jika: format YYYY-MM-DD",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2023-01-01"
+                                    },
+                                    "endDate": {
+                                        "description": "Diterima jika: format YYYY-MM-DD",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2023-01-05"
+                                    },
+                                    "totalPerson": {
+                                        "description": "Diterima jika: number",
+                                        "type": "number",
+                                        "example": 2
+                                    },
+                                    "totalPrice": {
+                                        "description": "Diterima jika: number",
+                                        "type": "number",
+                                        "example": 1000000
+                                    }
+                                },
+                                "required": [
+                                    "username",
+                                    "startDate",
+                                    "endDate",
+                                    "totalPerson",
+                                    "totalPrice"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "$ref": "#/components/responses/created"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/badRequest"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/serverError"
+                    }
+                }
+            }
+        },
+        "/provinces": {
+            "get": {
+                "tags": ["Location"],
+                "summary": "Mendapatkan daftar provinsi",
+                "responses": {
+                    "200": {
+                        "description": "Berhasil mendapatkan daftar provinsi",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "example": "Jawa Tengah"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/serverError"
+                    }
+                }
+            }
+        },
+        "/provinces/{province}/cities": {
+            "get": {
+                "tags": ["Location"],
+                "summary": "Mendapatkan daftar kota di provinsi",
+                "parameters": [
+                    {
+                        "name": "province",
+                        "in": "path",
+                        "description": "Nama provinsi",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Berhasil mendapatkan daftar kota di provinsi",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "example": "Semarang"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/serverError"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "Bearer": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        },
+        "schemas": {
+            "user": {
+                "type": "object",
+                "properties": {
+                    "account": {
+                        "type": "object",
+                        "properties": {
+                            "email": {
+                                "description": "Diterima jika: email sesuai format dan unik",
+                                "type": "string",
+                                "format": "email",
+                                "example": "johndoe@gmail.com"
+                            }
+                        }
+                    },
+                    "user": {
+                        "type": "object",
+                        "properties": {
+                            "avatarUrl": {
+                                "description": "Diterima jika: image URL",
+                                "type": "string",
+                                "example": "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
+                            },
+                            "firstName": {
+                                "description": "Diterima jika: terdiri dari 3-20 karakter huruf besar dan kapital, tidak boleh ada angka, spasi, dan simbol",
+                                "type": "string",
+                                "example": "John"
+                            },
+                            "lastName": {
+                                "description": "Diterima jika: terdiri dari 3-20 karakter huruf besar dan kapital, tidak boleh ada angka, spasi, dan simbol",
+                                "type": "string",
+                                "example": "Doe"
+                            },
+                            "biography": {
+                                "description": "Diterima jika: terdiri dari 3-100 karakter",
+                                "type": "string",
+                                "example": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                            },
+                            "nik": {
+                                "description": "Diterima jika: 16 digit angka",
+                                "type": "string",
+                                "example": "1234567890123456"
+                            },
+                            "phoneNumber": {
+                                "description": "Diterima jika: 10-13 digit angka",
+                                "type": "string",
+                                "example": "081234567890"
+                            },
+                            "province": {
+                                "description": "Diterima jika: memilih dari dropdown list",
+                                "type": "string",
+                                "example": "Jawa Tengah"
+                            },
+                            "city": {
+                                "description": "Diterima jika: memilih dari dropdown list",
+                                "type": "string",
+                                "example": "Semarang"
+                            },
+                            "gender": {
+                                "description": "Diterima jika: terdiri dari tipe data enum yaitu L atau P, L = laki-laki, P = perempuan",
+                                "type": "string",
+                                "example": "L"
+                            },
+                            "cardNumber": {
+                                "description": "Diterima jika: 16 digit angka",
+                                "type": "string",
+                                "example": "1234567890123456"
+                            }
+                        }
+                    }
+                }
+            },
+            "ownerName": {
+                "type": "object",
+                "properties": {
+                    "firstName": {
+                        "description": "Nama depan",
+                        "type": "string",
+                        "example": "John"
+                    },
+                    "lastName": {
+                        "description": "Nama belakang",
+                        "type": "string",
+                        "example": "Doe"
+                    }
+                }
+            },
+            "package": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "description": "Diterima jika: 3-50 karakter",
+                        "type": "string",
+                        "example": "Paket Wisata Tanah Lot"
+                    },
+                    "thumbnailUrl": {
+                        "description": "Diterima jika: image URL",
+                        "type": "string",
+                        "example": "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
+                    },
+                    "price": {
+                        "description": "Diterima jika: angka",
+                        "type": "number",
+                        "example": 500000
+                    },
+                    "description": {
+                        "description": "Diterima jika: 3-100 karakter",
+                        "type": "string",
+                        "example": "Paket wisata ke Tanah Lot dengan durasi 3 hari 2 malam"
+                    },
+                    "duration": {
+                        "description": "Diterima jika: angka",
+                        "type": "number",
+                        "example": 3
+                    },
+                    "destinations": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "description": "Diterima jika: 3-50 karakter",
+                                    "type": "string",
+                                    "example": "Tanah Lot"
+                                },
+                                "imageUrl": {
+                                    "description": "Diterima jika: image URL",
+                                    "type": "string",
+                                    "example": "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
+                                },
+                                "city": {
+                                    "description": "Diterima jika: memilih dari dropdown list",
+                                    "type": "string",
+                                    "example": "Denpasar"
+                                },
+                                "description": {
+                                    "description": "Diterima jika: 3-100 karakter",
+                                    "type": "string",
+                                    "example": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "transaction": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "description": "Id transaksi",
+                        "type": "number",
+                        "example": 1
+                    },
+                    "package": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "description": "Nama paket wisata",
+                                "type": "string",
+                                "example": "Paket Wisata Tanah Lot"
+                            }
+                        }
+                    },
+                    "status": {
+                        "description": "Status transaksi dalam bentuk enum, terdiri dari: menunggu, terkonfirmasi, ditolak, selesai",
+                        "type": "string",
+                        "example": "menunggu"
+                    },
+                    "orderDate": {
+                        "description": "Tanggal pemesanan",
+                        "type": "string",
+                        "format": "date",
+                        "example": "2023-01-01"
+                    },
+                    "startDate": {
+                        "description": "Tanggal mulai wisata",
+                        "type": "string",
+                        "format": "date",
+                        "example": "2023-01-01"
+                    },
+                    "endDate": {
+                        "description": "Tanggal selesai wisata",
+                        "type": "string",
+                        "format": "date",
+                        "example": "2023-01-05"
+                    },
+                    "totalPerson": {
+                        "description": "Jumlah orang",
+                        "type": "number",
+                        "example": 2
+                    },
+                    "totalPrice": {
+                        "description": "Total harga",
+                        "type": "number",
+                        "example": 1000000
+                    }
+                }
+            },
+            "miniTransaction": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "description": "Id transaksi",
+                        "type": "number",
+                        "example": 1
+                    },
+                    "package": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "description": "Nama paket wisata",
+                                "type": "string",
+                                "example": "Paket Wisata Tanah Lot"
+                            }
+                        }
+                    },
+                    "status": {
+                        "description": "Status transaksi dalam bentuk enum, terdiri dari: menunggu, terkonfirmasi, ditolak, selesai",
+                        "type": "string",
+                        "example": "menunggu"
+                    },
+                    "orderDate": {
+                        "description": "Tanggal pemesanan",
+                        "type": "string",
+                        "format": "date",
+                        "example": "2023-01-01"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "created": {
+                "description": "Data berhasil dibuat",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "example": "created"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Berhasil dibuat"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "badRequest": {
+                "description": "Terdapat error pada input data",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "example": "error"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Terjadi kesalahan input"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "unauthorized": {
+                "description": "Autentikasi gagal",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "example": "error"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Anda belum login"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "forbidden": {
+                "description": "Tidak memiliki akses ke sumber daya ini",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "example": "error"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Anda tidak memiliki akses ke sumber daya ini"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "notFound": {
+                "description": "Data tidak ditemukan",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "example": "error"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Data tidak ditemukan"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "serverError": {
+                "description": "Terjadi kesalahan pada server",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "example": "error"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Terjadi kesalahan pada server"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
