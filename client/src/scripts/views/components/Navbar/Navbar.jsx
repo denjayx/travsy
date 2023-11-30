@@ -1,13 +1,17 @@
 import { useState } from 'react';
 import logo from '../../../../assets/logo.svg'
 import Button from '../Buttons/Button';
-function Navbar() {
+import { NavLink } from 'react-router-dom';
+
+export default function Navbar() {
  const [isOpen, setIsOpen] = useState(false);
 
  return (
    <nav className="container flex items-center justify-between p-6 gap-12">
      <div className="flex items-center">
+      <NavLink to='/'>
        <img src={logo} className="w-100 h-10 mr-2" alt="Logo" />
+      </NavLink>
      </div>
      <div className="block lg:hidden text-primary-600">
        <button
@@ -22,27 +26,40 @@ function Navbar() {
      <div
        className={`lg:w-full justify-between absolute lg:static top-16 right-4 lg:flex lg:items-center max-lg:mt-4 ${isOpen ? "block" : "hidden"}`}
      >
-       <div className="flex max-lg:bg-gray-0 text-primary-700 max-lg:flex-col m-2 gap-1 lg:gap-8 max-lg:px-6 max-lg:py-4 max-lg:border max-lg:border-primary-300 rounded-xl">
-         <a href="#" className="block py-3 rounded-xl px-6 lg:px-2">
-            Beranda
-         </a>
-         <a href="#" className="block py-3 rounded-xl px-6 lg:px-2">
-            Paket Wisata
-         </a>
-         <a href="#" className="block py-3 rounded-xl px-6 lg:px-2">
-            Riwayat
-         </a>
-         <div className='flex flex-col md:hidden'>
-            <Button variant="text" className="">Masuk</Button>
-            <Button variant="text" className="font-semibold">Buat Akun</Button>
-         </div>
-       </div>
-       <div className='flex flex-row max-md:hidden gap-2'>
-            <Button variant="primary">Masuk</Button>
-            <Button variant="secondary">Buat Akun</Button>
+        <ul className="flex max-lg:bg-gray-0 text-primary-700 max-lg:flex-col m-2 gap-1 lg:gap-8 max-lg:px-6 max-lg:py-4 max-lg:border max-lg:border-primary-300 rounded-xl">
+          <li>
+            <NavLink to="/" className="block py-3 rounded-xl px-6 lg:px-2">
+                Beranda
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/package" className="block py-3 rounded-xl px-6 lg:px-2">
+                Paket Wisata
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/history" className="block py-3 rounded-xl px-6 lg:px-2">
+                Riwayat
+            </NavLink>
+          </li>
+          <div className='flex flex-col md:hidden'>
+            <NavLink to="/login">
+              <Button variant="text" className="">Masuk</Button>
+            </NavLink>
+            <NavLink to="/register">
+              <Button variant="text" className="font-semibold">Buat Akun</Button>
+            </NavLink>
+          </div>
+        </ul>
+        <div className='flex flex-row max-md:hidden gap-2'>
+            <NavLink to="/login">
+              <Button variant="primary">Masuk</Button>
+            </NavLink>
+            <NavLink to="/register">
+              <Button variant="secondary">Buat Akun</Button>
+            </NavLink>
          </div>
      </div>
    </nav>
  );
 }
-export default Navbar;
