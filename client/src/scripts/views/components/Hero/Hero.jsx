@@ -3,6 +3,7 @@ import {NavLink} from "react-router-dom";
 import Button from "../Buttons/Button";
 import HeroImage from "../../../../assets/hero-image.png";
 import HeroIcon from "../../../../assets/hero-icon.png";
+import Paragraph from "../Paragraph/Paragraph";
 
 const Hero = () => {
 	return (
@@ -11,7 +12,7 @@ const Hero = () => {
 				<h1 className="text-3xl font-bold text-primary-950">
 					Solusi healing <span className="text-primary-700">tanpa pusing.</span>
 				</h1>
-				<p className="text-base text-gray-700">Jelajahi keindahan pulau Bali dengan pilihan destinasi menarik dari kami. Setiap tempat memiliki cerita dan keunikan tersendiri yang menunggu untuk Anda temukan.Yuk segera pesan layanan kami.</p>
+				<Paragraph>Jelajahi keindahan pulau Bali dengan pilihan destinasi menarik dari kami. Setiap tempat memiliki cerita dan keunikan tersendiri yang menunggu untuk Anda temukan.Yuk segera pesan layanan kami.</Paragraph>
 				<div className="flex gap-2">
 					<NavLink to="/package">
 						<Button variant="secondary">Mulai Trip</Button>
