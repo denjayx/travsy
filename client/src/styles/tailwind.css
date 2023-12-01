@@ -1,12 +1,11 @@
 
-    @tailwind base;
+@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
   --primary-color: #f0faff;
 }
-/* Override default focus colors for tailwindcss-forms https://github.com/tailwindlabs/tailwindcss-forms */
 [type='text']:focus,
 [type='email']:focus,
 [type='url']:focus,
@@ -49,7 +48,6 @@ li:hover{
 
 .tab-panel--selected { animation-name: tabPanel; animation-duration: 300ms; animation-timing-function: linear; }
 @keyframes tabPanel { from { opacity: 0; } to { opacity: 1; } }
-/* Input style */
 .input-container {
   position: relative;
   display: flex;

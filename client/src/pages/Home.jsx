@@ -4,7 +4,6 @@ const Home = () => {
   return (
     <div className="travsy-navigation">
       <h1>Homepage</h1>
-     Travsy-code
       <ul>
         <li>
           <Link to="/">Homeguest</Link>

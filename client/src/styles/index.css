@@ -166,19 +166,18 @@ ul li a{
   width: 100%;
 }
 
-/* scroll */
+
 ::-webkit-scrollbar {
   width: 4px;
   height: 4px;
   background: transparent;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 
-/* Handle */
+
 ::-webkit-scrollbar-thumb {
   background: #6b6b6b;
   border-radius: 10px;

@@ -12,7 +12,14 @@ const variants = {
     light_blue_800: "border border-light_blue-800 border-solid text-white-A700",
   },
 };
-const sizes = { xs: "p-1", sm: "p-3.5", md: "p-6 sm:px-5" };
+const sizes =
+ { xs: "p-1",
+  sm: "p-3.5",
+  am: "p-[9px]",
+  md: "p-6 sm:px-5",
+  lg: "p-[18px]",
+  xl: "p-6 sm:px-5",
+};
 
 const Button = ({
   children,
@@ -43,7 +50,7 @@ Button.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node,
   shape: PropTypes.oneOf(["round"]),
-  size: PropTypes.oneOf(["xs", "sm", "md"]),
+  size: PropTypes.oneOf(["xs", "sm", "am", "md", "lg", "xl"]),
   variant: PropTypes.oneOf(["fill", "outline"]),
   color: PropTypes.oneOf([
     "white_A700",
