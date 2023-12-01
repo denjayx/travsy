@@ -43,10 +43,6 @@ class ResponseError extends Error {
     this.name = this.constructor.name;
 
     if (this.constructor.name === 'ResponseError') {
-      /**
-       * Throws a TypeError if an attempt is made to instantiate the abstract class directly.
-       * @throws {TypeError}
-       */
       throw new TypeError(
         'Abstract class "ResponseError" cannot be instantiated directly.',
       );

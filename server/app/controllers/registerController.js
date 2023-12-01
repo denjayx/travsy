@@ -1,16 +1,12 @@
-const bcryptHash = require('../utils/bcryptHash');
-const AccountService = require('../services/AccountService');
+const AuthenticationService = require('../services/AuthenticationService');
 
 // Desc: controller for register
 const registerController = async (req, res, next) => {
   const { account, user } = req.body;
 
   try {
-    const saltRounds = 10;
-    account.password = await bcryptHash(account.password, saltRounds);
-
-    const accountService = AccountService.getInstance();
-    await accountService.createAccountIncludeUser(account, user);
+    const authenticationService = AuthenticationService.getInstance();
+    await authenticationService.registerUserAccount(account, user);
 
     res.status(200).json({
       status: 'OK',

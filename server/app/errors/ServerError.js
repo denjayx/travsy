@@ -14,7 +14,7 @@ class ServerError extends ResponseError {
    * @constructor
    */
   constructor() {
-    super('Terjadi kesalahan pada server', 500, 'Internal Server Error');
+    super('An error occurred on the server', 500, 'Internal Server Error');
   }
 }
 
