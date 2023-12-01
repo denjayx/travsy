@@ -323,7 +323,37 @@ class PackageService {
     }
   }
 
-  // delete detail package by username
+  // delete detail package by username dan id
+  async deletePackagesByUsernameAndId(username, id) {
+    try {
+      const user = await User.findOne({
+        where: { username },
+      });
+
+      if (!user) {
+        throw new NotFoundError('User not found');
+      }
+
+      const deletedPackage = await Package.destroy({
+        where: {
+          id,
+          tourGuideId: username,
+        },
+      });
+
+      if (!deletedPackage) {
+        throw new NotFoundError('Package not found');
+      }
+
+      return { message: 'Package deleted successfully' };
+    } catch (error) {
+      if (error instanceof NotFoundError) {
+        throw error;
+      } else {
+        throw new ServerError('Internal server error');
+      }
+    }
+  }
 
   // get detail package by id
   async getPackageDetail(id) {

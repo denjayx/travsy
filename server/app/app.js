@@ -13,6 +13,7 @@ const {
   insertPackageByUserController,
   getPackageDetailByUsernameController,
   updatePackageDetailByUsernameController,
+  deletePackagesByUsernameAndIdController,
 } = require('./controllers');
 
 // Create Express app
@@ -44,6 +45,9 @@ app
 app
   .route('/user/:username/packages/:id')
   .put(updatePackageDetailByUsernameController);
+app
+  .route('/user/:username/packages/:id')
+  .delete(deletePackagesByUsernameAndIdController);
 
 app.route('/packages').get(getPackageListController);
 
