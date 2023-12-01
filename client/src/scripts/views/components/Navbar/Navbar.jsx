@@ -7,7 +7,7 @@ export default function Navbar() {
 	const [isOpen, setIsOpen] = useState(false);
 
 	return (
-		<nav className="container flex items-center justify-between py-6 gap-12">
+		<nav className="container flex items-center justify-between py-6 gap-12 fixed top-0 inset-x-0 bg-primary-50 z-50 w-full">
 			<div className="flex items-center">
 				<NavLink to="/">
 					<img src={logo} className="w-100 h-10 mr-2" alt="Logo" />

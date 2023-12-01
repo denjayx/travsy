@@ -7,7 +7,7 @@ import Paragraph from "../Paragraph/Paragraph";
 
 const Hero = () => {
 	return (
-		<section className="container flex flex-col lg:flex-row justify-between items-center mt-10">
+		<section className="container flex flex-col lg:flex-row justify-between items-center mt-40">
 			<div className="flex flex-col gap-8 lg:w-6/12 h-full">
 				<h1 className="text-3xl font-bold text-primary-950">
 					Solusi healing <span className="text-primary-700">tanpa pusing.</span>
