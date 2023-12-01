@@ -7,7 +7,7 @@ export default function Navbar() {
 	const [isOpen, setIsOpen] = useState(false);
 
 	return (
-		<nav className="container flex items-center justify-between p-6 gap-12">
+		<nav className="container flex items-center justify-between py-6 gap-12">
 			<div className="flex items-center">
 				<NavLink to="/">
 					<img src={logo} className="w-100 h-10 mr-2" alt="Logo" />
@@ -21,7 +21,7 @@ export default function Navbar() {
 				</button>
 			</div>
 			<div onClick={() => setIsOpen(!isOpen)} className={`lg:w-full justify-between absolute lg:static top-16 right-4 lg:flex lg:items-center max-lg:mt-4 ${isOpen ? "block" : "hidden"}`}>
-				<ul className="flex max-lg:bg-gray-0 text-primary-700 max-lg:flex-col m-2 gap-1 lg:gap-8 max-lg:px-6 max-lg:py-4 max-lg:border max-lg:border-primary-300 rounded-xl">
+				<ul className="flex max-lg:bg-white text-primary-700 max-lg:flex-col m-2 gap-1 lg:gap-8 max-lg:px-6 max-lg:py-4 max-lg:border max-lg:border-primary-300 rounded-xl">
 					<li>
 						<NavLink to="/" className="block py-3 rounded-xl px-6 lg:px-2">
 							Beranda
