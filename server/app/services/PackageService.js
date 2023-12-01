@@ -207,7 +207,7 @@ class PackageService {
     return result;
   }
 
-  // inset data package
+  // insert data package
   async createPackageByUser(username, packageData) {
     try {
       const user = await User.findOne({ where: { username } });
@@ -286,6 +286,45 @@ class PackageService {
     }
   }
 
+  // update detail package by id dengan username
+  async updateDetailPackageByUsername(username, id, updatedPackageData) {
+    try {
+      const user = await User.findOne({
+        where: { username },
+      });
+
+      if (!user) {
+        throw new NotFoundError('User not found');
+      }
+
+      const packageToUpdate = await Package.findOne({
+        where: {
+          id,
+          tourGuideId: username, // Menggunakan username sebagai tur guide ID
+        },
+      });
+
+      if (!packageToUpdate) {
+        throw new NotFoundError('Package not found');
+      }
+
+      // lakukan update data
+      await packageToUpdate.update(updatedPackageData);
+      const updatedPackage = await Package.findByPk(id);
+
+      return updatedPackage;
+    } catch (error) {
+      console.log(error);
+      if (error instanceof NotFoundError) {
+        throw error;
+      } else {
+        throw new ServerError('Internal server error');
+      }
+    }
+  }
+
+  // delete detail package by username
+
   // get detail package by id
   async getPackageDetail(id) {
     const findPackageDetail = async (transaction) => {
@@ -334,10 +373,6 @@ class PackageService {
 
     return packageDetail;
   }
-
-  static async modifyPackage(filter) {}
-
-  static async deletePackage(filter) {}
 }
 
 module.exports = PackageService;
