@@ -210,20 +210,31 @@ class PackageService {
   async createPackageByUser(username, packageData) {
     try {
       const user = await User.findOne({ where: { username } });
+
       if (!user) {
         throw new NotFoundError('Username not found');
       }
+
       const newPackage = await Package.create({
-        ...packageData,
-        tourGuideId: user,
+        id: packageData.packageId,
+        tourGuideId: user.username, // Menggunakan username sebagai tur guide ID
+        packageName: packageData.packageName,
+        thumbnailUrl: packageData.thumbnailUrl,
+        price: packageData.price,
+        description: packageData.description,
+        serviceDuration: packageData.duration,
+        destinationCount: 0,
+        transactionCount: 0,
       });
+
       return newPackage;
     } catch (error) {
+      console.error(error);
       throw new ServerError('Failed create package', error);
     }
   }
 
-  // menemkan package berdasarkan username
+  // menemukan package berdasarkan username
   async getPackageByUsername(tourGuideId) {
     try {
       const userPackages = await Package.findAll({ where: { tourGuideId } });
