@@ -1,26 +1,20 @@
-const bcrypt = require('bcrypt');
+const bcryptHash = require('../utils/bcryptHash');
 const AccountService = require('../services/AccountService');
 
 // Desc: controller for register
 const registerController = async (req, res, next) => {
   const { account, user } = req.body;
 
-  const hashPassword = async (password, saltRounds) => {
-    const salt = await bcrypt.genSalt(saltRounds);
-    const hash = await bcrypt.hash(password, salt);
-    return hash;
-  };
-
   try {
     const saltRounds = 10;
-    account.password = await hashPassword(account.password, saltRounds);
+    account.password = await bcryptHash(account.password, saltRounds);
 
     const accountService = AccountService.getInstance();
     await accountService.createAccountIncludeUser(account, user);
 
-    res.status(201).json({
-      status: 'success',
-      message: 'Berhasil mendaftarkan akun',
+    res.status(200).json({
+      status: 'OK',
+      message: 'Successfully registered an account',
     });
   } catch (err) {
     next(err);

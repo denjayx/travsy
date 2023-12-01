@@ -55,8 +55,25 @@
                     }
                 },
                 "responses": {
-                    "201": {
-                        "$ref": "#/components/responses/created"
+                    "200": {
+                        "description": "Registrasi berhasil",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Successfully registered an account"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "$ref": "#/components/responses/badRequest"
@@ -1729,11 +1746,11 @@
                             "properties": {
                                 "status": {
                                     "type": "string",
-                                    "example": "created"
+                                    "example": "Created"
                                 },
                                 "message": {
                                     "type": "string",
-                                    "example": "Berhasil dibuat"
+                                    "example": "Successfully created"
                                 }
                             }
                         }
@@ -1749,11 +1766,11 @@
                             "properties": {
                                 "status": {
                                     "type": "string",
-                                    "example": "error"
+                                    "example": "Bad Request"
                                 },
                                 "message": {
                                     "type": "string",
-                                    "example": "Terjadi kesalahan input"
+                                    "example": "Input error occured"
                                 }
                             }
                         }
@@ -1769,11 +1786,11 @@
                             "properties": {
                                 "status": {
                                     "type": "string",
-                                    "example": "error"
+                                    "example": "Unauthorized"
                                 },
                                 "message": {
                                     "type": "string",
-                                    "example": "Anda belum login"
+                                    "example": "You are not logged in"
                                 }
                             }
                         }
@@ -1789,11 +1806,11 @@
                             "properties": {
                                 "status": {
                                     "type": "string",
-                                    "example": "error"
+                                    "example": "Forbidden"
                                 },
                                 "message": {
                                     "type": "string",
-                                    "example": "Anda tidak memiliki akses ke sumber daya ini"
+                                    "example": "You do not have access to this resource."
                                 }
                             }
                         }
@@ -1809,11 +1826,11 @@
                             "properties": {
                                 "status": {
                                     "type": "string",
-                                    "example": "error"
+                                    "example": "Not Found"
                                 },
                                 "message": {
                                     "type": "string",
-                                    "example": "Data tidak ditemukan"
+                                    "example": "Data not found"
                                 }
                             }
                         }
@@ -1829,11 +1846,11 @@
                             "properties": {
                                 "status": {
                                     "type": "string",
-                                    "example": "error"
+                                    "example": "Internal Server Error"
                                 },
                                 "message": {
                                     "type": "string",
-                                    "example": "Terjadi kesalahan pada server"
+                                    "example": "An error occurred on the server."
                                 }
                             }
                         }

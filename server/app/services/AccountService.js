@@ -62,7 +62,7 @@ class AccountService {
         );
       } catch (error) {
         if (error instanceof ValidationError) {
-          throw new BadRequestError('Akun sudah terdaftar');
+          throw new BadRequestError('The account is already registered');
         }
         throw new ServerError();
       }
