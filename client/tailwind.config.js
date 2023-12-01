@@ -5,6 +5,11 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    extend: {
+      boxShadow: {
+        'btn': '2px 8px 12.7px 0px rgba(0, 152, 205, 0.15);',
+      },
+    },
     container: {
       center: true,
       padding: {
@@ -15,7 +20,6 @@ export default {
         '2xl': '6rem',
       },
     },
-    extend: {},
     colors: {
       primary: {
         50: '#f0faff',
