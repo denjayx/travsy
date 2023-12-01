@@ -207,6 +207,7 @@ class PackageService {
     return result;
   }
 
+  // inset data package
   async createPackageByUser(username, packageData) {
     try {
       const user = await User.findOne({ where: { username } });
@@ -248,6 +249,40 @@ class PackageService {
         throw error;
       }
       throw new ServerError();
+    }
+  }
+
+  // get detail package berdasarkan username
+  async getDetailPackageByUsername(username, id) {
+    try {
+      const user = await User.findOne({
+        where: { username },
+      });
+
+      if (!user) {
+        throw new NotFoundError('User not found');
+      }
+
+      const detailPackagesIdByUsername = await Package.findOne({
+        where: {
+          id,
+          tourGuideId: username,
+        },
+        include: [Destination, TransactionModel],
+      });
+
+      if (!detailPackagesIdByUsername) {
+        throw new NotFoundError('Package not found');
+      }
+
+      return detailPackagesIdByUsername;
+    } catch (error) {
+      console.error(error);
+      if (error instanceof NotFoundError) {
+        throw error;
+      } else {
+        throw new ServerError('Internal server error');
+      }
     }
   }
 
