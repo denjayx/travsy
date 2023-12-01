@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Input, List, Text } from "components";
+import { Button, Input, List, Text,img } from "components";
 import Footer from "components/Footer";
 import HomeGuestCards from "components/HomeGuestCards";
 import PaketWisataSearchResultNavbar from "components/PaketWisataSearchResultNavbar";
