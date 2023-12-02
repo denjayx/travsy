@@ -1,8 +1,8 @@
-import Image1 from "../../../../assets/whyus-1.png";
-import Image2 from "../../../../assets/whyus-2.png";
-import Image3 from "../../../../assets/whyus-3.png";
-import Image4 from "../../../../assets/whyus-4.png";
-import Image5 from "../../../../assets/whyus-5.png";
+import Image1 from "../../../../assets/images/whyus-1.png";
+import Image2 from "../../../../assets/images/whyus-2.png";
+import Image3 from "../../../../assets/images/whyus-3.png";
+import Image4 from "../../../../assets/images/whyus-4.png";
+import Image5 from "../../../../assets/images/whyus-5.png";
 import Paragraph from "../Paragraph/Paragraph";
 import WhyUsItem from "./WhyUsItem";
 

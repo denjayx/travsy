@@ -1,7 +1,7 @@
 import ScaleItem from "./ScaleItem";
-import ActiveUserIcon from "../../../../assets/users.png";
-import DestinationIcon from "../../../../assets/maps.png";
-import TourGuideIcon from "../../../../assets/tourguide.png";
+import ActiveUserIcon from "../../../../assets/images/users.png";
+import DestinationIcon from "../../../../assets/images/maps.png";
+import TourGuideIcon from "../../../../assets/images/tourguide.png";
 
 const Scale = () => {
 	const scaleItems = [

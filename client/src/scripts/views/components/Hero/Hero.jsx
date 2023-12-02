@@ -1,8 +1,8 @@
 /* eslint-disable react/no-unknown-property */
 import {NavLink} from "react-router-dom";
 import Button from "../Buttons/Button";
-import HeroImage from "../../../../assets/hero-image.png";
-import HeroIcon from "../../../../assets/hero-icon.png";
+import HeroImage from "../../../../assets/images/hero-image.png";
+import HeroIcon from "../../../../assets/images/hero-icon.png";
 import Paragraph from "../Paragraph/Paragraph";
 
 const Hero = () => {

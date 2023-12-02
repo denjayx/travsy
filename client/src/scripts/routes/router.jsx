@@ -4,7 +4,7 @@ import TourPackage from "../views/pages/TourPackage";
 import PackageHistory from "../views/pages/PackageHistory";
 import Login from "../views/pages/Login";
 import Register from "../views/pages/Register";
-import Homepage from "../views/pages/HomePage";
+import Homepage from "../views/pages/Homepage";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(

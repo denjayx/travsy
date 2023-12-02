@@ -1,4 +1,4 @@
-import CardImage from "../../../../assets/card-image.png";
+import CardImage from "../../../../assets/images/card-image.png";
 import Avatar from "../../../../assets/avatar.png";
 import Labels from "../Labels/Lables";
 
