@@ -23,9 +23,9 @@ const Scale = () => {
 	];
 
 	return (
-		<section className="container mt-14">
+		<section className="container mt-24 flex w-full flex-col justify-center items-center">
 			<h3 className="text-xl text-primary-950 font-bold">Skala Travsy</h3>
-			<div className="flex gap-4 mt-6 overflow-x-scroll">
+			<div className="flex md:justify-center gap-4 md:gap-12 mt-6 overflow-x-scroll w-full">
 				{scaleItems.map((item, index) => (
 					<ScaleItem key={index} userImage={item.userImage} count={item.count} title={item.title} />
 				))}
