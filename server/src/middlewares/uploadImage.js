@@ -20,7 +20,9 @@ const uploadImage = (destination, fileKey) => {
       if (err) {
         throw new ServerError();
       } else {
-        req.body.avatarUrl = `http://${host}:${port}/${fileKey}/${req.file.filename}`;
+        if (req.file) {
+          req.body.avatarUrl = `http://${host}:${port}/${fileKey}/${req.file.filename}`;
+        }
         next();
       }
     });
