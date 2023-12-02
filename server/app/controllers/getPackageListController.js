@@ -1,22 +1,37 @@
 const PackageService = require('../services/PackageService');
 
-// Desc: controller for get package list
 const getPackageListController = async (req, res, next) => {
+  const filter = req.query;
+
   try {
-    const filter = req.query;
-    const service = PackageService.getInstance();
-    const resultPackageList = await service.getPackageList({
+    const packageService = PackageService.getInstance();
+    const packages = await packageService.getPackageList({
       ...filter,
       pmin: parseInt(filter.pmin, 10),
       pmax: parseInt(filter.pmax, 10),
     });
 
+    // mapping to package with tour guided
+    const packageWithTourGuideList = await Promise.all(
+      packages.map(async (tourPackage) => {
+        const tourGuide = await tourPackage.getTourGuide({
+          attributes: ['avatarUrl', 'firstName', 'lastName'],
+        });
+
+        return {
+          tourGuide,
+          package: tourPackage,
+        };
+      }),
+    );
+
     res.status(200).json({
-      status: 'success',
-      message: 'Berhasil mendapatkan daftar paket wisata',
-      data: resultPackageList,
+      status: 'OK',
+      message: 'Successfully got the tour package list',
+      data: packageWithTourGuideList,
     });
   } catch (error) {
+    console.error(error);
     next(error);
   }
 };

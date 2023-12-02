@@ -1129,11 +1129,11 @@
                                     "properties": {
                                         "status": {
                                             "type": "string",
-                                            "example": "success"
+                                            "example": "OK"
                                         },
                                         "message": {
                                             "type": "string",
-                                            "example": "Berhasil mendapatkan daftar paket wisata"
+                                            "example": "Successfully got the tour package list"
                                         },
                                         "data": {
                                             "type": "array",
@@ -1144,41 +1144,7 @@
                                                         "$ref": "#/components/schemas/ownerName"
                                                     },
                                                     "package": {
-                                                        "type": "object",
-                                                        "properties": {
-                                                            "id": {
-                                                                "type": "number",
-                                                                "example": 1
-                                                            },
-                                                            "thumbnailUrl": {
-                                                                "type": "string",
-                                                                "example": "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
-                                                            },
-                                                            "name": {
-                                                                "type": "string",
-                                                                "example": "Paket Wisata Tanah Lot"
-                                                            },
-                                                            "price": {
-                                                                "type": "number",
-                                                                "example": 500000
-                                                            },
-                                                            "description": {
-                                                                "type": "string",
-                                                                "example": "Paket wisata ke Tanah Lot dengan durasi 3 hari 2 malam"
-                                                            },
-                                                            "destinations": {
-                                                                "type": "array",
-                                                                "items": {
-                                                                    "type": "object",
-                                                                    "properties": {
-                                                                        "name": {
-                                                                            "type": "string",
-                                                                            "example": "Tanah Lot"
-                                                                        }
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
+                                                        "$ref": "#/components/schemas/miniPackage"
                                                     }
                                                 }
                                             }
@@ -1211,16 +1177,24 @@
                                     "properties": {
                                         "status": {
                                             "type": "string",
-                                            "example": "success"
+                                            "example": "OK"
                                         },
                                         "message": {
                                             "type": "string",
-                                            "example": "Berhasil mendapatkan daftar paket wisata populer"
+                                            "example": "Successfully got the tour popular package list"
                                         },
                                         "data": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/components/schemas/miniPackage"
+                                                "type": "object",
+                                                "properties": {
+                                                    "tourGuide": {
+                                                        "$ref": "#/components/schemas/ownerName"
+                                                    },
+                                                    "package": {
+                                                        "$ref": "#/components/schemas/miniPackage"
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -1519,13 +1493,15 @@
             "ownerName": {
                 "type": "object",
                 "properties": {
+                    "avatarUrl": {
+                        "type": "string",
+                        "example": "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
+                    },
                     "firstName": {
-                        "description": "Nama depan",
                         "type": "string",
                         "example": "John"
                     },
                     "lastName": {
-                        "description": "Nama belakang",
                         "type": "string",
                         "example": "Doe"
                     }
@@ -1602,7 +1578,7 @@
             "miniPackage": {
                 "type": "object",
                 "properties": {
-                    "packageId": {
+                    "id": {
                         "type": "string",
                         "example": "123e4567-e89b-12d3-a456-426614174000"
                     },
@@ -1610,7 +1586,7 @@
                         "type": "string",
                         "example": "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
                     },
-                    "name": {
+                    "packageName": {
                         "type": "string",
                         "example": "Paket Wisata Tanah Lot"
                     },
@@ -1618,9 +1594,13 @@
                         "type": "number",
                         "example": 500000
                     },
-                    "description": {
-                        "type": "string",
-                        "example": "Paket wisata ke Tanah Lot dengan durasi 3 hari 2 malam"
+                    "destinationCount": {
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "transactionCount": {
+                        "type": "integer",
+                        "example": 4
                     },
                     "destinations": {
                         "type": "array",

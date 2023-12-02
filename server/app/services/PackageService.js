@@ -6,11 +6,12 @@ const {
   User,
   sequelize,
 } = require('../models');
+const BaseService = require('./BaseService');
 const BadRequestError = require('../errors/BadRequestError');
 const ServerError = require('../errors/ServerError');
 const NotFoundError = require('../errors/NotFoundError');
 
-class PackageService {
+class PackageService extends BaseService {
   // Desc: Implementasi singleton
   static getInstance() {
     if (!PackageService.instance) {
@@ -34,22 +35,20 @@ class PackageService {
 
     Object.keys(filter).forEach((key) => {
       if (!expectedFilter.includes(key)) {
-        throw new BadRequestError(
-          `Error filter: filter ${key} tidak dapat ditemukan`,
-        );
+        throw new BadRequestError(`Filter ${key} could not be found`);
       }
     });
 
     const { search, city, pmin, pmax, ndest, sdate, edate } = filter;
 
-    const findPackagesWithFilters = async (transaction) => {
+    const findFilteredPackages = async (transaction) => {
       const whereConditionsDestination = [];
       const whereConditionsPackage = [];
 
       if (sdate && edate) {
         if (sdate > edate) {
           throw new BadRequestError(
-            'Error filter: tanggal mulai tidak boleh lebih besar dari tanggal berakhir',
+            'Start date cannot be greater than end date',
           );
         }
 
@@ -109,7 +108,7 @@ class PackageService {
       if (pmin && pmax) {
         if (pmax < pmin) {
           throw new BadRequestError(
-            'Error filter: harga maksimum tidak boleh lebih kecil dari harga minimum',
+            'Minimum price cannot be greater than maximum price',
           );
         }
 
@@ -144,6 +143,16 @@ class PackageService {
             where: {
               [Op.and]: whereConditionsPackage,
             },
+            attributes: {
+              exclude: [
+                'description',
+                'serviceDuration',
+                'transactionCount',
+                'createdAt',
+                'updatedAt',
+                'deletedAt',
+              ],
+            },
             transaction,
           },
           { transaction },
@@ -155,14 +164,9 @@ class PackageService {
       }
     };
 
-    const result = await sequelize.transaction(
-      {
-        isolationLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED,
-      },
-      async (transaction) => findPackagesWithFilters(transaction),
-    );
+    const packages = await this.createDbTransaction(findFilteredPackages);
 
-    return result;
+    return packages;
   }
 
   // Desc: service for get popular package list with limit 4 data
@@ -179,32 +183,28 @@ class PackageService {
           ],
           order: [['transaction_count', 'DESC']],
           limit: limit || 4,
-          attributes: [
-            'id',
-            'thumbnailUrl',
-            'packageName',
-            'price',
-            'description',
-            'transaction_count',
-          ],
+          attributes: {
+            exclude: [
+              'description',
+              'serviceDuration',
+              'destinationCount',
+              'createdAt',
+              'updatedAt',
+              'deletedAt',
+            ],
+          },
           transaction,
         });
 
         return packages;
       } catch (error) {
-        console.error(error);
         throw new ServerError();
       }
     };
 
-    const result = await sequelize.transaction(
-      {
-        isolationLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED,
-      },
-      async (transaction) => findPopularPackages(transaction),
-    );
+    const packages = await this.createDbTransaction(findPopularPackages);
 
-    return result;
+    return packages;
   }
 
   async createPackageByUser(username, packageData) {
