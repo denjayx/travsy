@@ -9,8 +9,11 @@ const {
   getPackageDetailController,
   getUserProfileController,
   getPackagesByUserController,
+  getPackageDetailByUsernameController,
   insertPackageByUserController,
   updateUserProfileController,
+  updatePackageDetailByUsernameController,
+  deletePackagesByUsernameAndIdController,
 } = require('./controllers');
 
 // Create Express app
@@ -36,6 +39,15 @@ app
 
 app.route('/user/:username/packages').get(getPackagesByUserController);
 app.route('/user/:username/packages').post(insertPackageByUserController);
+app
+  .route('/user/:username/packages/:id')
+  .get(getPackageDetailByUsernameController);
+app
+  .route('/user/:username/packages/:id')
+  .put(updatePackageDetailByUsernameController);
+app
+  .route('/user/:username/packages/:id')
+  .delete(deletePackagesByUsernameAndIdController);
 
 app.route('/packages').get(getPackageListController);
 

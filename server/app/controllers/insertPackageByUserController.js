@@ -3,10 +3,11 @@ const PackageService = require('../services/PackageService');
 const insertPackageByUserController = async (req, res, next) => {
   try {
     const { username } = req.params;
-    const { newPackage } = req.body;
+    const packageData = req.body;
+    console.log(packageData);
 
     const service = PackageService.getInstance();
-    const result = await service.createPackageByUser(username, newPackage);
+    const result = await service.createPackageByUser(username, packageData);
 
     res.status(200).json({
       status: 'success',

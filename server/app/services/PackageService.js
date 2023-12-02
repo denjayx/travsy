@@ -203,23 +203,35 @@ class PackageService extends BaseService {
     return packages;
   }
 
+  // insert data package
   async createPackageByUser(username, packageData) {
     try {
       const user = await User.findOne({ where: { username } });
+
       if (!user) {
         throw new NotFoundError('Username not found');
       }
+
       const newPackage = await Package.create({
-        ...packageData,
-        tourGuideId: user,
+        id: packageData.packageId,
+        tourGuideId: user.username, // Menggunakan username sebagai tur guide ID
+        packageName: packageData.packageName,
+        thumbnailUrl: packageData.thumbnailUrl,
+        price: packageData.price,
+        description: packageData.description,
+        serviceDuration: packageData.duration,
+        destinationCount: 0,
+        transactionCount: 0,
       });
+
       return newPackage;
     } catch (error) {
+      console.error(error);
       throw new ServerError('Failed create package', error);
     }
   }
 
-  // menemkan package berdasarkan username
+  // menemukan package berdasarkan username
   async getPackageByUsername(tourGuideId) {
     try {
       const userPackages = await Package.findAll({ where: { tourGuideId } });
@@ -233,6 +245,109 @@ class PackageService extends BaseService {
         throw error;
       }
       throw new ServerError();
+    }
+  }
+
+  // get detail package berdasarkan username
+  async getDetailPackageByUsername(username, id) {
+    try {
+      const user = await User.findOne({
+        where: { username },
+      });
+
+      if (!user) {
+        throw new NotFoundError('User not found');
+      }
+
+      const detailPackagesIdByUsername = await Package.findOne({
+        where: {
+          id,
+          tourGuideId: username,
+        },
+        include: [Destination, TransactionModel],
+      });
+
+      if (!detailPackagesIdByUsername) {
+        throw new NotFoundError('Package not found');
+      }
+
+      return detailPackagesIdByUsername;
+    } catch (error) {
+      console.error(error);
+      if (error instanceof NotFoundError) {
+        throw error;
+      } else {
+        throw new ServerError('Internal server error');
+      }
+    }
+  }
+
+  // update detail package by id dengan username
+  async updateDetailPackageByUsername(username, id, updatedPackageData) {
+    try {
+      const user = await User.findOne({
+        where: { username },
+      });
+
+      if (!user) {
+        throw new NotFoundError('User not found');
+      }
+
+      const packageToUpdate = await Package.findOne({
+        where: {
+          id,
+          tourGuideId: username, // Menggunakan username sebagai tur guide ID
+        },
+      });
+
+      if (!packageToUpdate) {
+        throw new NotFoundError('Package not found');
+      }
+
+      // lakukan update data
+      await packageToUpdate.update(updatedPackageData);
+      const updatedPackage = await Package.findByPk(id);
+
+      return updatedPackage;
+    } catch (error) {
+      console.log(error);
+      if (error instanceof NotFoundError) {
+        throw error;
+      } else {
+        throw new ServerError('Internal server error');
+      }
+    }
+  }
+
+  // delete detail package by username dan id
+  async deletePackagesByUsernameAndId(username, id) {
+    try {
+      const user = await User.findOne({
+        where: { username },
+      });
+
+      if (!user) {
+        throw new NotFoundError('User not found');
+      }
+
+      const deletedPackage = await Package.destroy({
+        where: {
+          id,
+          tourGuideId: username,
+        },
+      });
+
+      if (!deletedPackage) {
+        throw new NotFoundError('Package not found');
+      }
+
+      return { message: 'Package deleted successfully' };
+    } catch (error) {
+      if (error instanceof NotFoundError) {
+        throw error;
+      } else {
+        throw new ServerError('Internal server error');
+      }
     }
   }
 
@@ -279,10 +394,6 @@ class PackageService extends BaseService {
 
     return packageDetail;
   }
-
-  static async modifyPackage(filter) {}
-
-  static async deletePackage(filter) {}
 }
 
 module.exports = PackageService;
