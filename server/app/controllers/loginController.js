@@ -12,7 +12,7 @@ const loginController = async (req, res, next) => {
     const user = await account.getUser({
       attributes: ['username', 'avatarUrl', 'firstName', 'lastName'],
     });
-    const token = tokenUtil.hashPayload(user.username);
+    const token = tokenUtil.generateToken({ username: user.username });
 
     res.status(200).json({
       status: 'OK',

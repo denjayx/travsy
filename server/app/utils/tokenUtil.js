@@ -8,13 +8,13 @@ const tokenUtil = {
   /**
    * Generates a JSON Web Token (JWT) with the provided data payload.
    * @function
-   * @param {object} data - The data payload to be included in the JWT.
+   * @param {object} payload - The data payload to be included in the JWT.
    * @returns {string} The generated JWT token.
    */
-  hashPayload: (data) => {
+  generateToken: (payload) => {
     const token = jwt.sign(
       {
-        data,
+        data: payload,
       },
       jwtSecret,
       {
@@ -34,10 +34,10 @@ const tokenUtil = {
    */
   verifyToken: (token) => {
     try {
-      jwt.verify(token, jwtSecret);
-      return true;
+      const payload = jwt.verify(token, jwtSecret).data;
+      return payload;
     } catch (error) {
-      return false;
+      return null;
     }
   },
 };
