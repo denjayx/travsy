@@ -1,6 +1,5 @@
 const AuthenticationService = require('../services/AuthenticationService');
 
-// Desc: controller for register
 const registerController = async (req, res, next) => {
   const { account, user } = req.body;
 

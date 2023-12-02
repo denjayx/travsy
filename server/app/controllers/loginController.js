@@ -8,10 +8,10 @@ const loginController = async (req, res, next) => {
     const authenticationService = AuthenticationService.getInstance();
     const account = await authenticationService.verifyAccount(email, password);
 
+    // generate token
     const user = await account.getUser({
       attributes: ['username', 'avatarUrl', 'firstName', 'lastName'],
     });
-
     const token = tokenUtil.hashPayload(user.username);
 
     res.status(200).json({
