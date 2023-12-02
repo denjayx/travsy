@@ -2,11 +2,11 @@ const UserService = require('../services/UserService');
 
 const updateUserProfileController = async (req, res, next) => {
   const { username } = req.user;
-  const { account, user } = req.body;
+  const { email, ...user } = req.body;
 
   try {
     const userServiceInstance = UserService.getInstance();
-    await userServiceInstance.updateUserProfile(username, user, account);
+    await userServiceInstance.updateUserProfile(username, user, { email });
     const updatedData = await userServiceInstance.getUserProfile(username);
 
     res.status(200).json({
