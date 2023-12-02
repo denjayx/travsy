@@ -1,4 +1,4 @@
-const { host, port } = require('../config/application');
+const { host, port } = require('./config/application');
 const app = require('./app');
 
 // Start the server

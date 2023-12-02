@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { errorHandler, verifyAuthorization } = require('./middlewares');
+const { errorHandler, verifyAuthorization } = require('./src/middlewares');
 const {
   registerController,
   loginController,
@@ -14,7 +14,7 @@ const {
   updateUserProfileController,
   updatePackageDetailByUsernameController,
   deletePackagesByUsernameAndIdController,
-} = require('./controllers');
+} = require('./src/controllers');
 
 // Create Express app
 const app = express();
