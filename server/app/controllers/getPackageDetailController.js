@@ -1,6 +1,5 @@
 const PackageService = require('../services/PackageService');
 
-// Desc: controller for get package detail
 const getPackageDetailController = async (req, res, next) => {
   try {
     const { packageId } = req.params;
@@ -9,7 +8,7 @@ const getPackageDetailController = async (req, res, next) => {
     const packageDetail = await packageService.getPackageDetail(packageId);
 
     const tourGuide = await packageDetail.getTourGuide({
-      attributes: ['firstName', 'lastName'],
+      attributes: ['avatarUrl', 'firstName', 'lastName'],
     });
 
     res.status(200).json({

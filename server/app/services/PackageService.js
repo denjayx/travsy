@@ -1,10 +1,9 @@
-const { Op, Transaction } = require('sequelize');
+const { Op } = require('sequelize');
 const {
   Package,
   Destination,
   Transaction: TransactionModel,
   User,
-  sequelize,
 } = require('../models');
 const BaseService = require('./BaseService');
 const BadRequestError = require('../errors/BadRequestError');
@@ -33,6 +32,7 @@ class PackageService extends BaseService {
       'edate',
     ];
 
+    // validate filter key
     Object.keys(filter).forEach((key) => {
       if (!expectedFilter.includes(key)) {
         throw new BadRequestError(`Filter ${key} could not be found`);
@@ -45,6 +45,7 @@ class PackageService extends BaseService {
       const whereConditionsDestination = [];
       const whereConditionsPackage = [];
 
+      // date filtering
       if (sdate && edate) {
         if (sdate > edate) {
           throw new BadRequestError(
@@ -52,43 +53,38 @@ class PackageService extends BaseService {
           );
         }
 
-        try {
-          const availablePackages = await Package.findAll(
-            {
-              include: [
-                {
-                  model: TransactionModel,
-                  attributes: ['startDate', 'endDate'],
-                  where: {
-                    startDate: {
-                      [Op.lt]: sdate,
-                    },
-                    endDate: {
-                      [Op.gt]: edate,
-                    },
+        const availablePackages = await Package.findAll(
+          {
+            include: [
+              {
+                model: TransactionModel,
+                attributes: ['startDate', 'endDate'],
+                where: {
+                  startDate: {
+                    [Op.lt]: sdate,
                   },
-                  required: true,
+                  endDate: {
+                    [Op.gt]: edate,
+                  },
                 },
-              ],
-              attributes: ['id'],
-            },
-            { transaction },
-          );
+                required: true,
+              },
+            ],
+            attributes: ['id'],
+          },
+          { transaction },
+        );
 
-          const packageIds = availablePackages.map(
-            (packageObj) => packageObj.id,
-          );
+        const packageIds = availablePackages.map((packageObj) => packageObj.id);
 
-          whereConditionsPackage.push({
-            package_id: {
-              [Op.in]: packageIds,
-            },
-          });
-        } catch (error) {
-          throw new BadRequestError('Failed to fetch available packages');
-        }
+        whereConditionsPackage.push({
+          package_id: {
+            [Op.in]: packageIds,
+          },
+        });
       }
 
+      // search filtering
       if (search) {
         whereConditionsDestination.push({
           destinationName: {
@@ -97,6 +93,7 @@ class PackageService extends BaseService {
         });
       }
 
+      // city filtering
       if (city) {
         whereConditionsDestination.push({
           city: {
@@ -105,6 +102,7 @@ class PackageService extends BaseService {
         });
       }
 
+      // price filtering
       if (pmin && pmax) {
         if (pmax < pmin) {
           throw new BadRequestError(
@@ -119,6 +117,7 @@ class PackageService extends BaseService {
         });
       }
 
+      // destination count filtering
       if (ndest) {
         whereConditionsPackage.push({
           destination_count: {
@@ -127,41 +126,38 @@ class PackageService extends BaseService {
         });
       }
 
-      try {
-        const packages = await Package.findAll(
-          {
-            include: [
-              {
-                model: Destination,
-                attributes: ['destinationName', 'city'],
-                where: {
-                  [Op.and]: whereConditionsDestination,
-                },
-                required: true,
+      // get packages with validated filters
+      const packages = await Package.findAll(
+        {
+          include: [
+            {
+              model: Destination,
+              attributes: ['destinationName', 'city'],
+              where: {
+                [Op.and]: whereConditionsDestination,
               },
-            ],
-            where: {
-              [Op.and]: whereConditionsPackage,
+              required: true,
             },
-            attributes: {
-              exclude: [
-                'description',
-                'serviceDuration',
-                'transactionCount',
-                'createdAt',
-                'updatedAt',
-                'deletedAt',
-              ],
-            },
-            transaction,
+          ],
+          where: {
+            [Op.and]: whereConditionsPackage,
           },
-          { transaction },
-        );
+          attributes: {
+            exclude: [
+              'description',
+              'serviceDuration',
+              'transactionCount',
+              'createdAt',
+              'updatedAt',
+              'deletedAt',
+            ],
+          },
+          transaction,
+        },
+        { transaction },
+      );
 
-        return packages;
-      } catch (error) {
-        throw new BadRequestError('Failed to fetch packages');
-      }
+      return packages;
     };
 
     const packages = await this.createDbTransaction(findFilteredPackages);
@@ -275,16 +271,11 @@ class PackageService extends BaseService {
         if (error instanceof NotFoundError) {
           throw error;
         }
-        throw new ServerError('Failed to fetch package details');
+        throw new ServerError();
       }
     };
 
-    const packageDetail = await sequelize.transaction(
-      {
-        isolationLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED,
-      },
-      async (transaction) => findPackageDetail(transaction),
-    );
+    const packageDetail = await this.createDbTransaction(findPackageDetail);
 
     return packageDetail;
   }

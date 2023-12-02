@@ -1540,7 +1540,7 @@
                         "type": "number",
                         "example": 3
                     },
-                    "destinations": {
+                    "Destinations": {
                         "type": "array",
                         "items": {
                             "type": "object",
@@ -1602,7 +1602,7 @@
                         "type": "integer",
                         "example": 4
                     },
-                    "destinations": {
+                    "Destinations": {
                         "type": "array",
                         "items": {
                             "type": "object",
