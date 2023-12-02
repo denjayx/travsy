@@ -33,7 +33,6 @@ class UserService extends BaseService {
   async getUserProfile(username) {
     const findUserIncludeAccount = async (transaction) => {
       try {
-        console.log(username);
         const userProfile = await User.findByPk(username, {
           attributes: {
             exclude: [

@@ -31,7 +31,6 @@ const getPackageListController = async (req, res, next) => {
       data: packageWithTourGuideList,
     });
   } catch (error) {
-    console.error(error);
     next(error);
   }
 };
