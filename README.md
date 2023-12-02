@@ -78,6 +78,7 @@ Proyek ini untuk kepentingan penyelesaian akademi kami di program SIB Dicoding C
 
 | Jenis Commit             | Format          | Contoh                                                |
 |--------------------------|-----------------|--------------------------------------------------------|
+| Penghapusan Fitur        | `feat:`         | menambahkan fitur baru XYZ                            |
 | Perbaikan Bug            | `fix:`          | memperbaiki bug yang menyebabkan ABC                  |
 | Perbaikan Kecil          | `chore:`        | melakukan perbaikan kecil yang tidak mempengaruhi perilaku program |
 | Optimisasi Kode          | `optimize:`     | meningkatkan performa fungsi XYZ                      |
