@@ -1,17 +1,17 @@
-const ResponseError = require('./ResponseError');
+const BaseResponseError = require('./BaseResponseError');
 
 /**
  * Error class for representing bad request errors.
- * @extends ResponseError
+ * @extends BaseResponseError
  * @class
  *
  * @param {string} message - The error message.
  *
  * @example
  * // Creating a new BadRequestError instance
- * const badRequestError = new BadRequestError('Bad Request');
+ * const badRequestError = new BadRequestError('Input invalid');
  */
-class BadRequestError extends ResponseError {
+class BadRequestError extends BaseResponseError {
   /**
    * @constructor
    * @param {string} message - The error message.

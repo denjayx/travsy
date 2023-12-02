@@ -1,8 +1,8 @@
-const ResponseError = require('./ResponseError');
+const BaseResponseError = require('./BaseResponseError');
 
 /**
  * Error class for representing unauthorized access errors.
- * @extends ResponseError
+ * @extends BaseResponseError
  * @class UnauthorizedError
  *
  * @param {string} message - The error message.
@@ -11,7 +11,7 @@ const ResponseError = require('./ResponseError');
  * // Creating a new UnauthorizedError instance
  * const unauthorizedError = new UnauthorizedError('Access denied');
  */
-class UnauthorizedError extends ResponseError {
+class UnauthorizedError extends BaseResponseError {
   /**
    * @constructor
    * @param {string} message - The error message.

@@ -1,15 +1,15 @@
-const ResponseError = require('./ResponseError');
+const BaseResponseError = require('./BaseResponseError');
 
 /**
  * Error class for representing forbidden access errors.
- * @extends ResponseError
+ * @extends BaseResponseError
  * @class ForbiddenError
  *
  * @example
  * // Creating a new ForbiddenError instance
  * const forbiddenError = new ForbiddenError();
  */
-class ForbiddenError extends ResponseError {
+class ForbiddenError extends BaseResponseError {
   /**
    * @constructor
    * @param {string} [message='You do not have access'] - The error message.

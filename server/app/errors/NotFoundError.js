@@ -1,8 +1,8 @@
-const ResponseError = require('./ResponseError');
+const BaseResponseError = require('./BaseResponseError');
 
 /**
  * Error class for representing not found errors.
- * @extends ResponseError
+ * @extends BaseResponseError
  * @class NotFoundError
  *
  * @param {string} message - The error message.
@@ -11,7 +11,7 @@ const ResponseError = require('./ResponseError');
  * // Creating a new NotFoundError instance
  * const notFoundError = new NotFoundError('Resource not found');
  */
-class NotFoundError extends ResponseError {
+class NotFoundError extends BaseResponseError {
   /**
    * @constructor
    * @param {string} message - The error message.
