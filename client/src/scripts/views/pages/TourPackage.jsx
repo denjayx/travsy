@@ -1,5 +1,3 @@
 export default function TourPackage() {
-  return (
-    <div>TourPackage</div>
-  )
+  return <div>TourPackage</div>
 }

@@ -1,5 +1,5 @@
 const StepsCard = () => {
-	return <div>StepsCard</div>;
-};
+  return <div>StepsCard</div>
+}
 
-export default StepsCard;
+export default StepsCard
