@@ -2,8 +2,11 @@ const { ValidationError } = require('sequelize');
 const BaseService = require('./BaseService');
 const { Account, User } = require('../models');
 const passwordUtil = require('../utils/passwordUtil');
+const AccountService = require('./AccountService');
+const BaseResponseError = require('../errors/BaseResponseError');
 const BadRequestError = require('../errors/BadRequestError');
 const ServerError = require('../errors/ServerError');
+const UnauthorizedError = require('../errors/UnauthorizedError');
 
 class AuthenticationService extends BaseService {
   static getInstance() {
@@ -37,6 +40,32 @@ class AuthenticationService extends BaseService {
     };
 
     await this.createDbTransaction(insertData);
+  }
+
+  async verifyAccount(email, password) {
+    try {
+      if (!(password && email)) {
+        throw new BadRequestError('Email and password required');
+      }
+
+      const accountService = AccountService.getInstance();
+      const account = await accountService.getAccountByEmail(email, [
+        'id',
+        'password',
+        'role',
+      ]);
+
+      if (!(await passwordUtil.verifyPassword(password, account.password))) {
+        throw new UnauthorizedError('Wrong password');
+      }
+
+      return account;
+    } catch (error) {
+      if (error instanceof BaseResponseError) {
+        throw error;
+      }
+      throw new ServerError();
+    }
   }
 }
 

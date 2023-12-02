@@ -126,7 +126,7 @@
                                         },
                                         "message": {
                                             "type": "string",
-                                            "example": "Login berhasil"
+                                            "example": "Login success"
                                         },
                                         "data": {
                                             "type": "object",
