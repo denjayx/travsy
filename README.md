@@ -74,22 +74,23 @@ Proyek ini untuk kepentingan penyelesaian akademi kami di program SIB Dicoding C
 - Ulangi tahap testing hingga tidak terdapat bug.
 - Apabila dirasa sudah tidak ada bug, maka aplikasi lolos ke tahap production dengan mergin branch **stage** ke **main**.
 
+## Standar Commit Message
 
-## Subject Line Standard Terminology
+| Jenis Commit             | Format          | Contoh                                                |
+|--------------------------|-----------------|--------------------------------------------------------|
+| Perbaikan Bug            | `fix:`          | memperbaiki bug yang menyebabkan ABC                  |
+| Perbaikan Kecil          | `chore:`        | melakukan perbaikan kecil yang tidak mempengaruhi perilaku program |
+| Optimisasi Kode          | `optimize:`     | meningkatkan performa fungsi XYZ                      |
+| Penghapusan Kode         | `refactor:`     | melakukan refaktor pada modul ABC                     |
+| Dokumentasi              | `docs:`         | memperbarui dokumentasi terkait dengan fitur XYZ      |
+| Uji                      | `test:`         | menambahkan uji untuk kasus ABC                       |
+| Pemeliharaan Dependensi  | `chore(deps):`  | memperbarui dependensi ke versi terbaru               |
+| Pembaruan Konfigurasi    | `chore(config):`| memperbarui konfigurasi untuk mendukung fitur baru    |
+| Penghapusan Fitur        | `feat:`         | menghapus fitur XYZ yang sudah tidak diperlukan lagi  |
+| Penambahan Fitur (WIP)   | `WIP:`          | Menambahkan fitur XYZ                                 |
 
-First Word | Meaning
---- | --
-Add | Create a capability e.g. feature, test, dependency.
-Cut | Remove a capability e.g. feature, test, dependency.
-Fix | Fix an issue e.g. bug, typo, accident, misstatement.
-Bump | Increase the version of something e.g. dependency.
-Make | Change the build process, or tooling, or infra.
-Start | Begin doing something; e.g. create a feature flag.
-Stop | End doing something; e.g. remove a feature flag.
-Refactor | A code change that MUST be just a refactoring.
-Reformat | Refactor of formatting, e.g. omit whitespace.
-Optimize | Refactor of performance, e.g. speed up code.
-Document | Refactor of documentation, e.g. help files.
+Pastikan untuk menyesuaikan placeholder seperti "XYZ" dan "ABC" sesuai dengan konteks sebenarnya dari commit message yang digunakan dalam proyek Anda.
+
 
 ## Visualisasi Branch Repository
 ```mermaid
