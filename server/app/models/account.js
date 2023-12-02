@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: {
           name: 'email',
-          msg: 'Email sudah terdaftar',
+          msg: 'Email already exist',
         },
         type: DataTypes.STRING,
       },

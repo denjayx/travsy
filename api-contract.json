@@ -242,16 +242,9 @@
             "get": {
                 "tags": ["User"],
                 "summary": "Mendapatkan detail user berdasarkan username",
-                "parameters": [
+                "security": [
                     {
-                        "name": "username",
-                        "in": "path",
-                        "description": "Username user",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "example": "johndoe"
-                        }
+                        "Bearer": []
                     }
                 ],
                 "responses": {
@@ -264,11 +257,11 @@
                                     "properties": {
                                         "status": {
                                             "type": "string",
-                                            "example": "success"
+                                            "example": "OK"
                                         },
                                         "message": {
                                             "type": "string",
-                                            "example": "Berhasil mendapatkan data user"
+                                            "example": "Successfully obtained user profile"
                                         },
                                         "data": {
                                             "$ref": "#/components/schemas/profile"
@@ -277,6 +270,9 @@
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/unauthorized"
                     },
                     "404": {
                         "$ref": "#/components/responses/notFound"
@@ -292,18 +288,6 @@
                 "security": [
                     {
                         "Bearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "username",
-                        "in": "path",
-                        "description": "Username user",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "example": "johndoe"
-                        }
                     }
                 ],
                 "requestBody": {
@@ -325,11 +309,11 @@
                                     "properties": {
                                         "status": {
                                             "type": "string",
-                                            "example": "success"
+                                            "example": "OK"
                                         },
                                         "message": {
                                             "type": "string",
-                                            "example": "Data user berhasil dirubah"
+                                            "example": "User profile successfully updated"
                                         },
                                         "data": {
                                             "$ref": "#/components/schemas/profile"
@@ -342,8 +326,8 @@
                     "400": {
                         "$ref": "#/components/responses/badRequest"
                     },
-                    "403": {
-                        "$ref": "#/components/responses/forbidden"
+                    "401": {
+                        "$ref": "#/components/responses/unauthorized"
                     },
                     "404": {
                         "$ref": "#/components/responses/notFound"
@@ -1790,7 +1774,7 @@
                                 },
                                 "message": {
                                     "type": "string",
-                                    "example": "You are not logged in"
+                                    "example": "Invalid token"
                                 }
                             }
                         }
