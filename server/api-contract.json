@@ -410,8 +410,8 @@
             "description": "Id transaksi",
             "required": true,
             "schema": {
-              "type": "number",
-              "example": 1
+              "type": "string",
+              "example": "f27bb743-c7a5-3e29-9967-5f8b450ad5db"
             }
           }
         ],
@@ -576,8 +576,8 @@
             "description": "Id package",
             "required": true,
             "schema": {
-              "type": "number",
-              "example": 1
+              "type": "string",
+              "example": "f27bb743-c7a5-3e29-9967-5f8b450ad5db"
             }
           }
         ],
@@ -631,8 +631,8 @@
             "description": "Id package",
             "required": true,
             "schema": {
-              "type": "number",
-              "example": 1
+              "type": "string",
+              "example": "f27bb743-c7a5-3e29-9967-5f8b450ad5db"
             }
           }
         ],
@@ -698,8 +698,8 @@
             "description": "Id package",
             "required": true,
             "schema": {
-              "type": "number",
-              "example": 1
+              "type": "string",
+              "example": "f27bb743-c7a5-3e29-9967-5f8b450ad5db"
             }
           }
         ],
@@ -808,8 +808,8 @@
             "description": "Id order",
             "required": true,
             "schema": {
-              "type": "number",
-              "example": 1
+              "type": "string",
+              "example": "f27bb743-c7a5-3e29-9967-5f8b450ad5db"
             }
           }
         ],
@@ -871,8 +871,8 @@
             "description": "Id order",
             "required": true,
             "schema": {
-              "type": "number",
-              "example": 1
+              "type": "string",
+              "example": "f27bb743-c7a5-3e29-9967-5f8b450ad5db"
             }
           }
         ],
@@ -1108,8 +1108,8 @@
             "description": "Id package",
             "required": true,
             "schema": {
-              "type": "number",
-              "example": 1
+              "type": "string",
+              "example": "f27bb743-c7a5-3e29-9967-5f8b450ad5db"
             }
           }
         ],
@@ -1170,8 +1170,8 @@
             "description": "Id package",
             "required": true,
             "schema": {
-              "type": "number",
-              "example": 1
+              "type": "string",
+              "example": "f27bb743-c7a5-3e29-9967-5f8b450ad5db"
             }
           }
         ],
