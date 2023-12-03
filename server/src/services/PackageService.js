@@ -9,6 +9,7 @@ const BaseService = require('./BaseService');
 const BadRequestError = require('../errors/BadRequestError');
 const ServerError = require('../errors/ServerError');
 const NotFoundError = require('../errors/NotFoundError');
+const BaseResponseError = require('../errors/BaseResponseError');
 
 class PackageService extends BaseService {
   // Desc: Implementasi singleton
@@ -45,119 +46,128 @@ class PackageService extends BaseService {
       const whereConditionsDestination = [];
       const whereConditionsPackage = [];
 
-      // date filtering
-      if (sdate && edate) {
-        if (sdate > edate) {
-          throw new BadRequestError(
-            'Start date cannot be greater than end date',
+      try {
+        // date filtering
+        if (sdate && edate) {
+          if (sdate > edate) {
+            throw new BadRequestError(
+              'Start date cannot be greater than end date',
+            );
+          }
+
+          const availablePackages = await Package.findAll(
+            {
+              include: [
+                {
+                  model: TransactionModel,
+                  attributes: ['startDate', 'endDate'],
+                  where: {
+                    startDate: {
+                      [Op.lt]: sdate,
+                    },
+                    endDate: {
+                      [Op.gt]: edate,
+                    },
+                  },
+                  required: true,
+                },
+              ],
+              attributes: ['id'],
+            },
+            { transaction },
           );
+
+          const packageIds = availablePackages.map(
+            (packageObj) => packageObj.id,
+          );
+
+          whereConditionsPackage.push({
+            package_id: {
+              [Op.in]: packageIds,
+            },
+          });
         }
 
-        const availablePackages = await Package.findAll(
+        // search filtering
+        if (search) {
+          whereConditionsDestination.push({
+            destinationName: {
+              [Op.like]: `%${search}%`,
+            },
+          });
+        }
+
+        // city filtering
+        if (city) {
+          whereConditionsDestination.push({
+            city: {
+              [Op.eq]: city,
+            },
+          });
+        }
+
+        // price filtering
+        if (pmin && pmax) {
+          if (pmax < pmin) {
+            throw new BadRequestError(
+              'Minimum price cannot be greater than maximum price',
+            );
+          }
+
+          whereConditionsPackage.push({
+            price: {
+              [Op.between]: [pmin, pmax],
+            },
+          });
+        }
+
+        // destination count filtering
+        if (ndest) {
+          whereConditionsPackage.push({
+            destination_count: {
+              [Op.eq]: ndest,
+            },
+          });
+        }
+
+        // get packages with validated filters
+        const packages = await Package.findAll(
           {
             include: [
               {
-                model: TransactionModel,
-                attributes: ['startDate', 'endDate'],
+                model: Destination,
+                attributes: ['destinationName', 'city'],
                 where: {
-                  startDate: {
-                    [Op.lt]: sdate,
-                  },
-                  endDate: {
-                    [Op.gt]: edate,
-                  },
+                  [Op.and]: whereConditionsDestination,
                 },
                 required: true,
               },
             ],
-            attributes: ['id'],
+            where: {
+              [Op.and]: whereConditionsPackage,
+            },
+            attributes: {
+              exclude: [
+                'description',
+                'serviceDuration',
+                'transactionCount',
+                'createdAt',
+                'updatedAt',
+                'deletedAt',
+              ],
+            },
+            transaction,
           },
           { transaction },
         );
 
-        const packageIds = availablePackages.map((packageObj) => packageObj.id);
-
-        whereConditionsPackage.push({
-          package_id: {
-            [Op.in]: packageIds,
-          },
-        });
-      }
-
-      // search filtering
-      if (search) {
-        whereConditionsDestination.push({
-          destinationName: {
-            [Op.like]: `%${search}%`,
-          },
-        });
-      }
-
-      // city filtering
-      if (city) {
-        whereConditionsDestination.push({
-          city: {
-            [Op.eq]: city,
-          },
-        });
-      }
-
-      // price filtering
-      if (pmin && pmax) {
-        if (pmax < pmin) {
-          throw new BadRequestError(
-            'Minimum price cannot be greater than maximum price',
-          );
+        return packages;
+      } catch (error) {
+        if (error instanceof BaseResponseError) {
+          throw error;
         }
-
-        whereConditionsPackage.push({
-          price: {
-            [Op.between]: [pmin, pmax],
-          },
-        });
+        throw new ServerError();
       }
-
-      // destination count filtering
-      if (ndest) {
-        whereConditionsPackage.push({
-          destination_count: {
-            [Op.eq]: ndest,
-          },
-        });
-      }
-
-      // get packages with validated filters
-      const packages = await Package.findAll(
-        {
-          include: [
-            {
-              model: Destination,
-              attributes: ['destinationName', 'city'],
-              where: {
-                [Op.and]: whereConditionsDestination,
-              },
-              required: true,
-            },
-          ],
-          where: {
-            [Op.and]: whereConditionsPackage,
-          },
-          attributes: {
-            exclude: [
-              'description',
-              'serviceDuration',
-              'transactionCount',
-              'createdAt',
-              'updatedAt',
-              'deletedAt',
-            ],
-          },
-          transaction,
-        },
-        { transaction },
-      );
-
-      return packages;
     };
 
     const packages = await this.createDbTransaction(findFilteredPackages);
@@ -233,19 +243,30 @@ class PackageService extends BaseService {
 
   // menemukan package berdasarkan username
   async getPackageByUsername(tourGuideId) {
-    try {
-      const userPackages = await Package.findAll({ where: { tourGuideId } });
-      if (!userPackages.length) {
-        throw new NotFoundError('Package tidak ditemukan');
+    const findPackageByUsername = async (transaction) => {
+      try {
+        const packages = await Package.findAll({
+          where: { tourGuideId },
+          attributes: ['id', 'packageName', 'price', 'serviceDuration'],
+          transaction,
+        });
+
+        if (!packages.length) {
+          throw new NotFoundError('Packages not found');
+        }
+
+        return packages;
+      } catch (error) {
+        if (error instanceof BaseResponseError) {
+          throw error;
+        }
+        throw new ServerError();
       }
-      return userPackages;
-    } catch (error) {
-      console.error(error);
-      if (error instanceof NotFoundError) {
-        throw error;
-      }
-      throw new ServerError();
-    }
+    };
+
+    const packages = await this.createDbTransaction(findPackageByUsername);
+
+    return packages;
   }
 
   // get detail package berdasarkan username
@@ -383,7 +404,7 @@ class PackageService extends BaseService {
 
         return packageDetail;
       } catch (error) {
-        if (error instanceof NotFoundError) {
+        if (error instanceof BaseResponseError) {
           throw error;
         }
         throw new ServerError();
