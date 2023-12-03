@@ -12,10 +12,6 @@ module.exports = {
         type: Sequelize.STRING,
         field: 'destination_name',
       },
-      imageUrl: {
-        type: Sequelize.STRING,
-        field: 'image_url',
-      },
       city: {
         allowNull: false,
         type: Sequelize.STRING,

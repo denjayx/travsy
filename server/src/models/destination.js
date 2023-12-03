@@ -20,9 +20,6 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.STRING,
       },
-      imageUrl: {
-        type: DataTypes.STRING,
-      },
       city: {
         allowNull: false,
         type: DataTypes.STRING,

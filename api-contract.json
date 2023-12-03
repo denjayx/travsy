@@ -1555,11 +1555,6 @@
                                     "type": "string",
                                     "example": "Tanah Lot"
                                 },
-                                "imageUrl": {
-                                    "description": "Diterima jika: image URL",
-                                    "type": "string",
-                                    "example": "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
-                                },
                                 "city": {
                                     "description": "Diterima jika: memilih dari dropdown list",
                                     "type": "string",
