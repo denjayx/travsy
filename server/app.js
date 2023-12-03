@@ -30,9 +30,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.static('upload'));
+app.use('/', swaggerUi.serve);
 
 // Routes
-app.use('/', swaggerUi.serve, swaggerUi.setup(apiContract));
+app.get('/', swaggerUi.setup(apiContract));
 
 app.route('/register').post(registerController);
 
