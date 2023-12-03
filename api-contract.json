@@ -338,25 +338,13 @@
                 }
             }
         },
-        "/user/{username}/histories": {
+        "/profile/histories": {
             "get": {
                 "tags": ["Transaction"],
                 "summary": "Mendapatkan riwayat transaksi user",
                 "security": [
                     {
                         "Bearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "username",
-                        "in": "path",
-                        "description": "Username user",
-                        "required": true,
-                        "schema": {
-                            "type": "number",
-                            "example": 1
-                        }
                     }
                 ],
                 "responses": {
@@ -406,7 +394,7 @@
                 }
             }
         },
-        "/user/{username}/histories/{transactionId}": {
+        "/profile/histories/{id}": {
             "get": {
                 "tags": ["Transaction"],
                 "summary": "Mendapatkan detail riwayat transaksi user",
@@ -417,17 +405,7 @@
                 ],
                 "parameters": [
                     {
-                        "name": "username",
-                        "in": "path",
-                        "description": "Username user",
-                        "required": true,
-                        "schema": {
-                            "type": "number",
-                            "example": 1
-                        }
-                    },
-                    {
-                        "name": "transactionId",
+                        "name": "id",
                         "in": "path",
                         "description": "Id transaksi",
                         "required": true,
@@ -481,25 +459,13 @@
                 }
             }
         },
-        "/user/{username}/packages": {
+        "/profile/packages": {
             "get": {
                 "tags": ["Package"],
                 "summary": "Mendapatkan paket wisata dari user",
                 "security": [
                     {
                         "Bearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "username",
-                        "in": "path",
-                        "description": "Username user",
-                        "required": true,
-                        "schema": {
-                            "type": "number",
-                            "example": 1
-                        }
                     }
                 ],
                 "responses": {
@@ -566,18 +532,6 @@
                         "Bearer": []
                     }
                 ],
-                "parameters": [
-                    {
-                        "name": "username",
-                        "in": "path",
-                        "description": "Username user",
-                        "required": true,
-                        "schema": {
-                            "type": "number",
-                            "example": 1
-                        }
-                    }
-                ],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -606,7 +560,7 @@
                 }
             }
         },
-        "/user/{username}/packages/{packageId}": {
+        "/profile/packages/{id}": {
             "get": {
                 "tags": ["Package"],
                 "summary": "Mendapatkan detail paket wisata dari user",
@@ -617,17 +571,7 @@
                 ],
                 "parameters": [
                     {
-                        "name": "username",
-                        "in": "path",
-                        "description": "Username user",
-                        "required": true,
-                        "schema": {
-                            "type": "number",
-                            "example": 1
-                        }
-                    },
-                    {
-                        "name": "packageId",
+                        "name": "id",
                         "in": "path",
                         "description": "Id package",
                         "required": true,
@@ -682,17 +626,7 @@
                 ],
                 "parameters": [
                     {
-                        "name": "username",
-                        "in": "path",
-                        "description": "Username user",
-                        "required": true,
-                        "schema": {
-                            "type": "number",
-                            "example": 1
-                        }
-                    },
-                    {
-                        "name": "packageId",
+                        "name": "id",
                         "in": "path",
                         "description": "Id package",
                         "required": true,
@@ -759,17 +693,7 @@
                 ],
                 "parameters": [
                     {
-                        "name": "username",
-                        "in": "path",
-                        "description": "Username user",
-                        "required": true,
-                        "schema": {
-                            "type": "number",
-                            "example": 1
-                        }
-                    },
-                    {
-                        "name": "packageId",
+                        "name": "id",
                         "in": "path",
                         "description": "Id package",
                         "required": true,
@@ -812,25 +736,13 @@
                 }
             }
         },
-        "/user/{username}/orders": {
+        "/profile/orders": {
             "get": {
                 "tags": ["Transaction"],
                 "summary": "Mendapatkan daftar pemesanan yang didapatkan user",
                 "security": [
                     {
                         "Bearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "username",
-                        "in": "path",
-                        "description": "Username user",
-                        "required": true,
-                        "schema": {
-                            "type": "number",
-                            "example": 1
-                        }
                     }
                 ],
                 "responses": {
@@ -880,7 +792,7 @@
                 }
             }
         },
-        "/user/{username}/orders/{orderId}": {
+        "/profile/orders/{id}": {
             "get": {
                 "tags": ["Transaction"],
                 "summary": "Mendapatkan detail pemesanan yang didapatkan user",
@@ -891,17 +803,7 @@
                 ],
                 "parameters": [
                     {
-                        "name": "username",
-                        "in": "path",
-                        "description": "Username user",
-                        "required": true,
-                        "schema": {
-                            "type": "number",
-                            "example": 1
-                        }
-                    },
-                    {
-                        "name": "orderId",
+                        "name": "id",
                         "in": "path",
                         "description": "Id order",
                         "required": true,
@@ -964,17 +866,7 @@
                 ],
                 "parameters": [
                     {
-                        "name": "username",
-                        "in": "path",
-                        "description": "Username user",
-                        "required": true,
-                        "schema": {
-                            "type": "number",
-                            "example": 1
-                        }
-                    },
-                    {
-                        "name": "orderId",
+                        "name": "id",
                         "in": "path",
                         "description": "Id order",
                         "required": true,
@@ -1205,13 +1097,13 @@
                 }
             }
         },
-        "/packages/{packageId}": {
+        "/packages/{id}": {
             "get": {
                 "tags": ["Package"],
                 "summary": "Mendapatkan detail paket wisata berdasarkan id",
                 "parameters": [
                     {
-                        "name": "packageId",
+                        "name": "id",
                         "in": "path",
                         "description": "Id package",
                         "required": true,
@@ -1262,7 +1154,7 @@
                 }
             }
         },
-        "/packages/{packageId}/pay": {
+        "/packages/{id}/pay": {
             "post": {
                 "tags": ["Transaction"],
                 "summary": "Membeli paket wisata",
@@ -1273,7 +1165,7 @@
                 ],
                 "parameters": [
                     {
-                        "name": "packageId",
+                        "name": "id",
                         "in": "path",
                         "description": "Id package",
                         "required": true,
@@ -1422,71 +1314,61 @@
             "profile": {
                 "type": "object",
                 "properties": {
-                    "account": {
-                        "type": "object",
-                        "properties": {
-                            "email": {
-                                "description": "Diterima jika: email sesuai format dan unik",
-                                "type": "string",
-                                "format": "email",
-                                "example": "johndoe@gmail.com"
-                            }
-                        }
+                    "email": {
+                        "description": "Diterima jika: email sesuai format dan unik",
+                        "type": "string",
+                        "format": "email",
+                        "example": "johndoe@gmail.com"
                     },
-                    "user": {
-                        "type": "object",
-                        "properties": {
-                            "avatarUrl": {
-                                "description": "Diterima jika: image URL",
-                                "type": "string",
-                                "example": "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
-                            },
-                            "firstName": {
-                                "description": "Diterima jika: terdiri dari 3-20 karakter huruf besar dan kapital, tidak boleh ada angka, spasi, dan simbol",
-                                "type": "string",
-                                "example": "John"
-                            },
-                            "lastName": {
-                                "description": "Diterima jika: terdiri dari 3-20 karakter huruf besar dan kapital, tidak boleh ada angka, spasi, dan simbol",
-                                "type": "string",
-                                "example": "Doe"
-                            },
-                            "biography": {
-                                "description": "Diterima jika: terdiri dari 3-100 karakter",
-                                "type": "string",
-                                "example": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-                            },
-                            "nik": {
-                                "description": "Diterima jika: 16 digit angka",
-                                "type": "string",
-                                "example": "1234567890123456"
-                            },
-                            "phone": {
-                                "description": "Diterima jika: 10-13 digit angka",
-                                "type": "string",
-                                "example": "081234567890"
-                            },
-                            "province": {
-                                "description": "Diterima jika: memilih dari dropdown list",
-                                "type": "string",
-                                "example": "Jawa Tengah"
-                            },
-                            "city": {
-                                "description": "Diterima jika: memilih dari dropdown list",
-                                "type": "string",
-                                "example": "Semarang"
-                            },
-                            "gender": {
-                                "description": "Diterima jika: terdiri dari tipe data enum yaitu L atau P, L = laki-laki, P = perempuan",
-                                "type": "string",
-                                "example": "L"
-                            },
-                            "cardNumber": {
-                                "description": "Diterima jika: 16 digit angka",
-                                "type": "string",
-                                "example": "1234567890123456"
-                            }
-                        }
+                    "avatarUrl": {
+                        "description": "Diterima jika: image URL",
+                        "type": "string",
+                        "example": "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
+                    },
+                    "firstName": {
+                        "description": "Diterima jika: terdiri dari 3-20 karakter huruf besar dan kapital, tidak boleh ada angka, spasi, dan simbol",
+                        "type": "string",
+                        "example": "John"
+                    },
+                    "lastName": {
+                        "description": "Diterima jika: terdiri dari 3-20 karakter huruf besar dan kapital, tidak boleh ada angka, spasi, dan simbol",
+                        "type": "string",
+                        "example": "Doe"
+                    },
+                    "biography": {
+                        "description": "Diterima jika: terdiri dari 3-100 karakter",
+                        "type": "string",
+                        "example": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                    },
+                    "nik": {
+                        "description": "Diterima jika: 16 digit angka",
+                        "type": "string",
+                        "example": "1234567890123456"
+                    },
+                    "phone": {
+                        "description": "Diterima jika: 10-13 digit angka",
+                        "type": "string",
+                        "example": "081234567890"
+                    },
+                    "province": {
+                        "description": "Diterima jika: memilih dari dropdown list",
+                        "type": "string",
+                        "example": "Jawa Tengah"
+                    },
+                    "city": {
+                        "description": "Diterima jika: memilih dari dropdown list",
+                        "type": "string",
+                        "example": "Semarang"
+                    },
+                    "gender": {
+                        "description": "Diterima jika: terdiri dari tipe data enum yaitu L atau P, L = laki-laki, P = perempuan",
+                        "type": "string",
+                        "example": "L"
+                    },
+                    "cardNumber": {
+                        "description": "Diterima jika: 16 digit angka",
+                        "type": "string",
+                        "example": "1234567890123456"
                     }
                 }
             },

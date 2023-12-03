@@ -9,13 +9,13 @@ const {
 const {
   registerController,
   loginController,
+  createPackageByUserController,
   getPackageListController,
   getPopularPackageListController,
   getPackageDetailController,
   getUserProfileController,
   getPackagesByUserController,
   getPackageDetailByUsernameController,
-  insertPackageByUserController,
   updateUserProfileController,
   updatePackageDetailByUsernameController,
   deletePackagesByUsernameAndIdController,
@@ -40,32 +40,35 @@ app.route('/login').post(loginController);
 
 app
   .route('/profile')
-  .get(verifyAuthorization, getUserProfileController)
+  .get(verifyAuthorization(), getUserProfileController)
   .put(
-    verifyAuthorization,
+    verifyAuthorization(),
     uploadImage(path.resolve('upload/avatar'), 'avatar'),
     updateUserProfileController,
   );
 
-app.route('/user/:username/packages').get(getPackagesByUserController);
-app.route('/user/:username/packages').post(insertPackageByUserController);
 app
-  .route('/user/:username/packages/:id')
-  .get(getPackageDetailByUsernameController);
+  .route('/profile/packages')
+  .post(
+    verifyAuthorization(),
+    uploadImage(path.resolve('upload/thumbnail', 'thumbnail')),
+    createPackageByUserController(),
+  )
+  .get(verifyAuthorization(), getPackagesByUserController);
+
 app
-  .route('/user/:username/packages/:id')
-  .put(updatePackageDetailByUsernameController);
-app
-  .route('/user/:username/packages/:id')
-  .delete(deletePackagesByUsernameAndIdController);
+  .route('/profile/packages/:id')
+  .get(verifyAuthorization(), getPackageDetailByUsernameController)
+  .put(verifyAuthorization(), updatePackageDetailByUsernameController)
+  .delete(verifyAuthorization(), deletePackagesByUsernameAndIdController);
 
 app.route('/packages').get(getPackageListController);
 
 app.route('/packages/popular').get(getPopularPackageListController);
 
-app.route('/packages/:packageId').get(getPackageDetailController);
+app.route('/packages/:id').get(getPackageDetailController);
 
 // Error handler
-app.use(errorHandler);
+app.use(errorHandler());
 
 module.exports = app;

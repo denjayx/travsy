@@ -55,21 +55,17 @@ class UserService extends BaseService {
         }
 
         return {
-          account: {
-            email: userProfile.Account.email,
-          },
-          user: {
-            avatarUrl: userProfile.avatarUrl,
-            firstName: userProfile.firstName,
-            lastName: userProfile.lastName,
-            biography: userProfile.biography,
-            nik: userProfile.nik,
-            phone: userProfile.phone,
-            province: userProfile.province,
-            city: userProfile.city,
-            gender: userProfile.gender,
-            cardNumber: userProfile.cardNumber,
-          },
+          email: userProfile.Account.email,
+          avatarUrl: userProfile.avatarUrl,
+          firstName: userProfile.firstName,
+          lastName: userProfile.lastName,
+          biography: userProfile.biography,
+          nik: userProfile.nik,
+          phone: userProfile.phone,
+          province: userProfile.province,
+          city: userProfile.city,
+          gender: userProfile.gender,
+          cardNumber: userProfile.cardNumber,
         };
       } catch (error) {
         if (error instanceof BaseResponseError) {
