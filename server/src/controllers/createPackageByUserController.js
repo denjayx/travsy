@@ -1,6 +1,6 @@
 const PackageService = require('../services/PackageService');
 
-const insertPackageByUserController = async (req, res, next) => {
+const createPackageByUserController = async (req, res, next) => {
   try {
     const { username } = req.params;
     const packageData = req.body;
@@ -20,4 +20,4 @@ const insertPackageByUserController = async (req, res, next) => {
   }
 };
 
-module.exports = insertPackageByUserController;
+module.exports = createPackageByUserController;

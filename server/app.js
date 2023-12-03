@@ -52,7 +52,7 @@ app
   .post(
     verifyAuthorization(),
     uploadImage(path.resolve('upload/thumbnail', 'thumbnail')),
-    createPackageByUserController(),
+    createPackageByUserController,
   )
   .get(verifyAuthorization(), getPackagesByUserController);
 
