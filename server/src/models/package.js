@@ -48,10 +48,12 @@ module.exports = (sequelize, DataTypes) => {
       destinationCount: {
         allowNull: false,
         type: DataTypes.INTEGER,
+        defaultValue: 0,
       },
       transactionCount: {
         allowNull: false,
         type: DataTypes.INTEGER,
+        defaultValue: 0,
       },
     },
     {

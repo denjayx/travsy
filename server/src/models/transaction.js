@@ -9,6 +9,14 @@ module.exports = (sequelize, DataTypes) => {
       this.Tourist = Transaction.belongsTo(models.User, {
         foreignKey: 'touristId',
       });
+      Transaction.addHook('afterCreate', async (transaction, options) => {
+        const tourPackage = await models.Package.findByPk(
+          transaction.packageId,
+          { transaction: options.transaction },
+        );
+        tourPackage.transactionCount += 1;
+        await tourPackage.save({ transaction: options.transaction });
+      });
     }
   }
   Transaction.init(
