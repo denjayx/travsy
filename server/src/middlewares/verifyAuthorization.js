@@ -2,7 +2,7 @@ const tokenUtil = require('../utils/tokenUtil');
 const BadRequestError = require('../errors/BadRequestError');
 const UnauthorizedError = require('../errors/UnauthorizedError');
 
-const verifyAuthorization = (req, res, next) => {
+const verifyAuthorization = () => (req, res, next) => {
   // get bearer token
   const { authorization } = req.headers;
 
