@@ -78,17 +78,17 @@ Proyek ini untuk kepentingan penyelesaian akademi kami di program SIB Dicoding C
 
 | Jenis Commit             | Format          | Contoh                                                |
 |--------------------------|-----------------|--------------------------------------------------------|
-| Penghapusan Fitur        | `feat:`         | menambahkan fitur baru XYZ                            |
+| Penambahan Fitur         | `feat:`         | menambahkan fitur baru XYZ                            |
 | Perbaikan Bug            | `fix:`          | memperbaiki bug yang menyebabkan ABC                  |
 | Perbaikan Kecil          | `chore:`        | melakukan perbaikan kecil yang tidak mempengaruhi perilaku program |
 | Optimisasi Kode          | `optimize:`     | meningkatkan performa fungsi XYZ                      |
-| Penghapusan Kode         | `refactor:`     | melakukan refaktor pada modul ABC                     |
+| Perbaikan Kode           | `refactor:`     | melakukan refaktor pada modul ABC                     |
 | Dokumentasi              | `docs:`         | memperbarui dokumentasi terkait dengan fitur XYZ      |
 | Uji                      | `test:`         | menambahkan uji untuk kasus ABC                       |
 | Pemeliharaan Dependensi  | `chore(deps):`  | memperbarui dependensi ke versi terbaru               |
 | Pembaruan Konfigurasi    | `chore(config):`| memperbarui konfigurasi untuk mendukung fitur baru    |
 | Penghapusan Fitur        | `feat:`         | menghapus fitur XYZ yang sudah tidak diperlukan lagi  |
-| Penambahan Fitur (WIP)   | `WIP:`          | Menambahkan fitur XYZ                                 |
+| Work In Progress (WIP)   | `WIP:`          | Menambahkan fitur XYZ on progres                      |
 
 Pastikan untuk menyesuaikan placeholder seperti "XYZ" dan "ABC" sesuai dengan konteks sebenarnya dari commit message yang digunakan dalam proyek Anda.
 
