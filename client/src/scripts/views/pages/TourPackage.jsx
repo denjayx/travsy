@@ -1,27 +1,13 @@
-import SearchWisata from "../components/Search/SearchWisata";
-import  Text from "../components/Text/index";
-import Input from "../components/Input/index";
-import Button from "../components/Buttons/Button";
-import PopularPackage from "../components/Popular/PopularPackage";
-import Footer from "../components/Footer/footer";
-
-
-
-
-
+import SearchWisata from '../components/Search/SearchWisata'
+import Footer from '../components/Footer/footer'
+import PopularPackage from '../components/Popular/PopularPackage'
 
 export default function TourPackage() {
   return (
-		<>
-			
-   
-   <SearchWisata/>
-   <Text/>
-   <Input/>
-   <Button/>
+    <section className=" mt-32 ">
+      <SearchWisata />
       <PopularPackage />
       <Footer />
-			
-		</>
-	);
+    </section>
+  )
 }
