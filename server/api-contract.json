@@ -5,7 +5,7 @@
     "version": "1.0",
     "description": "Spesifikasi API untuk aplikasi travel Travsy"
   },
-  "servers": [{ "url": "http://localhost:3000" }],
+  "servers": [{ "url": "http://172.188.98.99:3000/" }],
   "paths": {
     "/register": {
       "post": {
