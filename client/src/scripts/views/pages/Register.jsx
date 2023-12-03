@@ -1,74 +1,46 @@
-import Logo from '../../../assets/logo.svg'
+import InputEmail from '../components/Input/InputEmail'
+import InputPassword from '../components/Input/InputPassword'
+import InputText from '../components/Input/InputText'
 
 const Register = () => {
   return (
-    <section className="px-13 container mt-32 w-5/12 rounded-3xl bg-white py-14  ">
-      <img src={Logo} alt="Logo" className="w-100 h-10 " />
-      <label className="my-5 block text-md font-bold text-primary-950 ">
-        Buat Akun Travsy.
-      </label>
-
-      <form className="mx-auto ">
-        <div className="mb-5">
-          <label
-            htmlFor="email"
-            className="mb-1 block text-base font-medium text-primary-950 "
-          >
-            Email
-          </label>
-          <input
-            type="email"
-            id="email"
-            className="focus:ring-blue-500 focus:border-blue block w-full rounded-xl border border-gray-400 bg-white p-3 text-base text-gray-900 shadow-sm"
-            placeholder="Emailkamu@gmail.com"
-            required
-          />
-        </div>
-        <div className="mb-5">
-          <label
-            htmlFor="nama-pengguna"
-            className="mb-1 block text-base font-medium text-primary-950 "
-          >
-            Nama Pengguna
-          </label>
-          <input
-            type="text"
-            id="nama-pengguna"
-            className="focus:ring-blue-500 focus:border-blue block w-full rounded-xl border border-gray-400 bg-white p-3 text-base text-gray-900 shadow-sm"
-            placeholder="Nama Pengguna"
-            required
-          />
-        </div>
-        <div className="mb-5">
-          <label
-            htmlFor="kata-sandi"
-            className="mb-1 block text-base font-medium text-primary-950 "
-          >
-            Kata Sandi
-          </label>
-          <input
-            type="password"
-            id="kata-sandi"
-            className="focus:ring-blue-500 focus:border-blue block w-full rounded-xl border border-gray-400 bg-white p-3 text-base text-gray-900 shadow-sm"
-            placeholder="Kata Sandi"
-            required
-          />
-        </div>
-        <div className="mb-5">
-          <label
-            htmlFor="konfirmasi-kata-sandi"
-            className="mb-1 block text-base font-medium text-primary-950 "
-          >
-            Konfirmasi Kata Sandi
-          </label>
-          <input
-            type="password"
-            id="konfirmasi-kata-sandi"
-            className="focus:ring-blue-500 focus:border-blue block w-full rounded-xl border border-gray-400 bg-white p-3 text-base text-gray-900 shadow-sm"
-            placeholder="Konfirmasi Kata Sandi"
-            required
-          />
-        </div>
+    <section className="flex flex-col gap-3 ">
+      <h3 className="text-md font-bold text-primary-950">
+        Masuk ke akun Travsy Anda.
+      </h3>
+      <form className="flex flex-col gap-3">
+        <InputEmail
+          id="email"
+          label="email"
+          condition="default"
+          placeholder="EmailKamu@mail.com"
+        >
+          Email
+        </InputEmail>
+        <InputText
+          condition="default"
+          label="username"
+          id="username"
+          placeholder="Buat Nama Pengguna"
+        >
+          Nama Pengguna
+        </InputText>
+        <InputPassword
+          condition="default"
+          label="password"
+          id="password"
+          placeholder="Masukkan Kata Sandi"
+        >
+          Kata Sandi
+        </InputPassword>
+        <InputPassword
+          condition="default"
+          label="confirm-password"
+          id="confirm-password"
+          placeholder="Konfirmasi Kata Sandi"
+        >
+          Konfirmasi Kata Sandi
+        </InputPassword>
 
         <button
           type="submit"
