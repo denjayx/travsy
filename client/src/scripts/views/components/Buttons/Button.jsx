@@ -1,5 +1,5 @@
 // eslint-disable-next-line react/prop-types
-const Button = ({ variant, children, ...props }) => {
+const Button = ({ variant, children, className, ...props }) => {
   const variants = {
     primary:
       'bg-primary-500 text-white border border-primary-500 shadow-btn hover:bg-primary-600 duration-300 ease-in-out',
@@ -8,10 +8,10 @@ const Button = ({ variant, children, ...props }) => {
     text: 'text-primary-700 text-left',
   }
 
-  const className = `py-3 px-6 rounded-full ${variants[variant]}`
+  const defaultClassName = `py-3 px-6 rounded-full ${variants[variant]} ${className}`
 
   return (
-    <button className={className} {...props}>
+    <button className={defaultClassName} {...props}>
       {children}
     </button>
   )
