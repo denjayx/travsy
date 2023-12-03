@@ -1,10 +1,10 @@
 import Card from '../Cards/Card'
 import Paragraph from '../Paragraph/Paragraph'
 
-const PopularPackage = () => {
+const PopularPackage = (className) => {
   return (
     <section
-      id="popular"
+      id="popular  "
       className="container mt-14 flex flex-col gap-8 lg:mt-32"
     >
       <div id="popularText" className="flex flex-col gap-4 lg:w-6/12">
