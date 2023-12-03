@@ -1,6 +1,8 @@
 const express = require('express');
+const swaggerUi = require('swagger-ui-express');
 const cors = require('cors');
 const path = require('path');
+const apiContract = require('./api-contract.json');
 const {
   errorHandler,
   verifyAuthorization,
@@ -30,9 +32,7 @@ app.use(express.json());
 app.use(express.static('upload'));
 
 // Routes
-app.get('/', (req, res) => {
-  res.json({ message: 'Welcome to Travsy' });
-});
+app.use('/', swaggerUi.serve, swaggerUi.setup(apiContract));
 
 app.route('/register').post(registerController);
 

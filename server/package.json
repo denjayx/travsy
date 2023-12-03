@@ -32,6 +32,7 @@
     "jsonwebtoken": "^9.0.2",
     "multer": "^1.4.5-lts.1",
     "mysql2": "^3.6.3",
-    "sequelize": "^6.35.0"
+    "sequelize": "^6.35.0",
+    "swagger-ui-express": "^5.0.0"
   }
 }
