@@ -19,6 +19,7 @@ export default {
       },
     },
     colors: {
+      red: '#D70000',
       white: '#ffffff',
       primary: {
         50: '#f0faff',
