@@ -27,7 +27,7 @@ const Steps = () => {
   ]
   return (
     <section className="container mt-24 space-y-6">
-      <div className="space-y-4 lg:w-10/12 xl:w-6/12">
+      <div className="mx-auto space-y-4 text-center lg:w-10/12 xl:w-6/12">
         <h3 className="text-xl font-bold text-primary-950">3 Langkah Mudah?</h3>
         <Paragraph>
           Kesulitan dalam memesan paket liburan sudah tidak jaman! Hanya dengan
