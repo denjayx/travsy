@@ -4,7 +4,7 @@ import Paragraph from '../Paragraph/Paragraph'
 
 const Footer = () => {
   return (
-    <section className="container grid gap-6 py-12 text-white md:w-auto lg:grid-cols-2 lg:gap-12">
+    <section className="container mt-24 grid gap-6 py-12 text-white md:w-auto lg:grid-cols-2 lg:gap-12">
       <div id="desc">
         <Logo variant="white" />
         <Paragraph color="white">
