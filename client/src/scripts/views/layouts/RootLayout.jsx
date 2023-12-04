@@ -13,7 +13,7 @@ export default function RootLayout() {
         <Outlet />
       </main>
 
-      <footer className="mt-auto w-full bg-primary-600">
+      <footer className="mt-auto w-full bg-primary-500">
         <Footer />
       </footer>
     </>
