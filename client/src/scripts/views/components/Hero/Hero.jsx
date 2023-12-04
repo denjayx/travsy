@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unknown-property */
 import { NavLink } from 'react-router-dom'
 import Button from '../Buttons/Button'
 import HeroImage from '../../../../assets/images/hero-image.png'
@@ -27,7 +26,7 @@ const Hero = () => {
         </div>
         <div className="mt-12 flex items-center justify-start gap-2">
           <svg
-            class="h-2 w-2 text-primary-700"
+            className="h-2 w-2 text-primary-700"
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -35,9 +34,9 @@ const Hero = () => {
           >
             <path
               stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
               d="m1 1 4 4 4-4"
             />
           </svg>
