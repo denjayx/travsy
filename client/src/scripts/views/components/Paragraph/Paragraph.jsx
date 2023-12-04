@@ -1,6 +1,12 @@
 /* eslint-disable react/prop-types */
-const Paragraph = ({ children, ...props }) => {
-  const className = `text-base text-gray-700`
+const Paragraph = ({ children, color, ...props }) => {
+  let textColor = 'text-gray-700'
+
+  if (color === 'white') {
+    textColor = 'text-white'
+  }
+
+  const className = `text-base ${textColor}`
   return (
     <p className={className} {...props}>
       {children}
