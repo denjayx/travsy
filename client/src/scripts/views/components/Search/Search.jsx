@@ -1,11 +1,9 @@
-import Button from '../Buttons/Button'
+import SearchWisata from './SearchWisata'
 
 const Search = () => {
   return (
     <section>
-      <Button variant="primary" className="rounded-xl">
-        Cari
-      </Button>
+      <SearchWisata />
     </section>
   )
 }
