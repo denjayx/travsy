@@ -12,6 +12,7 @@ const {
   registerController,
   loginController,
   createPackageByUserController,
+  createTransactionController,
   getPackageListController,
   getPopularPackageListController,
   getPackageDetailController,
@@ -68,6 +69,10 @@ app.route('/packages').get(getPackageListController);
 app.route('/packages/popular').get(getPopularPackageListController);
 
 app.route('/packages/:id').get(getPackageDetailController);
+
+app
+  .route('/packages/:id/pay')
+  .post(verifyAuthorization(), createTransactionController);
 
 // Error handler
 app.use(errorHandler());

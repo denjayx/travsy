@@ -39,10 +39,12 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.ENUM,
         values: ['menunggu', 'terkonfirmasi', 'ditolak', 'selesai'],
+        defaultValue: 'menunggu',
       },
       orderDate: {
         allowNull: false,
         type: DataTypes.DATEONLY,
+        defaultValue: new Date().toISOString().split('T')[0],
       },
       startDate: {
         allowNull: false,
