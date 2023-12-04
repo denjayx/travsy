@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import Logo from '../../../../assets/logo.svg'
 import Button from '../Buttons/Button'
 import { NavLink } from 'react-router-dom'
+import Logo from '../Logo/Logo'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -10,7 +10,7 @@ export default function Navbar() {
     <nav className="container fixed inset-x-0 top-0 z-50 flex w-full items-center justify-between gap-12 bg-primary-50 py-6">
       <div className="flex items-center">
         <NavLink to="/">
-          <img src={Logo} className="w-100 mr-2 h-10" alt="Logo" />
+          <Logo variant="blue" />
         </NavLink>
       </div>
       <div className="block text-primary-600 lg:hidden">
