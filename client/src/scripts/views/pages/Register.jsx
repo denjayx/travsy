@@ -6,14 +6,14 @@ const Register = () => {
   return (
     <section className="flex flex-col gap-3 ">
       <h3 className="text-md font-bold text-primary-950">
-        Masuk ke akun Travsy Anda.
+       Buat akun Travsy Anda.
       </h3>
       <form className="flex flex-col gap-3">
         <InputEmail
           id="email"
           label="email"
           condition="default"
-          placeholder="EmailKamu@mail.com"
+          placeholder="emailkamu@mail.com"
         >
           Email
         </InputEmail>
@@ -51,10 +51,10 @@ const Register = () => {
         </button>
 
         <label className="mt-3 block text-center text-base text-primary-950 ">
-          Daftar jadi Tour Guide{' '}
+          Daftar jadi Tour Guide {' '}
           <span className="font-semibold  text-primary-700 underline underline-offset-2">
             <a href="#">disini</a>
-          </span>{' '}
+          </span>
         </label>
       </form>
     </section>
