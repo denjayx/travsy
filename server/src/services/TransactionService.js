@@ -149,9 +149,10 @@ class TransactionService extends BaseService {
 
   async getDetailOrder(username, id) {}
 
+  // get transaction history by username
   async getHistoryTransactionByUsername(username) {
     try {
-      const transactions = await Transaction.findAll({
+      const transactions = await TransactionModel.findAll({
         where: {
           touristId: username,
         },
@@ -179,6 +180,38 @@ class TransactionService extends BaseService {
           'Terjadi kesalahan saat mengambil data transaksi',
           error,
         );
+      }
+    }
+  }
+
+  // get detail transaction history by username and id
+  async getDetailHistoryTransactionByUsername(username, id) {
+    try {
+      // Cari transaksi berdasarkan username dan id
+      const transaction = await TransactionModel.findOne({
+        where: {
+          id,
+        },
+        include: [
+          {
+            model: User,
+            where: {
+              username,
+            },
+          },
+        ],
+      });
+
+      if (!transaction) {
+        throw new NotFoundError('Transaction not found');
+      }
+
+      return transaction;
+    } catch (error) {
+      if (error instanceof NotFoundError) {
+        throw error;
+      } else {
+        throw new ServerError('Error fetching transaction details');
       }
     }
   }

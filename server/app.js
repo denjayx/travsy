@@ -20,6 +20,7 @@ const {
   getPackagesByUserController,
   getPackageDetailByUsernameController,
   getTransactionHistoriesController,
+  getDetailTransactionHistoriesController,
   getOrderListContoller,
   updateUserProfileController,
   updatePackageDetailByUsernameController,
@@ -76,6 +77,10 @@ app.route('/packages/:id').get(getPackageDetailController);
 
 // Transaction service
 app.route('/user/:username/histories').get(getTransactionHistoriesController);
+app
+  .route('/user/:username/histories/:id')
+  .get(getDetailTransactionHistoriesController);
+
 app
   .route('/packages/:id/pay')
   .post(verifyAuthorization(), createTransactionController);

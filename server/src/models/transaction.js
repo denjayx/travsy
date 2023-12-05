@@ -6,9 +6,8 @@ module.exports = (sequelize, DataTypes) => {
       this.Package = Transaction.belongsTo(models.Package, {
         foreignKey: 'packageId',
       });
-      this.Tourist = Transaction.belongsTo(models.User, {
+      this.User = Transaction.belongsTo(models.User, {
         foreignKey: 'touristId',
-        as: 'Tourist',
       });
       Transaction.addHook('afterCreate', async (transaction, options) => {
         const tourPackage = await models.Package.findByPk(
