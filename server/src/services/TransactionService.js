@@ -97,6 +97,7 @@ class TransactionService extends BaseService {
     return token;
   }
 
+  // get semua order
   async getOrderList(username) {
     const findOrderList = async (transaction) => {
       try {
@@ -122,7 +123,7 @@ class TransactionService extends BaseService {
 
         const mappedOrderList = await Promise.all(
           orderList.map(async (order) => {
-            const tourist = await order.getTourist({
+            const tourist = await order.getUser({
               attributes: ['avatarUrl', 'firstName', 'lastName'],
               transaction,
             });
@@ -138,6 +139,7 @@ class TransactionService extends BaseService {
 
         return mappedOrderList;
       } catch (error) {
+        console.error(error);
         throw new ServerError();
       }
     };
@@ -147,7 +149,60 @@ class TransactionService extends BaseService {
     return orderList;
   }
 
-  async getDetailOrder(username, id) {}
+  // get order berdasarkan id
+  async getDetailOrder(username, id) {
+    const findOrderList = async (transaction) => {
+      try {
+        const order = await TransactionModel.findByPk(id, {
+          include: [
+            {
+              model: Package,
+              attributes: ['id', 'packageName'],
+            },
+            {
+              model: User,
+              attributes: ['username', 'firstName', 'lastName'],
+            },
+          ],
+          transaction,
+        });
+
+        return order;
+      } catch (error) {
+        console.error(error);
+        throw new ServerError();
+      }
+    };
+
+    const orderList = await this.createDbTransaction(findOrderList);
+
+    return orderList;
+  }
+
+  // patch untuk patch order
+  async patchOrderForStatus(username, id, status) {
+    try {
+      console.log(id);
+      console.log(status);
+      const updatedOrder = await TransactionModel.update(
+        { status },
+        {
+          where: {
+            id,
+          },
+        },
+      );
+
+      return updatedOrder;
+    } catch (error) {
+      console.error(error);
+      if (error instanceof NotFoundError) {
+        throw error;
+      } else {
+        throw new ServerError('Gagal memperbarui status pesanan', error);
+      }
+    }
+  }
 
   // get transaction history by username
   async getHistoryTransactionByUsername(username) {

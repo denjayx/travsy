@@ -21,6 +21,9 @@ const {
   getPackageDetailByUsernameController,
   getTransactionHistoriesController,
   getDetailTransactionHistoriesController,
+  getOrderController,
+  getOrderControllerById,
+  patchOrderController,
   getOrderListContoller,
   updateUserProfileController,
   updatePackageDetailByUsernameController,
@@ -80,6 +83,10 @@ app.route('/user/:username/histories').get(getTransactionHistoriesController);
 app
   .route('/user/:username/histories/:id')
   .get(getDetailTransactionHistoriesController);
+
+app.route('/user/:username/orders').get(getOrderController);
+app.route('/user/:username/orders/:id').get(getOrderControllerById);
+app.route('/user/:username/orders/:id').patch(patchOrderController);
 
 app
   .route('/packages/:id/pay')
