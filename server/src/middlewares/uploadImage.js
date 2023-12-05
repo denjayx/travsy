@@ -8,7 +8,6 @@ const uploadImage = (destination, fileKey) => {
       cb(null, destination);
     },
     filename: (req, file, cb) => {
-      // eslint-disable-next-line prefer-template
       cb(null, Date.now() + '.jpg');
     },
   });

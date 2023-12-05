@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       });
       this.Tourist = Transaction.belongsTo(models.User, {
         foreignKey: 'touristId',
+        as: 'Tourist',
       });
       Transaction.addHook('afterCreate', async (transaction, options) => {
         const tourPackage = await models.Package.findByPk(
@@ -39,10 +40,12 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.ENUM,
         values: ['menunggu', 'terkonfirmasi', 'ditolak', 'selesai'],
+        defaultValue: 'menunggu',
       },
       orderDate: {
         allowNull: false,
         type: DataTypes.DATEONLY,
+        defaultValue: new Date().toISOString().split('T')[0],
       },
       startDate: {
         allowNull: false,

@@ -29,5 +29,6 @@ module.exports = {
     'class-methods-use-this': 'off',
     'object-curly-newline': 'off',
     'import/no-extraneous-dependencies': 'off',
+    'prefer-template': 'off',
   },
 };

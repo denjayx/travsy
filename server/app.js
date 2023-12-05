@@ -12,6 +12,7 @@ const {
   registerController,
   loginController,
   createPackageByUserController,
+  createTransactionController,
   getPackageListController,
   getPopularPackageListController,
   getPackageDetailController,
@@ -19,6 +20,7 @@ const {
   getPackagesByUserController,
   getPackageDetailByUsernameController,
   getTransactionHistoriesController,
+  getOrderListContoller,
   updateUserProfileController,
   updatePackageDetailByUsernameController,
   deletePackagesByUsernameAndIdController,
@@ -64,6 +66,8 @@ app
   .put(verifyAuthorization(), updatePackageDetailByUsernameController)
   .delete(verifyAuthorization(), deletePackagesByUsernameAndIdController);
 
+app.route('/prodile/orders').get(verifyAuthorization(), getOrderListContoller);
+
 app.route('/packages').get(getPackageListController);
 
 app.route('/packages/popular').get(getPopularPackageListController);
@@ -72,6 +76,9 @@ app.route('/packages/:id').get(getPackageDetailController);
 
 // Transaction service
 app.route('/user/:username/histories').get(getTransactionHistoriesController);
+app
+  .route('/packages/:id/pay')
+  .post(verifyAuthorization(), createTransactionController);
 
 // Error handler
 app.use(errorHandler());
