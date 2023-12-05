@@ -18,6 +18,7 @@ const {
   getUserProfileController,
   getPackagesByUserController,
   getPackageDetailByUsernameController,
+  getTransactionHistoriesController,
   updateUserProfileController,
   updatePackageDetailByUsernameController,
   deletePackagesByUsernameAndIdController,
@@ -68,6 +69,9 @@ app.route('/packages').get(getPackageListController);
 app.route('/packages/popular').get(getPopularPackageListController);
 
 app.route('/packages/:id').get(getPackageDetailController);
+
+// Transaction service
+app.route('/user/:username/histories').get(getTransactionHistoriesController);
 
 // Error handler
 app.use(errorHandler());
