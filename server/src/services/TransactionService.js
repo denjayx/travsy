@@ -1,10 +1,11 @@
+const { Op } = require('sequelize');
 const axios = require('axios');
 const { v4: uuidv4 } = require('uuid');
 const {
   PAYMENT_API_ENDPOINT,
   PAYMENT_API_KEY,
 } = require('../../config/payment');
-const { Transaction: TransactionModel, User } = require('../models');
+const { Transaction: TransactionModel, User, Package } = require('../models');
 const BaseService = require('./BaseService');
 const BaseResponseError = require('../errors/BaseResponseError');
 const NotFoundError = require('../errors/NotFoundError');
@@ -83,7 +84,6 @@ class TransactionService extends BaseService {
 
         return token;
       } catch (error) {
-        console.log(error);
         if (error instanceof BaseResponseError) {
           throw error;
         }
@@ -94,6 +94,56 @@ class TransactionService extends BaseService {
     const token = await this.createDbTransaction(insertData);
 
     return token;
+  }
+
+  async getOrderList(username) {
+    const findOrderList = async (transaction) => {
+      try {
+        const tourPackageList = await Package.findAll({
+          where: { tourGuideId: username },
+          attributes: ['id'],
+          transaction,
+        });
+
+        const packageIdList = await tourPackageList.map(
+          (tourPackage) => tourPackage.id,
+        );
+
+        const orderList = await TransactionModel.findAll({
+          where: { packageId: { [Op.in]: packageIdList } },
+          include: {
+            model: Package,
+            attributes: ['id', 'packageName'],
+          },
+          attributes: ['id', 'packageId', 'touristId', 'status', 'orderDate'],
+          transaction,
+        });
+
+        const mappedOrderList = await Promise.all(
+          orderList.map(async (order) => {
+            const tourist = await order.getTourist({
+              attributes: ['avatarUrl', 'firstName', 'lastName'],
+              transaction,
+            });
+
+            const mappedOrder = {
+              tourist,
+              transaction: order,
+            };
+
+            return mappedOrder;
+          }),
+        );
+
+        return mappedOrderList;
+      } catch (error) {
+        throw new ServerError();
+      }
+    };
+
+    const orderList = await this.createDbTransaction(findOrderList);
+
+    return orderList;
   }
 }
 
