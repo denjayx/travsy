@@ -1,4 +1,4 @@
-const { Op } = require('sequelize');
+const { Op, Transaction } = require('sequelize');
 const axios = require('axios');
 const { v4: uuidv4 } = require('uuid');
 const {
@@ -145,6 +145,8 @@ class TransactionService extends BaseService {
 
     return orderList;
   }
+
+  async getDetailOrder(username, id) {}
 }
 
 module.exports = TransactionService;
