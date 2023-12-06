@@ -15,7 +15,7 @@ export default function Login() {
           id="email"
           label="email"
           condition="default"
-          placeholder="deni@mail.com"
+          placeholder="masukan email @gmail.com"
         >
           Email
         </InputEmail>
