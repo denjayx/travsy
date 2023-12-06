@@ -21,6 +21,7 @@
                     "type": "object",
                     "properties": {
                       "username": {
+                        "description": "Diterima jika: tidak mengandung huruf besar, spasi, dan simbol selain underscore",
                         "type": "string",
                         "example": "johndoe"
                       }
@@ -39,7 +40,7 @@
                         "description": "Diterima jika: terdiri dari 5-25 character, merupakan kombinasi dari huruf kecil, huruf besar, angka, dan simbol",
                         "type": "string",
                         "format": "password",
-                        "example": "$Pander#800@"
+                        "example": "$Pander800"
                       },
                       "role": {
                         "description": "Diterima jika: terdiri dari tipe data enum yaitu tourist atau tour guide",
