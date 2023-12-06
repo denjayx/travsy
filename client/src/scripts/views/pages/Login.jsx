@@ -1,8 +1,5 @@
 import InputPassword from '../components/Input/InputPassword'
 import InputEmail from '../components/Input/InputEmail'
-{/*
-import InputText from '../components/Input/InputText' 
-*/}
 
 export default function Login() {
   return (
@@ -15,7 +12,7 @@ export default function Login() {
           id="email"
           label="email"
           condition="default"
-          placeholder="masukan email @gmail.com"
+          placeholder="Masukkan email yang terdaftar"
         >
           Email
         </InputEmail>
@@ -23,28 +20,26 @@ export default function Login() {
           condition="default"
           label="password"
           id="password"
-          placeholder="Masukkan Password"
+          placeholder="Masukkan Kata Sandi"
         >
-          Password
+          Kata Sandi
         </InputPassword>
-        {/* 
-        <InputText
-          condition="default"
-          label="username"
-          id="username"
-          placeholder="Buat Nama Pengguna"
+
+        <button
+          type="submit"
+          className="focus:ring-blue-300 container my-4 rounded-3xl bg-primary-500 px-6 py-3
+          text-center text-base font-medium text-white hover:bg-primary-600 focus:outline-none focus:ring-4"
         >
-          Nama Pengguna
-        </InputText>
-        */}
-        <button type="submit" className="bg-primary-600 text-white py-3 px-6 rounded-full">
-          Login
+          Masuk
         </button>
-        <div className="flex justify-center">
-          <p className="text-blue-500">
-            Belum punya akun? <a href="/register" className="underline">Buat akun</a>
-          </p>
-        </div>
+
+        <label className="mt-3 block text-center text-base text-primary-950 ">
+          Belum punya akun?{' '}
+          <span className="font-semibold  text-primary-700 underline underline-offset-2">
+            <a href="/register">Buat Akun</a>
+          </span>
+        </label>
+        
       </form>
     </section>
   )

@@ -1,48 +1,45 @@
-import logowhite from '../../../../assets/logo-white.svg'
+import { Link } from 'react-router-dom'
+import Logo from '../Logo/Logo'
+import Paragraph from '../Paragraph/Paragraph'
 
 const Footer = () => {
   return (
-    <footer className="bg-primary-500">
-      <div className="flex w-full flex-col items-start justify-start gap-16 md:flex-row md:gap-10">
-        <div className="flex flex-col items-start justify-start gap-2.5">
-          <img
-            className="h-20 w-20 md:h-auto md:w-auto"
-            src={logowhite}
-            alt="logo_One"
-          />
-          <span className="text-base text-white md:max-w-full">
-            Jelajahi keindahan pulau Bali dengan pilihan destinasi menarik dari
-            kami. Setiap tempat memiliki cerita dan keunikan tersendiri yang
-            menunggu untuk Anda temukan. Yuk segera pesan layanan kami.
-          </span>
+    <section className="container mt-24 grid gap-6 py-12 text-white md:w-auto lg:grid-cols-2 lg:gap-12">
+      <div id="desc">
+        <Logo variant="white" />
+        <Paragraph color="white">
+          Jelajahi keindahan pulau Bali dengan pilihan destinasi menarik dari
+          kami. Setiap tempat memiliki cerita dan keunikan tersendiri yang
+          menunggu untuk Anda temukan.Yuk segera pesan layanan kami.
+        </Paragraph>
+      </div>
+      <div
+        id="links"
+        className="grid gap-6 md:grid-cols-3 md:place-content-start"
+      >
+        <div id="link" className="flex flex-col">
+          <h5 className="mb-1 text-md font-semibold text-white">Tautan</h5>
+          <Link to="/package">Paket Wisata</Link>
+          <Link to="/history">Riwayat</Link>
         </div>
-        <div className="flex w-auto flex-col items-start justify-start gap-4">
-          <span className="w-auto text-xl text-white">Tautan</span>
-          <div className="flex w-auto flex-col items-start justify-start gap-[5px]">
-            <span className="w-auto text-base text-white">Paket Wisata</span>
-            <span className="w-auto text-base text-white">Riwayat</span>
-          </div>
+        <div id="link" className="flex flex-col">
+          <h5 className="mb-1 text-md font-semibold text-white">Layanan</h5>
+          <Link to="/package">Tour Guide</Link>
+          <Link to="/package">Paket Wisata</Link>
         </div>
-        <div className="flex w-auto flex-col items-start justify-start gap-4">
-          <span className="w-auto text-xl text-white">Layanan</span>
-          <div className="flex w-auto flex-col items-start justify-start">
-            <span className="w-auto text-base text-white">Tour Guide</span>
-            <span className="w-auto text-base text-white">Paket Wisata</span>
-          </div>
-        </div>
-        <div className="flex w-auto flex-col items-start justify-start gap-4">
-          <span className="w-auto text-xl text-white">Kontak</span>
-          <div className="flex w-auto flex-col items-start justify-start">
-            <span className="w-auto text-base text-white">
-              official@travsy.id
-            </span>
-            <span className="w-auto text-base text-white">
-              Sleman, Yogyakarta
-            </span>
-          </div>
+        <div id="link" className="flex flex-col">
+          <h5 className="mb-1 text-md font-semibold text-white">Layanan</h5>
+          <a href="mailto:official@travsy.id">Kontak</a>
+          <a
+            href="https://maps.app.goo.gl/wwFZcdusFQdEB3fz5"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Sleman, Yogyakarta
+          </a>
         </div>
       </div>
-    </footer>
+    </section>
   )
 }
 
