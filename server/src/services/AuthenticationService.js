@@ -62,16 +62,11 @@ class AuthenticationService extends BaseService {
    * @param {string} email - The email associated with the user account.
    * @param {string} password - The password to verify.
    * @returns {Object} The authenticated user account.
-   * @throws {BadRequestError} If email or password is missing.
    * @throws {UnauthorizedError} If the password is incorrect.
    * @throws {ServerError} If an unexpected error occurs during verification.
    */
-  async verifyAccount(email, password) {
+  async verifyAccount({ email, password }) {
     try {
-      if (!(password && email)) {
-        throw new BadRequestError('Email and password required');
-      }
-
       const accountService = AccountService.getInstance();
       const account = await accountService.getAccountByEmail(email, [
         'id',

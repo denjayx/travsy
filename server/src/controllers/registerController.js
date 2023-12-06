@@ -24,7 +24,6 @@ const registerController = async (req, res, next) => {
           .messages({
             'string.pattern.base':
               'Password must be 5-25 characters and include at least one lowercase letter, one uppercase letter, one number, and one special character.',
-            'any.required': 'Password is required.',
           }),
 
         role: Joi.string().valid('tourist', 'tour guide').required().messages({
