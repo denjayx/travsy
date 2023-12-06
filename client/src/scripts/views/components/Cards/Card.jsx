@@ -2,7 +2,7 @@ import CardImage from '../../../../assets/images/card-image.png'
 import Avatar from '../../../../assets/avatar.png'
 import Labels from '../Labels/Lables'
 
-const Card = () => {
+const   Card = () => {
   return (
     <article className="flex flex-col gap-4 rounded-2xl bg-white p-6 max-xl:flex-shrink-0 max-md:w-full md:w-6/12 lg:w-4/12">
       <figure className="h-64 w-full overflow-hidden rounded-lg">
