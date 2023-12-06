@@ -27,11 +27,12 @@ const PopularPackage = ({ className }) => {
         </Paragraph>
       </div>
       <section className="flex gap-8 overflow-x-scroll">
-        {popularPackages.map((data) => (
+        {popularPackages.map((popularPackage) => (
           <Card
-            key={data.package.id}
-            packagesData={data.package}
-            tourguideData={data.tourGuide}
+            key={popularPackage.package.id}
+            packagesData={popularPackage.package}
+            tourguideData={popularPackage.tourGuide}
+            labelData={popularPackage.package.Destinations[0]}
           />
         ))}
       </section>

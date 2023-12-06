@@ -3,7 +3,7 @@ import CardImage from '../../../../assets/images/card-image.png'
 import Avatar from '../../../../assets/avatar.png'
 import Labels from '../Labels/Lables'
 
-const Card = ({ packagesData, tourguideData }) => {
+const Card = ({ packagesData, tourguideData, labelData }) => {
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('id-ID', {
       style: 'currency',
@@ -11,6 +11,7 @@ const Card = ({ packagesData, tourguideData }) => {
       minimumFractionDigits: 0,
     }).format(amount)
   }
+
   return (
     <article className="flex flex-col gap-4 rounded-2xl bg-white p-6 max-xl:flex-shrink-0 max-md:w-full md:w-6/12 lg:w-4/12">
       <figure className="h-64 w-full overflow-hidden rounded-lg">
@@ -32,15 +33,13 @@ const Card = ({ packagesData, tourguideData }) => {
         </span>
       </header>
       <h4 className="text-md font-semibold text-primary-950">
-        {`${packagesData.packageName}`}
+        {`${packagesData.packageName.substr(0, 120)}...`}
       </h4>
       <span className="text-md font-semibold text-primary-600">
         {`${formatCurrency(packagesData.price)}`}
       </span>
       <footer>
-        <Labels>Tanah Lot</Labels>
-        <Labels>Uluwatu</Labels>
-        <Labels>Pantai Kuta</Labels>
+        <Labels {...labelData} />
       </footer>
     </article>
   )
