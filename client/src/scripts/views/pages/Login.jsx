@@ -39,7 +39,6 @@ export default function Login() {
             <a href="/register">Buat Akun</a>
           </span>
         </label>
-        
       </form>
     </section>
   )
