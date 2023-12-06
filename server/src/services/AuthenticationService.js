@@ -32,7 +32,7 @@ class AuthenticationService extends BaseService {
    * @throws {BadRequestError} If the account is already registered.
    * @throws {ServerError} If an unexpected error occurs during registration.
    */
-  async registerUserAccount(account, user) {
+  async registerUserAccount({ account, user }) {
     const insertData = async (transaction) => {
       try {
         const hashedPassword = await passwordUtil.hashPassword(
