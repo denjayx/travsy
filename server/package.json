@@ -13,7 +13,7 @@
     "migrate:down": "sequelize-cli db:migrate:undo:all",
     "seed:up": "sequelize-cli db:seed:all",
     "seed:down": "sequelize-cli db:seed:undo:all",
-    "test": "jest"
+    "test": "jest --verbose"
   },
   "author": "",
   "license": "ISC",

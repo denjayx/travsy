@@ -145,6 +145,11 @@
                         "user": {
                           "type": "object",
                           "properties": {
+                            "username": {
+                              "description": "Diterima jika: tidak mengandung huruf besar, spasi, dan simbol selain underscore",
+                              "type": "string",
+                              "example": "johndoe"
+                            },
                             "avatarUrl": {
                               "description": "Diterima jika: image URL",
                               "type": "string",

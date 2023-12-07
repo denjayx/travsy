@@ -1,5 +1,7 @@
 class BaseService {
-  createDbTransaction = jest.fn((callback) => callback({}));
+  createDbTransaction = jest
+    .fn()
+    .mockImplementation((callback) => callback({}));
 }
 
 module.exports = BaseService;

@@ -13,7 +13,7 @@ describe('token utilities', () => {
       const payload = { foo: 'bar' };
       const token = 'token';
 
-      jwt.sign.mockReturnValue(token);
+      jwt.sign.mockReturnValueOnce(token);
 
       const result = tokenUtil.generateToken(payload);
 
@@ -30,7 +30,7 @@ describe('token utilities', () => {
       const token = 'token';
       const payload = { foo: 'bar' };
 
-      jwt.verify.mockReturnValue({ data: payload });
+      jwt.verify.mockReturnValueOnce({ data: payload });
 
       const result = tokenUtil.verifyToken(token);
 
@@ -41,7 +41,7 @@ describe('token utilities', () => {
     it('should return null when token not verified', () => {
       const token = 'token';
 
-      jwt.verify.mockImplementation(() => {
+      jwt.verify.mockImplementationOnce(() => {
         throw new Error();
       });
 
