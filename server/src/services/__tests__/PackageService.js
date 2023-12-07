@@ -154,4 +154,76 @@ describe('package service', () => {
       );
     });
   });
+
+  describe('get package detail', () => {
+    const id = 1;
+
+    it('should return an object', async () => {
+      Package.findByPk.mockResolvedValueOnce({});
+
+      const result = await packageService.getPackageDetail(id);
+
+      expect(typeof result).toBe('object');
+      expect(Package.findByPk).toHaveBeenCalledWith(id, {
+        include: [
+          {
+            model: Destination,
+            attributes: {
+              exclude: ['createdAt', 'updatedAt', 'deletedAt'],
+            },
+            required: true,
+          },
+        ],
+        attributes: {
+          exclude: [
+            'destinationCount',
+            'transactionCount',
+            'createdAt',
+            'updatedAt',
+            'deletedAt',
+          ],
+        },
+        transaction: expect.any(Object),
+      });
+    });
+
+    it('should throw NotFoundError when package detail not found', async () => {
+      Package.findByPk.mockResolvedValueOnce(undefined);
+
+      await expect(packageService.getPackageDetail(id)).rejects.toThrow(
+        NotFoundError,
+      );
+      expect(Package.findByPk).toHaveBeenCalledWith(id, {
+        include: [
+          {
+            model: Destination,
+            attributes: {
+              exclude: ['createdAt', 'updatedAt', 'deletedAt'],
+            },
+            required: true,
+          },
+        ],
+        attributes: {
+          exclude: [
+            'destinationCount',
+            'transactionCount',
+            'createdAt',
+            'updatedAt',
+            'deletedAt',
+          ],
+        },
+        transaction: expect.any(Object),
+      });
+    });
+
+    it('should throw ServerError when an error is thrown', async () => {
+      Package.findByPk.mockImplementationOnce(() => {
+        throw new Error();
+      });
+
+      await expect(packageService.getPackageDetail(id)).rejects.toThrow(
+        ServerError,
+      );
+    });
+  });
 });

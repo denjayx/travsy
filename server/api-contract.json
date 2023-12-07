@@ -1099,6 +1099,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/serverError"
           }
         }
       }
