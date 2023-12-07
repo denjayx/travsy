@@ -38,27 +38,25 @@ class PackageService extends BaseService {
             );
           }
 
-          const availablePackages = await Package.findAll(
-            {
-              include: [
-                {
-                  model: TransactionModel,
-                  attributes: ['startDate', 'endDate'],
-                  where: {
-                    startDate: {
-                      [Op.lt]: sdate,
-                    },
-                    endDate: {
-                      [Op.gt]: edate,
-                    },
+          const availablePackages = await Package.findAll({
+            include: [
+              {
+                model: TransactionModel,
+                attributes: ['startDate', 'endDate'],
+                where: {
+                  startDate: {
+                    [Op.lt]: sdate,
                   },
-                  required: true,
+                  endDate: {
+                    [Op.gt]: edate,
+                  },
                 },
-              ],
-              attributes: ['id'],
-            },
-            { transaction },
-          );
+                required: true,
+              },
+            ],
+            attributes: ['id'],
+            transaction,
+          });
 
           const packageIds = availablePackages.map(
             (packageObj) => packageObj.id,
@@ -114,35 +112,32 @@ class PackageService extends BaseService {
         }
 
         // get packages with validated filters
-        const packages = await Package.findAll(
-          {
-            include: [
-              {
-                model: Destination,
-                attributes: ['destinationName', 'city'],
-                where: {
-                  [Op.and]: whereConditionsDestination,
-                },
-                required: true,
+        const packages = await Package.findAll({
+          include: [
+            {
+              model: Destination,
+              attributes: ['destinationName', 'city'],
+              where: {
+                [Op.and]: whereConditionsDestination,
               },
-            ],
-            where: {
-              [Op.and]: whereConditionsPackage,
+              required: true,
             },
-            attributes: {
-              exclude: [
-                'description',
-                'serviceDuration',
-                'transactionCount',
-                'createdAt',
-                'updatedAt',
-                'deletedAt',
-              ],
-            },
-            transaction,
+          ],
+          where: {
+            [Op.and]: whereConditionsPackage,
           },
-          { transaction },
-        );
+          attributes: {
+            exclude: [
+              'description',
+              'serviceDuration',
+              'transactionCount',
+              'createdAt',
+              'updatedAt',
+              'deletedAt',
+            ],
+          },
+          transaction,
+        });
 
         return packages;
       } catch (error) {
@@ -194,6 +189,50 @@ class PackageService extends BaseService {
     const packages = await this.createDbTransaction(findPopularPackages);
 
     return packages;
+  }
+
+  // get detail package by id
+  async getPackageDetail(id) {
+    const findPackageDetail = async (transaction) => {
+      try {
+        const packageDetail = await Package.findByPk(id, {
+          include: [
+            {
+              model: Destination,
+              attributes: {
+                exclude: ['createdAt', 'updatedAt', 'deletedAt'],
+              },
+              required: true,
+            },
+          ],
+          attributes: {
+            exclude: [
+              'destinationCount',
+              'transactionCount',
+              'createdAt',
+              'updatedAt',
+              'deletedAt',
+            ],
+          },
+          transaction,
+        });
+
+        if (!packageDetail) {
+          throw new NotFoundError('Package Not Found');
+        }
+
+        return packageDetail;
+      } catch (error) {
+        if (error instanceof BaseResponseError) {
+          throw error;
+        }
+        throw new ServerError();
+      }
+    };
+
+    const packageDetail = await this.createDbTransaction(findPackageDetail);
+
+    return packageDetail;
   }
 
   // insert data package
@@ -350,50 +389,6 @@ class PackageService extends BaseService {
         throw new ServerError('Internal server error');
       }
     }
-  }
-
-  // get detail package by id
-  async getPackageDetail(id) {
-    const findPackageDetail = async (transaction) => {
-      try {
-        const packageDetail = await Package.findByPk(id, {
-          include: [
-            {
-              model: Destination,
-              attributes: {
-                exclude: ['createdAt', 'updatedAt', 'deletedAt'],
-              },
-              required: true,
-            },
-          ],
-          attributes: {
-            exclude: [
-              'destinationCount',
-              'transactionCount',
-              'createdAt',
-              'updatedAt',
-              'deletedAt',
-            ],
-          },
-          transaction,
-        });
-
-        if (!packageDetail) {
-          throw new NotFoundError('Package Not Found');
-        }
-
-        return packageDetail;
-      } catch (error) {
-        if (error instanceof BaseResponseError) {
-          throw error;
-        }
-        throw new ServerError();
-      }
-    };
-
-    const packageDetail = await this.createDbTransaction(findPackageDetail);
-
-    return packageDetail;
   }
 }
 

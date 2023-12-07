@@ -18,14 +18,40 @@ describe('package service', () => {
   const packageService = PackageService.getInstance();
 
   describe('get filtered package list', () => {
-    it('should return package list', async () => {
+    it('should return array', async () => {
       const filter = { search: 'Lot' };
 
       Package.findAll.mockResolvedValueOnce([]);
 
       const result = await packageService.getPackageList(filter);
 
-      expect(result).toEqual([]);
+      expect(Array.isArray(result)).toBe(true);
+      expect(Package.findAll).toHaveBeenCalledWith({
+        include: [
+          {
+            model: Destination,
+            attributes: ['destinationName', 'city'],
+            where: {
+              [Op.and]: expect.any(Object),
+            },
+            required: true,
+          },
+        ],
+        where: {
+          [Op.and]: expect.any(Object),
+        },
+        attributes: {
+          exclude: [
+            'description',
+            'serviceDuration',
+            'transactionCount',
+            'createdAt',
+            'updatedAt',
+            'deletedAt',
+          ],
+        },
+        transaction: expect.any(Object),
+      });
     });
 
     it('should throw BadRequestError when start date is greater than end date', async () => {
@@ -58,16 +84,64 @@ describe('package service', () => {
       await expect(packageService.getPackageList({})).rejects.toThrow(
         ServerError,
       );
+      expect(Package.findAll).toHaveBeenCalledWith({
+        include: [
+          {
+            model: Destination,
+            attributes: ['destinationName', 'city'],
+            where: {
+              [Op.and]: expect.any(Object),
+            },
+            required: true,
+          },
+        ],
+        where: {
+          [Op.and]: expect.any(Object),
+        },
+        attributes: {
+          exclude: [
+            'description',
+            'serviceDuration',
+            'transactionCount',
+            'createdAt',
+            'updatedAt',
+            'deletedAt',
+          ],
+        },
+        transaction: expect.any(Object),
+      });
     });
   });
 
   describe('get popular package list', () => {
-    it('should return package list', async () => {
+    it('should return array', async () => {
       Package.findAll.mockResolvedValueOnce([]);
 
       const result = await packageService.getPopularPackageList();
 
-      expect(result).toEqual([]);
+      expect(Array.isArray(result)).toBe(true);
+      expect(Package.findAll).toHaveBeenCalledWith({
+        include: [
+          {
+            model: Destination,
+            attributes: ['destinationName', 'city'],
+            required: true,
+          },
+        ],
+        order: [['transaction_count', 'DESC']],
+        limit: expect.any(Number),
+        attributes: {
+          exclude: [
+            'description',
+            'serviceDuration',
+            'destinationCount',
+            'createdAt',
+            'updatedAt',
+            'deletedAt',
+          ],
+        },
+        transaction: expect.any(Object),
+      });
     });
 
     it('should throw ServerError when an error is thrown', async () => {

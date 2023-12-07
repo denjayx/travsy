@@ -10,15 +10,16 @@ jest.mock('../../models');
 describe('account service', () => {
   const accountService = AccountService.getInstance();
   const mockAccount = { id: 1, email: 'test@example.com' };
+  const mockAttributes = ['id', 'email'];
 
   describe('get account by email', () => {
     it('should return the account when found', async () => {
       Account.findOne.mockResolvedValueOnce(mockAccount);
 
-      const result = await accountService.getAccountByEmail(mockAccount.email, [
-        'id',
-        'email',
-      ]);
+      const result = await accountService.getAccountByEmail(
+        mockAccount.email,
+        mockAttributes,
+      );
 
       expect(result).toEqual(mockAccount);
     });
@@ -44,7 +45,7 @@ describe('account service', () => {
     afterEach(() => {
       expect(Account.findOne).toHaveBeenCalledWith({
         where: { email: mockAccount.email },
-        attributes: ['id', 'email'],
+        attributes: mockAttributes,
         transaction: expect.any(Object),
       });
     });
