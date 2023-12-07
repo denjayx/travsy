@@ -219,7 +219,6 @@ class PackageService extends BaseService {
 
       return newPackage;
     } catch (error) {
-      console.error(error);
       throw new ServerError('Failed create package', error);
     }
   }
@@ -277,7 +276,6 @@ class PackageService extends BaseService {
 
       return detailPackagesIdByUsername;
     } catch (error) {
-      console.error(error);
       if (error instanceof NotFoundError) {
         throw error;
       } else {
@@ -314,7 +312,6 @@ class PackageService extends BaseService {
 
       return updatedPackage;
     } catch (error) {
-      console.log(error);
       if (error instanceof NotFoundError) {
         throw error;
       } else {
