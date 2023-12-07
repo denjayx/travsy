@@ -23,23 +23,6 @@ class PackageService extends BaseService {
 
   // Desc: service for get package list with filter
   async getPackageList(filter) {
-    const expectedFilter = [
-      'search',
-      'city',
-      'pmin',
-      'pmax',
-      'ndest',
-      'sdate',
-      'edate',
-    ];
-
-    // validate filter key
-    Object.keys(filter).forEach((key) => {
-      if (!expectedFilter.includes(key)) {
-        throw new BadRequestError(`Filter ${key} could not be found`);
-      }
-    });
-
     const { search, city, pmin, pmax, ndest, sdate, edate } = filter;
 
     const findFilteredPackages = async (transaction) => {
