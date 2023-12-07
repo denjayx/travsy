@@ -61,9 +61,23 @@ describe('package service', () => {
     });
   });
 
-  // describe('get popular package list', () => {
-  //   it('should return package list', async () => {
-  //     Package.findAll.mockResolvedValueOnce();
-  //   });
-  // });
+  describe('get popular package list', () => {
+    it('should return package list', async () => {
+      Package.findAll.mockResolvedValueOnce([]);
+
+      const result = await packageService.getPopularPackageList();
+
+      expect(result).toEqual([]);
+    });
+
+    it('should throw ServerError when an error is thrown', async () => {
+      Package.findAll.mockImplementationOnce(() => {
+        throw new Error();
+      });
+
+      await expect(packageService.getPopularPackageList()).rejects.toThrow(
+        ServerError,
+      );
+    });
+  });
 });

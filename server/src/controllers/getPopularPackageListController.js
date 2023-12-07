@@ -1,11 +1,21 @@
+const Joi = require('joi');
 const PackageService = require('../services/PackageService');
+const BadRequestError = require('../errors/BadRequestError');
 
 const getPopularPackageListController = async (req, res, next) => {
   const { limit } = req.query;
 
   try {
+    const querySchema = Joi.object({ limit: Joi.number() });
+
+    const { error, value } = querySchema.validate({ limit });
+
+    if (error) {
+      throw new BadRequestError('Limit must be a number');
+    }
+
     const packageService = PackageService.getInstance();
-    const packages = await packageService.getPopularPackageList(limit);
+    const packages = await packageService.getPopularPackageList(value.limit);
 
     // mapping to package with tour guided
     const packageWithTourGuideList = await Promise.all(
