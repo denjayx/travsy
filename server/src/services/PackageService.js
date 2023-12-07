@@ -235,6 +235,30 @@ class PackageService extends BaseService {
     return packageDetail;
   }
 
+  // menemukan package berdasarkan username
+  async getPackageListByUsername(tourGuideId) {
+    const findPackageByUsername = async (transaction) => {
+      try {
+        const packages = await Package.findAll({
+          where: { tourGuideId },
+          attributes: ['id', 'packageName', 'price', 'serviceDuration'],
+          transaction,
+        });
+
+        return packages;
+      } catch (error) {
+        if (error instanceof BaseResponseError) {
+          throw error;
+        }
+        throw new ServerError();
+      }
+    };
+
+    const packages = await this.createDbTransaction(findPackageByUsername);
+
+    return packages;
+  }
+
   // insert data package
   async createPackageByUser(username, packageData) {
     try {
@@ -260,34 +284,6 @@ class PackageService extends BaseService {
     } catch (error) {
       throw new ServerError('Failed create package', error);
     }
-  }
-
-  // menemukan package berdasarkan username
-  async getPackageByUsername(tourGuideId) {
-    const findPackageByUsername = async (transaction) => {
-      try {
-        const packages = await Package.findAll({
-          where: { tourGuideId },
-          attributes: ['id', 'packageName', 'price', 'serviceDuration'],
-          transaction,
-        });
-
-        if (!packages.length) {
-          throw new NotFoundError('Packages not found');
-        }
-
-        return packages;
-      } catch (error) {
-        if (error instanceof BaseResponseError) {
-          throw error;
-        }
-        throw new ServerError();
-      }
-    };
-
-    const packages = await this.createDbTransaction(findPackageByUsername);
-
-    return packages;
   }
 
   // get detail package berdasarkan username

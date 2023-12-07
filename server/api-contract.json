@@ -522,9 +522,6 @@
           "401": {
             "$ref": "#/components/responses/unauthorized"
           },
-          "404": {
-            "$ref": "#/components/responses/notFound"
-          },
           "500": {
             "$ref": "#/components/responses/serverError"
           }

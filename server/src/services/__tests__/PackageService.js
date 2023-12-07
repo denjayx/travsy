@@ -226,4 +226,31 @@ describe('package service', () => {
       );
     });
   });
+
+  describe('get package list by username', () => {
+    const username = 'johndoe';
+
+    it('should return array', async () => {
+      Package.findAll.mockResolvedValueOnce([]);
+
+      const result = await packageService.getPackageListByUsername(username);
+
+      expect(Array.isArray(result)).toBe(true);
+      expect(Package.findAll).toHaveBeenCalledWith({
+        where: { tourGuideId: username },
+        attributes: ['id', 'packageName', 'price', 'serviceDuration'],
+        transaction: expect.any(Object),
+      });
+    });
+
+    it('should return ServerError when an error is thrown', async () => {
+      Package.findAll.mockImplementationOnce(() => {
+        throw new Error();
+      });
+
+      await expect(
+        packageService.getPackageListByUsername(username),
+      ).rejects.toThrow(ServerError);
+    });
+  });
 });

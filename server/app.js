@@ -17,7 +17,7 @@ const {
   getPopularPackageListController,
   getPackageDetailController,
   getUserProfileController,
-  getPackagesByUserController,
+  getPackageListByUserController,
   getPackageDetailByUsernameController,
   getTransactionHistoriesController,
   getDetailTransactionHistoriesController,
@@ -62,7 +62,7 @@ app
     uploadImage(path.resolve('upload/thumbnail', 'thumbnail')),
     createPackageByUserController,
   )
-  .get(verifyAuthorization(), getPackagesByUserController);
+  .get(verifyAuthorization(), getPackageListByUserController);
 
 app
   .route('/profile/packages/:id')
