@@ -33,6 +33,7 @@ const PopularPackage = ({ className }) => {
             packagesData={popularPackage.package}
             tourguideData={popularPackage.tourGuide}
             labelData={popularPackage.package.Destinations[0]}
+            cardId={popularPackage.package.id}
           />
         ))}
       </section>
