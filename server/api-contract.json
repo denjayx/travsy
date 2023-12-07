@@ -1332,17 +1332,17 @@
             "example": "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
           },
           "firstName": {
-            "description": "Diterima jika: terdiri dari 3-20 karakter huruf besar dan kapital, tidak boleh ada angka, spasi, dan simbol",
+            "description": "Diterima jika: terdiri dari maksimal 20 karakter huruf besar dan kapital, tidak boleh ada angka, spasi, dan simbol",
             "type": "string",
             "example": "John"
           },
           "lastName": {
-            "description": "Diterima jika: terdiri dari 3-20 karakter huruf besar dan kapital, tidak boleh ada angka, spasi, dan simbol",
+            "description": "Diterima jika: terdiri dari maksimal 20 karakter huruf besar dan kapital, tidak boleh ada angka, spasi, dan simbol",
             "type": "string",
             "example": "Doe"
           },
           "biography": {
-            "description": "Diterima jika: terdiri dari 3-100 karakter",
+            "description": "Diterima jika: terdiri dari maksimal 100 karakter",
             "type": "string",
             "example": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
           },
@@ -1352,7 +1352,7 @@
             "example": "1234567890123456"
           },
           "phone": {
-            "description": "Diterima jika: 10-13 digit angka",
+            "description": "Diterima jika: maksimal 13 digit angka",
             "type": "string",
             "example": "081234567890"
           },
@@ -1372,7 +1372,7 @@
             "example": "L"
           },
           "cardNumber": {
-            "description": "Diterima jika: 16 digit angka",
+            "description": "Diterima jika: angka",
             "type": "string",
             "example": "1234567890123456"
           }

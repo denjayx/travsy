@@ -1,12 +1,62 @@
+const Joi = require('joi');
 const UserService = require('../services/UserService');
+const BadRequestError = require('../errors/BadRequestError');
 
 const updateUserProfileController = async (req, res, next) => {
   const { username } = req.user;
   const { email, ...user } = req.body;
 
   try {
+    const bodySchema = Joi.object({
+      email: Joi.string()
+        .email({ tlds: { allow: false } })
+        .messages({
+          'string.email': 'Invalid email format',
+        }),
+      avatarUrl: Joi.string().allow('').uri().messages({
+        'string.uri': 'Invalid image URL',
+      }),
+      firstName: Joi.string().allow('').max(20).messages({
+        'string.max':
+          'First name must consist maximum of 20 characters without numbers, spaces, or symbols',
+      }),
+      lastName: Joi.string().allow('').max(20).messages({
+        'string.max':
+          'Last name must consist maximum of 20 characters without numbers, spaces, or symbols',
+      }),
+      biography: Joi.string().allow('').max(100).messages({
+        'string.max': 'Biography must be at most 100 characters long',
+      }),
+      nik: Joi.string().allow('').length(16).pattern(/^\d+$/).messages({
+        'string.max': 'NIK must consist of 16 digits',
+        'string.pattern.base': 'NIK must consist of numbers',
+      }),
+      phone: Joi.string().allow('').max(13).pattern(/^\d+$/).messages({
+        'string.length': 'Phone number must consist maximum of 13 digits',
+        'string.pattern.base': 'Phone number must consist of numbers',
+      }),
+      province: Joi.string().allow(''),
+      city: Joi.string().allow(''),
+      gender: Joi.string().allow('').valid('L', 'P').messages({
+        'any.only': 'Gender must be either L (male) or P (female)',
+      }),
+      cardNumber: Joi.string().allow('').pattern(/^\d+$/).messages({
+        'string.pattern.base': 'Card number must consist of numbers',
+      }),
+    });
+
+    const { error, value } = bodySchema.validate({ email, ...user });
+
+    if (error) {
+      throw new BadRequestError(error.details[0].message);
+    }
+
+    const { email: emailValidated, ...userValidated } = value;
+
     const userServiceInstance = UserService.getInstance();
-    await userServiceInstance.updateUserProfile(username, user, { email });
+    await userServiceInstance.updateUserProfile(username, userValidated, {
+      email: emailValidated,
+    });
     const updatedData = await userServiceInstance.getUserProfile(username);
 
     res.status(200).json({
@@ -14,8 +64,8 @@ const updateUserProfileController = async (req, res, next) => {
       message: 'User profile updated successfully',
       data: updatedData,
     });
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    next(error);
   }
 };
 

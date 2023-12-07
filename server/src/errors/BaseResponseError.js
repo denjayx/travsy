@@ -21,7 +21,7 @@ class BaseResponseError extends Error {
 
     if (this.constructor.name === 'ResponseError') {
       throw new TypeError(
-        'Abstract class "ResponseError" cannot be instantiated directly.',
+        'Abstract class "ResponseError" cannot be instantiated directly',
       );
     }
     /**

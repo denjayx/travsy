@@ -15,7 +15,7 @@ class BaseService {
   constructor() {
     if (this.constructor.name === 'BaseService') {
       throw new TypeError(
-        'Abstract class "BaseService" cannot be instantiated directly.',
+        'Abstract class "BaseService" cannot be instantiated directly',
       );
     }
   }

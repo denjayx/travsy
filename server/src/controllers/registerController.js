@@ -11,7 +11,7 @@ const registerController = async (req, res, next) => {
         email: Joi.string()
           .email({ tlds: { allow: false } })
           .messages({
-            'string.email': 'Invalid email format.',
+            'string.email': 'Invalid email format',
             'string.empty': 'Email cannot be empty',
           }),
 
@@ -23,11 +23,11 @@ const registerController = async (req, res, next) => {
           )
           .messages({
             'string.pattern.base':
-              'Password must be 5-25 characters and include at least one lowercase letter, one uppercase letter, one number, and one special character.',
+              'Password must be 5-25 characters and include at least one lowercase letter, one uppercase letter, one number, and one special character',
           }),
 
         role: Joi.string().valid('tourist', 'tour guide').required().messages({
-          'any.only': 'Role must be either "tourist" or "tour guide".',
+          'any.only': 'Role must be either "tourist" or "tour guide"',
         }),
       }),
       user: Joi.object({
@@ -36,10 +36,10 @@ const registerController = async (req, res, next) => {
           .max(15)
           .messages({
             'string.pattern.base':
-              'Username should only contain lowercase letters, numbers, and underscores.',
-            'string.empty': 'Username cannot be empty.',
+              'Username should only contain lowercase letters, numbers, and underscores',
+            'string.empty': 'Username cannot be empty',
             'string.max':
-              'Username must be less than or equal to 15 characters.',
+              'Username must be less than or equal to 15 characters',
           }),
       }),
     });
