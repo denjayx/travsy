@@ -14,7 +14,7 @@ const loginController = async (req, res, next) => {
           'string.email': 'Invalid email format.',
           'string.empty': 'Email cannot be empty',
         }),
-      password: Joi.string().message({
+      password: Joi.string().messages({
         'string.empty': 'Password cannot be empty',
       }),
     });

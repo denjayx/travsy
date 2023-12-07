@@ -122,7 +122,7 @@ describe('authentication service', () => {
       accountService.getAccountByEmail = jest
         .fn()
         .mockImplementationOnce(() => {
-          throw new ServerError();
+          throw new Error();
         });
 
       await expect(
