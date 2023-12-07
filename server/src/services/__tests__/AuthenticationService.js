@@ -77,8 +77,8 @@ describe('authentication service', () => {
       password: '$Pander#800@',
     };
     const mockAccount = {
-      id: '67ea0679-5bce-470d-917d-4e9c40ae9fc8',
-      password: '$2b$10$I5Uv2U1a.8U8Ve7Rk8Xy8.reP7nMSW1wjnoTHvrMWicV7HH4tw45W',
+      id: 1,
+      password: 'password',
       role: 'tourist',
     };
 

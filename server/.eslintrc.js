@@ -31,5 +31,6 @@ module.exports = {
     'object-curly-newline': 'off',
     'import/no-extraneous-dependencies': 'off',
     'prefer-template': 'off',
+    'newline-per-chained-call': 'off',
   },
 };
