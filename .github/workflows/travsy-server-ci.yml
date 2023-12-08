@@ -19,6 +19,9 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v3
 
+            - name: Change to directory server
+              run: cd server
+
             - name: Use Node.js ${{ matrix.node-version }}
               uses: actions/setup-node@v3
               with:
@@ -32,9 +35,6 @@ jobs:
                   key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
                   restore-keys: |
                       ${{ runner.os }}-node-${{ matrix.node-version }}-
-
-            - name: Change to directory server
-              run: cd server
 
             - name: Install dependencies
               run: install
