@@ -1,10 +1,5 @@
 const { Op } = require('sequelize');
-const {
-  Package,
-  Destination,
-  Transaction: TransactionModel,
-  User,
-} = require('../../models');
+const { Package, Destination } = require('../../models');
 const BadRequestError = require('../../errors/BadRequestError');
 const ServerError = require('../../errors/ServerError');
 const NotFoundError = require('../../errors/NotFoundError');
