@@ -1,11 +1,11 @@
 const PackageService = require('../services/PackageService');
 
-const getPackageListByUserController = async (req, res, next) => {
+const getUserPackageListController = async (req, res, next) => {
   const { username } = req.user;
 
   try {
     const packageService = PackageService.getInstance();
-    const packages = await packageService.getPackageListByUsername(username);
+    const packages = await packageService.getUserPackageList(username);
 
     res.status(200).json({
       status: 'OK',
@@ -17,4 +17,4 @@ const getPackageListByUserController = async (req, res, next) => {
   }
 };
 
-module.exports = getPackageListByUserController;
+module.exports = getUserPackageListController;

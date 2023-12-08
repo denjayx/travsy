@@ -11,14 +11,14 @@ const {
 const {
   registerController,
   loginController,
-  createPackageByUserController,
+  createPackageController,
   createTransactionController,
   getPackageListController,
   getPopularPackageListController,
   getPackageDetailController,
   getUserProfileController,
-  getPackageListByUserController,
-  getPackageDetailByUserController,
+  getUserPackageListController,
+  getUserPackageDetailController,
   getTransactionHistoriesController,
   getDetailTransactionHistoriesController,
   getOrderController,
@@ -26,8 +26,8 @@ const {
   patchOrderController,
   getOrderListController,
   updateUserProfileController,
-  updatePackageDetailByUsernameController,
-  deletePackagesByUsernameAndIdController,
+  updatePackageController,
+  deletePackageController,
 } = require('./src/controllers');
 
 // Create Express app
@@ -60,15 +60,15 @@ app
   .post(
     verifyAuthorization(),
     uploadImage(path.resolve('upload/thumbnail', 'thumbnail')),
-    createPackageByUserController,
+    createPackageController,
   )
-  .get(verifyAuthorization(), getPackageListByUserController);
+  .get(verifyAuthorization(), getUserPackageListController);
 
 app
   .route('/profile/packages/:id')
-  .get(verifyAuthorization(), getPackageDetailByUserController)
-  .put(verifyAuthorization(), updatePackageDetailByUsernameController)
-  .delete(verifyAuthorization(), deletePackagesByUsernameAndIdController);
+  .get(verifyAuthorization(), getUserPackageDetailController)
+  .put(verifyAuthorization(), updatePackageController)
+  .delete(verifyAuthorization(), deletePackageController);
 
 app.route('/profile/orders').get(verifyAuthorization(), getOrderListController);
 

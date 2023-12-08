@@ -236,7 +236,7 @@ class PackageService extends BaseService {
   }
 
   // menemukan package berdasarkan username
-  async getPackageListByUsername(tourGuideId) {
+  async getUserPackageList(tourGuideId) {
     const findPackageByUsername = async (transaction) => {
       try {
         const packages = await Package.findAll({
@@ -260,7 +260,7 @@ class PackageService extends BaseService {
   }
 
   // insert data package
-  async createPackageByUser(username, packageData) {
+  async createPackage(username, packageData) {
     try {
       const user = await User.findOne({ where: { username } });
 
@@ -287,7 +287,7 @@ class PackageService extends BaseService {
   }
 
   // update detail package by id dengan username
-  async updateDetailPackageByUsername(username, id, updatedPackageData) {
+  async updatePackage(username, id, updatedPackageData) {
     try {
       const user = await User.findOne({
         where: { username },
@@ -323,7 +323,7 @@ class PackageService extends BaseService {
   }
 
   // delete detail package by username dan id
-  async deletePackagesByUsernameAndId(username, id) {
+  async deletePackage(username, id) {
     try {
       const user = await User.findOne({
         where: { username },

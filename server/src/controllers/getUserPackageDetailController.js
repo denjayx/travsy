@@ -1,7 +1,7 @@
 const ForbiddenError = require('../errors/ForbiddenError');
 const PackageService = require('../services/PackageService');
 
-const getPackageDetailByUserController = async (req, res, next) => {
+const getUserPackageDetailController = async (req, res, next) => {
   const { username } = req.user;
   const { id } = req.params;
 
@@ -23,4 +23,4 @@ const getPackageDetailByUserController = async (req, res, next) => {
   }
 };
 
-module.exports = getPackageDetailByUserController;
+module.exports = getUserPackageDetailController;
