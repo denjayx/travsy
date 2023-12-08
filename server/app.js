@@ -18,13 +18,13 @@ const {
   getPackageDetailController,
   getUserProfileController,
   getPackageListByUserController,
-  getPackageDetailByUsernameController,
+  getPackageDetailByUserController,
   getTransactionHistoriesController,
   getDetailTransactionHistoriesController,
   getOrderController,
   getOrderControllerById,
   patchOrderController,
-  getOrderListContoller,
+  getOrderListController,
   updateUserProfileController,
   updatePackageDetailByUsernameController,
   deletePackagesByUsernameAndIdController,
@@ -66,11 +66,11 @@ app
 
 app
   .route('/profile/packages/:id')
-  .get(verifyAuthorization(), getPackageDetailByUsernameController)
+  .get(verifyAuthorization(), getPackageDetailByUserController)
   .put(verifyAuthorization(), updatePackageDetailByUsernameController)
   .delete(verifyAuthorization(), deletePackagesByUsernameAndIdController);
 
-app.route('/prodile/orders').get(verifyAuthorization(), getOrderListContoller);
+app.route('/profile/orders').get(verifyAuthorization(), getOrderListController);
 
 app.route('/packages').get(getPackageListController);
 

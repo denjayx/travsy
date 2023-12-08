@@ -286,39 +286,6 @@ class PackageService extends BaseService {
     }
   }
 
-  // get detail package berdasarkan username
-  async getDetailPackageByUsername(username, id) {
-    try {
-      const user = await User.findOne({
-        where: { username },
-      });
-
-      if (!user) {
-        throw new NotFoundError('User not found');
-      }
-
-      const detailPackagesIdByUsername = await Package.findOne({
-        where: {
-          id,
-          tourGuideId: username,
-        },
-        include: [Destination, TransactionModel],
-      });
-
-      if (!detailPackagesIdByUsername) {
-        throw new NotFoundError('Package not found');
-      }
-
-      return detailPackagesIdByUsername;
-    } catch (error) {
-      if (error instanceof NotFoundError) {
-        throw error;
-      } else {
-        throw new ServerError('Internal server error');
-      }
-    }
-  }
-
   // update detail package by id dengan username
   async updateDetailPackageByUsername(username, id, updatedPackageData) {
     try {

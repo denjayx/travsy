@@ -12,8 +12,8 @@ const getPackageDetailController = async (req, res, next) => {
     });
 
     res.status(200).json({
-      status: 'success',
-      message: 'Berhasil mendapatkan data detail package',
+      status: 'OK',
+      message: 'Successfully got the package detail',
       data: { tourGuide, package: packageDetail },
     });
   } catch (error) {
