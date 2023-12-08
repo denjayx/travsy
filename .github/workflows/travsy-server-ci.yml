@@ -1,46 +1,40 @@
 name: Travsy Server CI
 
 on:
-  push:
-    branches: ['be-dev']
-  pull_request:
-    branches: ['be-dev']
+    push:
+        branches: ["be-dev"]
+    pull_request:
+        branches: ["be-dev"]
 
 jobs:
-  test:
-    name: Unit Test
-    runs-on: ubuntu-latest
+    test:
+        name: Unit Test
+        runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [18.x]
+        strategy:
+            matrix:
+                node-version: [18.x]
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ matrix.node-version }}
 
-      - name: Cache dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('server/**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-${{ matrix.node-version }}-
+            - name: Install dependencies
+              run: |
+                  cd server
+                  npm install
 
-      - name: Change to server directory
-        run: cd server
+            - name: Linting and code quality
+              run: |
+                  cd server
+                  npm run lint
 
-      - name: Install dependencies
-        run: install
-
-      - name: Linting and code quality
-        run: npm run lint
-
-      - name: Unit testing
-        run: npm test
+            - name: Unit testing
+              run: |
+                  cd server
+                  npm test
