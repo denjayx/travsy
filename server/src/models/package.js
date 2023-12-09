@@ -10,8 +10,8 @@ module.exports = (sequelize, DataTypes) => {
       this.Transactions = Package.hasMany(models.Transaction, {
         foreignKey: 'packageId',
       });
-      this.Destinations = Package.belongsToMany(models.Destination, {
-        through: models.PackageDetail,
+      this.Destinations = Package.hasMany(models.Destination, {
+        foreignKey: 'packageId',
       });
     }
   }
@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       packageName: {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(50),
       },
       thumbnailUrl: {
         type: DataTypes.STRING,

@@ -25,7 +25,6 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
-        field: 'transaction_id',
       },
       packageId: {
         allowNull: false,
@@ -40,11 +39,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.ENUM,
         values: ['menunggu', 'terkonfirmasi', 'ditolak', 'selesai'],
         defaultValue: 'menunggu',
-      },
-      orderDate: {
-        allowNull: false,
-        type: DataTypes.DATEONLY,
-        defaultValue: new Date().toISOString().split('T')[0],
       },
       startDate: {
         allowNull: false,
