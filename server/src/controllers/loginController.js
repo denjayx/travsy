@@ -1,6 +1,5 @@
 const Joi = require('joi');
 const AuthenticationService = require('../services/AuthenticationService');
-const tokenUtil = require('../utils/tokenUtil');
 const BadRequestError = require('../errors/BadRequestError');
 
 const loginController = async (req, res, next) => {
@@ -26,22 +25,12 @@ const loginController = async (req, res, next) => {
     }
 
     const authenticationService = AuthenticationService.getInstance();
-    const account = await authenticationService.verifyAccount(value);
-
-    // generate token
-    const user = await account.getUser({
-      attributes: ['username', 'avatarUrl', 'firstName', 'lastName'],
-    });
-    const token = tokenUtil.generateToken({ username: user.username });
+    const credential = await authenticationService.verifyAccount(value);
 
     res.status(200).json({
       status: 'OK',
       message: 'Login success',
-      data: {
-        token,
-        role: account.role,
-        user,
-      },
+      data: credential,
     });
   } catch (error) {
     next(error);
