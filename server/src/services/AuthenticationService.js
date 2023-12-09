@@ -2,9 +2,9 @@ const { ValidationError } = require('sequelize');
 const BaseService = require('./BaseService');
 const { Account, User } = require('../models');
 const passwordUtil = require('../utils/passwordUtil');
-const AccountService = require('./AccountService');
 const BaseResponseError = require('../errors/BaseResponseError');
 const BadRequestError = require('../errors/BadRequestError');
+const NotFoundError = require('../errors/NotFoundError');
 const ServerError = require('../errors/ServerError');
 const UnauthorizedError = require('../errors/UnauthorizedError');
 
@@ -66,13 +66,22 @@ class AuthenticationService extends BaseService {
    * @throws {ServerError} If an unexpected error occurs during verification.
    */
   async verifyAccount({ email, password }) {
+    const findAccount = async (transaction) => {
+      const account = await Account.findOne({
+        where: { email },
+        attributes: ['id', 'password', 'role'],
+        transaction,
+      });
+
+      if (!account) {
+        throw new NotFoundError('Email not found');
+      }
+
+      return account;
+    };
+
     try {
-      const accountService = AccountService.getInstance();
-      const account = await accountService.getAccountByEmail(email, [
-        'id',
-        'password',
-        'role',
-      ]);
+      const account = await this.createDbTransaction(findAccount);
 
       if (!(await passwordUtil.verifyPassword(password, account.password))) {
         throw new UnauthorizedError('Wrong password');
