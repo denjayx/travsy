@@ -21,7 +21,7 @@
                     "type": "object",
                     "properties": {
                       "username": {
-                        "description": "Diterima jika: tidak mengandung huruf besar, spasi, dan simbol selain underscore",
+                        "description": "Diterima jika: maksimal 15 karakter dan tidak mengandung huruf besar, spasi, dan simbol selain underscore",
                         "type": "string",
                         "example": "johndoe"
                       }
@@ -37,7 +37,7 @@
                         "example": "johndoe@gmail.com"
                       },
                       "password": {
-                        "description": "Diterima jika: terdiri dari 5-25 character, merupakan kombinasi dari huruf kecil, huruf besar, angka, dan simbol",
+                        "description": "Diterima jika: terdiri dari 5-25 karakter merupakan kombinasi dari huruf kecil, huruf besar, angka, dan simbol",
                         "type": "string",
                         "format": "password",
                         "example": "$Pander800"

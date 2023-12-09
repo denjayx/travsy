@@ -50,10 +50,6 @@ module.exports = {
         values: ['L', 'P'],
         field: 'gender',
       },
-      cardNumber: {
-        type: Sequelize.STRING,
-        field: 'card_number',
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
@@ -78,7 +74,7 @@ module.exports = {
       name: 'fk_users_account_id',
       references: {
         table: 'accounts',
-        field: 'account_id',
+        field: 'id',
       },
       onDelete: 'cascade',
       onUpdate: 'cascade',

@@ -55,42 +55,42 @@ app
     updateUserProfileController,
   );
 
-app
-  .route('/profile/packages')
-  .post(
-    verifyAuthorization(),
-    uploadImage(path.resolve('upload/thumbnail', 'thumbnail')),
-    createPackageController,
-  )
-  .get(verifyAuthorization(), getUserPackageListController);
+// app
+//   .route('/profile/packages')
+//   .post(
+//     verifyAuthorization(),
+//     uploadImage(path.resolve('upload/thumbnail', 'thumbnail')),
+//     createPackageController,
+//   )
+//   .get(verifyAuthorization(), getUserPackageListController);
 
-app
-  .route('/profile/packages/:id')
-  .get(verifyAuthorization(), getUserPackageDetailController)
-  .put(verifyAuthorization(), updatePackageController)
-  .delete(verifyAuthorization(), deletePackageController);
+// app
+//   .route('/profile/packages/:id')
+//   .get(verifyAuthorization(), getUserPackageDetailController)
+//   .put(verifyAuthorization(), updatePackageController)
+//   .delete(verifyAuthorization(), deletePackageController);
 
-app.route('/profile/orders').get(verifyAuthorization(), getOrderListController);
+// app.route('/profile/orders').get(verifyAuthorization(), getOrderListController);
 
-app.route('/packages').get(getPackageListController);
+// app.route('/packages').get(getPackageListController);
 
-app.route('/packages/popular').get(getPopularPackageListController);
+// app.route('/packages/popular').get(getPopularPackageListController);
 
-app.route('/packages/:id').get(getPackageDetailController);
+// app.route('/packages/:id').get(getPackageDetailController);
 
-// Transaction service
-app.route('/user/:username/histories').get(getTransactionHistoriesController);
-app
-  .route('/user/:username/histories/:id')
-  .get(getDetailTransactionHistoriesController);
+// // Transaction service
+// app.route('/user/:username/histories').get(getTransactionHistoriesController);
+// app
+//   .route('/user/:username/histories/:id')
+//   .get(getDetailTransactionHistoriesController);
 
-app.route('/user/:username/orders').get(getOrderController);
-app.route('/user/:username/orders/:id').get(getOrderControllerById);
-app.route('/user/:username/orders/:id').patch(patchOrderController);
+// app.route('/user/:username/orders').get(getOrderController);
+// app.route('/user/:username/orders/:id').get(getOrderControllerById);
+// app.route('/user/:username/orders/:id').patch(patchOrderController);
 
-app
-  .route('/packages/:id/pay')
-  .post(verifyAuthorization(), createTransactionController);
+// app
+//   .route('/packages/:id/pay')
+//   .post(verifyAuthorization(), createTransactionController);
 
 // Error handler
 app.use(errorHandler());

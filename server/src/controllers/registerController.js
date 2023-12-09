@@ -3,10 +3,10 @@ const AuthenticationService = require('../services/AuthenticationService');
 const BadRequestError = require('../errors/BadRequestError');
 
 const registerController = async (req, res, next) => {
-  const { account, user } = req.body;
+  const registrationData = req.body;
 
   try {
-    const bodySchema = Joi.object({
+    const registrationDataSchema = Joi.object({
       account: Joi.object({
         email: Joi.string()
           .email({ tlds: { allow: false } })
@@ -24,27 +24,28 @@ const registerController = async (req, res, next) => {
           .messages({
             'string.pattern.base':
               'Password must be 5-25 characters and include at least one lowercase letter, one uppercase letter, one number, and one special character',
+            'string.empty': 'Password cannot be empty',
           }),
 
-        role: Joi.string().valid('tourist', 'tour guide').required().messages({
+        role: Joi.string().valid('tourist', 'tour guide').messages({
           'any.only': 'Role must be either "tourist" or "tour guide"',
         }),
       }),
       user: Joi.object({
         username: Joi.string()
-          .regex(/^[a-z0-9_]+$/)
+          .pattern(/^[a-z0-9_]+$/)
           .max(15)
           .messages({
             'string.pattern.base':
               'Username should only contain lowercase letters, numbers, and underscores',
-            'string.empty': 'Username cannot be empty',
             'string.max':
               'Username must be less than or equal to 15 characters',
+            'string.empty': 'Username cannot be empty',
           }),
       }),
     });
 
-    const { error, value } = bodySchema.validate({ account, user });
+    const { error, value } = registrationDataSchema.validate(registrationData);
 
     if (error) {
       throw new BadRequestError(error.details[0].message);

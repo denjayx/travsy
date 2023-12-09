@@ -5,7 +5,7 @@ module.exports = {
       id: {
         primaryKey: true,
         type: Sequelize.UUID,
-        field: 'account_id',
+        field: 'id',
       },
       email: {
         allowNull: false,

@@ -58,9 +58,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.ENUM,
         values: ['L', 'P'],
       },
-      cardNumber: {
-        type: DataTypes.STRING,
-      },
     },
     {
       sequelize,
