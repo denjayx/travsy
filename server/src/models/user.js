@@ -8,14 +8,16 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      this.Account = User.belongsTo(models.Account, {
+      this.Account = User.belongsTo(models.account, {
         foreignKey: 'accountId',
       });
-      this.Packages = User.hasMany(models.Package, {
+      this.Packages = User.hasMany(models.package, {
         foreignKey: 'tourGuideId',
+        as: 'tourGuide',
       });
-      this.Transactions = User.hasMany(models.Transaction, {
+      this.Transactions = User.hasMany(models.transaction, {
         foreignKey: 'touristId',
+        as: 'tourist',
       });
     }
   }
@@ -61,7 +63,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'User',
+      modelName: 'user',
       tableName: 'users',
       underscored: true,
       paranoid: true,

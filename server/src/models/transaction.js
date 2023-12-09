@@ -3,14 +3,15 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Transaction extends Model {
     static associate(models) {
-      this.Package = Transaction.belongsTo(models.Package, {
+      this.Package = Transaction.belongsTo(models.package, {
         foreignKey: 'packageId',
       });
-      this.User = Transaction.belongsTo(models.User, {
+      this.Tourist = Transaction.belongsTo(models.user, {
         foreignKey: 'touristId',
+        as: 'tourist',
       });
       Transaction.addHook('afterCreate', async (transaction, options) => {
-        const tourPackage = await models.Package.findByPk(
+        const tourPackage = await models.package.findByPk(
           transaction.packageId,
           { transaction: options.transaction },
         );
@@ -59,7 +60,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'Transaction',
+      modelName: 'transaction',
       tableName: 'transactions',
       underscored: true,
       paranoid: true,

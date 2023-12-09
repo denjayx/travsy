@@ -3,14 +3,14 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Package extends Model {
     static associate(models) {
-      this.User = Package.belongsTo(models.User, {
+      this.TourGuide = Package.belongsTo(models.user, {
         foreignKey: 'tourGuideId',
-        as: 'TourGuide',
+        as: 'tourGuide',
       });
-      this.Transactions = Package.hasMany(models.Transaction, {
+      this.Transactions = Package.hasMany(models.transaction, {
         foreignKey: 'packageId',
       });
-      this.Destinations = Package.hasMany(models.Destination, {
+      this.Destinations = Package.hasMany(models.destination, {
         foreignKey: 'packageId',
       });
     }
@@ -58,7 +58,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'Package',
+      modelName: 'package',
       tableName: 'packages',
       underscored: true,
       paranoid: true,
