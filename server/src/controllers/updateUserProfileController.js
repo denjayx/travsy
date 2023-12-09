@@ -7,12 +7,11 @@ const updateUserProfileController = async (req, res, next) => {
   const { email, ...user } = req.body;
 
   try {
-    const bodySchema = Joi.object({
+    const dataSchema = Joi.object({
       email: Joi.string()
         .email({ tlds: { allow: false } })
         .messages({
           'string.email': 'Invalid email format',
-          'string.empty': 'Email cannot be empty',
         }),
       avatarUrl: Joi.string().allow('').uri().messages({
         'string.uri': 'Invalid image URL',
@@ -41,7 +40,7 @@ const updateUserProfileController = async (req, res, next) => {
       }),
     });
 
-    const { error, value } = bodySchema.validate({ email, ...user });
+    const { error, value } = dataSchema.validate({ email, ...user });
 
     if (error) {
       throw new BadRequestError(error.details[0].message);

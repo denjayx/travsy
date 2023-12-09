@@ -1,11 +1,12 @@
 const PackageService = require('../services/PackageService');
 
 const getPackageDetailController = async (req, res, next) => {
+  const { id: packageId } = req.params;
+
   try {
-    const { id } = req.params;
     const packageService = PackageService.getInstance();
 
-    const packageDetail = await packageService.getPackageDetail(id);
+    const packageDetail = await packageService.getPackageDetail(packageId);
 
     const tourGuide = await packageDetail.getTourGuide({
       attributes: ['avatarUrl', 'firstName', 'lastName'],
