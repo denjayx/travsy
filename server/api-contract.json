@@ -1484,7 +1484,7 @@
             "type": "integer",
             "example": 4
           },
-          "Destinations": {
+          "destinations": {
             "type": "array",
             "items": {
               "type": "object",

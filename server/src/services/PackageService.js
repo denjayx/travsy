@@ -27,7 +27,7 @@ class PackageService extends BaseService {
   async getPackageList(filter) {
     const { search, city, pmin, pmax, ndest, sdate, edate } = filter;
 
-    const findFilteredPackages = async (transaction) => {
+    const findFilteredPackageList = async (transaction) => {
       const whereConditionsDestination = [];
       const whereConditionsPackage = [];
 
@@ -40,7 +40,7 @@ class PackageService extends BaseService {
             );
           }
 
-          const availablePackages = await packageModel.findAll({
+          const availablePackageList = await packageModel.findAll({
             include: [
               {
                 model: transactionModel,
@@ -60,7 +60,7 @@ class PackageService extends BaseService {
             transaction,
           });
 
-          const packageIds = availablePackages.map(
+          const packageIds = availablePackageList.map(
             (packageObj) => packageObj.id,
           );
 
@@ -114,7 +114,7 @@ class PackageService extends BaseService {
         }
 
         // get packages with validated filters
-        const packages = await packageModel.findAll({
+        const packageList = await packageModel.findAll({
           include: [
             {
               model: destination,
@@ -128,20 +128,34 @@ class PackageService extends BaseService {
           where: {
             [Op.and]: whereConditionsPackage,
           },
-          attributes: {
-            exclude: [
-              'description',
-              'serviceDuration',
-              'transactionCount',
-              'createdAt',
-              'updatedAt',
-              'deletedAt',
-            ],
-          },
+          attributes: [
+            'id',
+            'tourGuideId',
+            'thumbnailUrl',
+            'packageName',
+            'price',
+            'destinationCount',
+            'transactionCount',
+          ],
           transaction,
         });
 
-        return packages;
+        // mapping to package with tour guided
+        const packageWithTourGuideList = await Promise.all(
+          packageList.map(async (tourPackage) => {
+            const tourGuide = await tourPackage.getTourGuide({
+              attributes: ['avatarUrl', 'firstName', 'lastName'],
+              transaction,
+            });
+
+            return {
+              tourGuide,
+              package: tourPackage,
+            };
+          }),
+        );
+
+        return packageWithTourGuideList;
       } catch (error) {
         if (error instanceof BaseResponseError) {
           throw error;
@@ -150,7 +164,7 @@ class PackageService extends BaseService {
       }
     };
 
-    const packages = await this.createDbTransaction(findFilteredPackages);
+    const packages = await this.createDbTransaction(findFilteredPackageList);
 
     return packages;
   }
