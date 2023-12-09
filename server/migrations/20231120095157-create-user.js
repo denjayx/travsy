@@ -4,7 +4,7 @@ module.exports = {
     await queryInterface.createTable('users', {
       username: {
         primaryKey: true,
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(15),
         field: 'username',
       },
       accountId: {
@@ -18,11 +18,11 @@ module.exports = {
         field: 'avatar_url',
       },
       firstName: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(15),
         field: 'first_name',
       },
       lastName: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(15),
         field: 'last_name',
       },
       biography: {
@@ -30,11 +30,11 @@ module.exports = {
         field: 'biography',
       },
       nik: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(16),
         field: 'nik',
       },
       phone: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(13),
         field: 'phone',
       },
       province: {

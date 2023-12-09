@@ -1332,17 +1332,17 @@
             "example": "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
           },
           "firstName": {
-            "description": "Diterima jika: terdiri dari maksimal 20 karakter huruf besar dan kapital, tidak boleh ada angka, spasi, dan simbol",
+            "description": "Diterima jika: terdiri dari maksimal 15 karakter huruf besar dan kapital, tidak boleh ada angka, spasi, dan simbol",
             "type": "string",
             "example": "John"
           },
           "lastName": {
-            "description": "Diterima jika: terdiri dari maksimal 20 karakter huruf besar dan kapital, tidak boleh ada angka, spasi, dan simbol",
+            "description": "Diterima jika: terdiri dari maksimal 15 karakter huruf besar dan kapital, tidak boleh ada angka, spasi, dan simbol",
             "type": "string",
             "example": "Doe"
           },
           "biography": {
-            "description": "Diterima jika: terdiri dari maksimal 100 karakter",
+            "description": "Diterima jika: text",
             "type": "string",
             "example": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
           },
@@ -1370,11 +1370,6 @@
             "description": "Diterima jika: terdiri dari tipe data enum yaitu L atau P, L = laki-laki, P = perempuan",
             "type": "string",
             "example": "L"
-          },
-          "cardNumber": {
-            "description": "Diterima jika: angka",
-            "type": "string",
-            "example": "1234567890123456"
           }
         }
       },

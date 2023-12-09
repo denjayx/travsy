@@ -12,21 +12,20 @@ const updateUserProfileController = async (req, res, next) => {
         .email({ tlds: { allow: false } })
         .messages({
           'string.email': 'Invalid email format',
+          'string.empty': 'Email cannot be empty',
         }),
       avatarUrl: Joi.string().allow('').uri().messages({
         'string.uri': 'Invalid image URL',
       }),
-      firstName: Joi.string().allow('').max(20).messages({
+      firstName: Joi.string().allow('').max(15).messages({
         'string.max':
-          'First name must consist maximum of 20 characters without numbers, spaces, or symbols',
+          'First name must consist maximum of 15 characters without numbers, spaces, or symbols',
       }),
-      lastName: Joi.string().allow('').max(20).messages({
+      lastName: Joi.string().allow('').max(15).messages({
         'string.max':
-          'Last name must consist maximum of 20 characters without numbers, spaces, or symbols',
+          'Last name must consist maximum of 15 characters without numbers, spaces, or symbols',
       }),
-      biography: Joi.string().allow('').max(100).messages({
-        'string.max': 'Biography must be at most 100 characters long',
-      }),
+      biography: Joi.string().allow(''),
       nik: Joi.string().allow('').length(16).pattern(/^\d+$/).messages({
         'string.max': 'NIK must consist of 16 digits',
         'string.pattern.base': 'NIK must consist of numbers',
@@ -39,9 +38,6 @@ const updateUserProfileController = async (req, res, next) => {
       city: Joi.string().allow(''),
       gender: Joi.string().allow('').valid('L', 'P').messages({
         'any.only': 'Gender must be either L (male) or P (female)',
-      }),
-      cardNumber: Joi.string().allow('').pattern(/^\d+$/).messages({
-        'string.pattern.base': 'Card number must consist of numbers',
       }),
     });
 
