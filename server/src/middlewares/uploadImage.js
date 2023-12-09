@@ -25,7 +25,8 @@ const uploadImage = (destination, fileKey) => {
         throw new ServerError();
       } else {
         if (req.file) {
-          req.body.avatarUrl = `http://${host}:${port}/${fileKey}/${req.file.filename}`;
+          req.body[`${fileKey}Url`] =
+            `http://${host}:${port}/${fileKey}/${req.file.filename}`;
         }
         next();
       }
