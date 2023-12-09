@@ -52,7 +52,10 @@ const registerController = async (req, res, next) => {
     }
 
     const authenticationService = AuthenticationService.getInstance();
-    await authenticationService.registerUserAccount(value);
+    await authenticationService.registerUserAccount({
+      accountData: value.account,
+      userData: value.user,
+    });
 
     res.status(200).json({
       status: 'OK',
