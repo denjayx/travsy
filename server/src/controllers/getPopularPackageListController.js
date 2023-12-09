@@ -15,26 +15,12 @@ const getPopularPackageListController = async (req, res, next) => {
     }
 
     const packageService = PackageService.getInstance();
-    const packages = await packageService.getPopularPackageList(value.limit);
-
-    // mapping to package with tour guided
-    const packageWithTourGuideList = await Promise.all(
-      packages.map(async (tourPackage) => {
-        const tourGuide = await tourPackage.getTourGuide({
-          attributes: ['avatarUrl', 'firstName', 'lastName'],
-        });
-
-        return {
-          tourGuide,
-          package: tourPackage,
-        };
-      }),
-    );
+    const packageList = await packageService.getPopularPackageList(value.limit);
 
     res.status(200).json({
       status: 'OK',
       message: 'Successfully got the popular tour package list',
-      data: packageWithTourGuideList,
+      data: packageList,
     });
   } catch (err) {
     next(err);

@@ -173,7 +173,7 @@ class PackageService extends BaseService {
   async getPopularPackageList(limit) {
     const findPopularPackages = async (transaction) => {
       try {
-        const packages = await packageModel.findAll({
+        const packageList = await packageModel.findAll({
           include: [
             {
               model: destination,
@@ -183,20 +183,33 @@ class PackageService extends BaseService {
           ],
           order: [['transaction_count', 'DESC']],
           limit: limit || 4,
-          attributes: {
-            exclude: [
-              'description',
-              'serviceDuration',
-              'destinationCount',
-              'createdAt',
-              'updatedAt',
-              'deletedAt',
-            ],
-          },
+          attributes: [
+            'id',
+            'tourGuideId',
+            'thumbnailUrl',
+            'packageName',
+            'price',
+            'destinationCount',
+            'transactionCount',
+          ],
           transaction,
         });
 
-        return packages;
+        // mapping to package with tour guided
+        const packageWithTourGuideList = await Promise.all(
+          packageList.map(async (tourPackage) => {
+            const tourGuide = await tourPackage.getTourGuide({
+              attributes: ['avatarUrl', 'firstName', 'lastName'],
+            });
+
+            return {
+              tourGuide,
+              package: tourPackage,
+            };
+          }),
+        );
+
+        return packageWithTourGuideList;
       } catch (error) {
         throw new ServerError();
       }
