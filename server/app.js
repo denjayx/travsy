@@ -59,7 +59,7 @@ app
   .route('/profile/packages')
   .post(
     verifyAuthorization(),
-    uploadImage(path.resolve('upload/thumbnail', 'thumbnail')),
+    uploadImage(path.resolve('upload/thumbnail'), 'thumbnail'),
     createPackageController,
   )
   .get(verifyAuthorization(), getUserPackageListController);

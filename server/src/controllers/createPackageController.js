@@ -3,7 +3,7 @@ const PackageService = require('../services/PackageService');
 const BadRequestError = require('../errors/BadRequestError');
 
 const createPackageController = async (req, res, next) => {
-  const { username } = req.params;
+  const { username } = req.user;
   const packageData = req.body;
 
   try {
@@ -38,7 +38,7 @@ const createPackageController = async (req, res, next) => {
 
     const { error, value } = packageDataSchema.validate(packageData);
 
-    if (!error) {
+    if (error) {
       throw new BadRequestError(error.details[0].message);
     }
 

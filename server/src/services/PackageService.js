@@ -3,13 +3,15 @@ const {
   package: packageModel,
   destination,
   transaction: transactionModel,
-  User,
+  account,
+  user,
 } = require('../models');
 const BaseService = require('./BaseService');
 const BadRequestError = require('../errors/BadRequestError');
 const ServerError = require('../errors/ServerError');
 const NotFoundError = require('../errors/NotFoundError');
 const BaseResponseError = require('../errors/BaseResponseError');
+const ForbiddenError = require('../errors/ForbiddenError');
 
 class PackageService extends BaseService {
   // Desc: Implementasi singleton
@@ -263,17 +265,62 @@ class PackageService extends BaseService {
   async createPackage(username, packageData) {
     const insertData = async (transaction) => {
       try {
+        const userData = await user.findByPk(username, {
+          include: [{ model: account, attributes: ['role'] }],
+          attributes: ['username'],
+          transaction,
+        });
+
+        if (!userData) {
+          throw new NotFoundError('User not found');
+        }
+
+        if (userData.account.role !== 'tour guide') {
+          throw new ForbiddenError(
+            'You logged in as tourist. Please logged in as tour guide to create a package',
+          );
+        }
+
+        const { destinations, ...restPackageData } = packageData;
+
         const createdPackage = await packageModel.create(
           {
-            ...packageData,
+            ...restPackageData,
             tourGuideId: username,
           },
-          { include: destination, transaction },
+          { attributes: ['id'], transaction },
         );
 
-        return createdPackage;
+        await destinations.reduce(async (previousPromise, destinationData) => {
+          await previousPromise;
+
+          const createdDestination = await destination.create(
+            {
+              destinationName: destinationData.destinationName,
+              city: destinationData.city,
+              description: destinationData.description,
+              packageId: createdPackage.id,
+            },
+            { transaction },
+          );
+
+          const currentPackage = await packageModel.findByPk(
+            createdPackage.id,
+            { attributes: ['id', 'destinationCount'], transaction },
+          );
+
+          await packageModel.update(
+            { destinationCount: currentPackage.destinationCount + 1 },
+            { where: { id: currentPackage.id }, transaction },
+          );
+
+          return Promise.resolve(createdDestination);
+        }, Promise.resolve());
       } catch (error) {
-        throw new ServerError('Failed create package', error);
+        if (error instanceof BaseResponseError) {
+          throw error;
+        }
+        throw new ServerError();
       }
     };
 
@@ -283,7 +330,7 @@ class PackageService extends BaseService {
   // update detail package by id dengan username
   async updatePackage(username, id, updatedPackageData) {
     try {
-      const user = await User.findOne({
+      const user = await user.findOne({
         where: { username },
       });
 
@@ -319,7 +366,7 @@ class PackageService extends BaseService {
   // delete detail package by username dan id
   async deletePackage(username, id) {
     try {
-      const user = await User.findOne({
+      const user = await user.findOne({
         where: { username },
       });
 
