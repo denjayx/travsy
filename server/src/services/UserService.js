@@ -65,7 +65,6 @@ class UserService extends BaseService {
           province: userProfile.province,
           city: userProfile.city,
           gender: userProfile.gender,
-          cardNumber: userProfile.cardNumber,
         };
       } catch (error) {
         if (error instanceof BaseResponseError) {

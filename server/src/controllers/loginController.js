@@ -4,10 +4,10 @@ const tokenUtil = require('../utils/tokenUtil');
 const BadRequestError = require('../errors/BadRequestError');
 
 const loginController = async (req, res, next) => {
-  const { email, password } = req.body;
+  const loginData = req.body;
 
   try {
-    const bodySchema = Joi.object({
+    const loginDataSchema = Joi.object({
       email: Joi.string()
         .email({ tlds: { allow: false } })
         .messages({
@@ -19,7 +19,7 @@ const loginController = async (req, res, next) => {
       }),
     });
 
-    const { error, value } = bodySchema.validate({ email, password });
+    const { error, value } = loginDataSchema.validate(loginData);
 
     if (error) {
       throw new BadRequestError(error.details[0].message);
