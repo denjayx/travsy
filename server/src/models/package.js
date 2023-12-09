@@ -21,7 +21,6 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
-        field: 'package_id',
       },
       tourGuideId: {
         allowNull: false,

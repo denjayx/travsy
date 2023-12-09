@@ -6,14 +6,6 @@ module.exports = (sequelize, DataTypes) => {
       this.Packages = Destination.belongsTo(models.package, {
         foreignKey: 'packageId',
       });
-      Destination.addHook('afterCreate', async (destination, options) => {
-        const tourPackage = await models.package.findByPk(
-          destination.packageId,
-          { transaction: options.transaction },
-        );
-        tourPackage.destinationCount += 1;
-        tourPackage.save({ transaction: options.transaction });
-      });
     }
   }
   Destination.init(
