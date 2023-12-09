@@ -6,9 +6,11 @@ const BadRequestError = require('../../errors/BadRequestError');
 const UnauthorizedError = require('../../errors/UnauthorizedError');
 const NotFoundError = require('../../errors/NotFoundError');
 const ServerError = require('../../errors/ServerError');
+const tokenUtil = require('../../utils/tokenUtil');
 
 // mock the dependencies
 jest.mock('../../utils/passwordUtil');
+jest.mock('../../utils/tokenUtil');
 jest.mock('../BaseService');
 jest.mock('../../models');
 
@@ -78,21 +80,35 @@ describe('authentication service', () => {
       email: 'johnchena@gmail.com',
       password: '$Pander#800@',
     };
-    const mockAccount = {
+    const mockAccountData = {
       id: 1,
-      password: 'password',
+      password: 'h4sh3dP455w012d',
       role: 'tourist',
     };
 
     it('should return the account when found', async () => {
-      account.findOne.mockResolvedValueOnce(mockAccount);
+      const mockUserData = {
+        username: 'johnchena',
+        avatarUrl: null,
+        firstName: null,
+        lastName: null,
+      };
+      const mockToken = 'th1s1sT0k3n';
+      const mockCredential = {
+        token: mockToken,
+        role: mockAccountData.role,
+        user: mockUserData,
+      };
 
+      account.findOne.mockResolvedValueOnce(mockAccountData);
       passwordUtil.verifyPassword.mockResolvedValueOnce(true);
+      user.findOne.mockResolvedValueOnce(mockUserData);
+      tokenUtil.generateToken.mockReturnValueOnce(mockToken);
 
-      const accountData =
+      const credential =
         await authenticationService.verifyAccount(mockLoginField);
 
-      expect(accountData).toEqual(mockAccount);
+      expect(credential).toEqual(mockCredential);
       expect(account.findOne).toHaveBeenCalledWith({
         where: { email: mockLoginField.email },
         attributes: ['id', 'password', 'role'],
@@ -100,12 +116,20 @@ describe('authentication service', () => {
       });
       expect(passwordUtil.verifyPassword).toHaveBeenCalledWith(
         mockLoginField.password,
-        mockAccount.password,
+        mockAccountData.password,
       );
+      expect(user.findOne).toHaveBeenCalledWith({
+        where: { accountId: mockAccountData.id },
+        attributes: ['username', 'avatarUrl', 'firstName', 'lastName'],
+        transaction: expect.any(Object),
+      });
+      expect(tokenUtil.generateToken).toHaveBeenCalledWith({
+        username: mockUserData.username,
+      });
     });
 
     it('should throw NotFoundError if email not found', async () => {
-      account.findOne.mockResolvedValueOnce(null);
+      account.findOne.mockResolvedValueOnce(undefined);
 
       await expect(
         authenticationService.verifyAccount(mockLoginField),
@@ -118,7 +142,7 @@ describe('authentication service', () => {
     });
 
     it('should throw UnauthorizedError if password not match', async () => {
-      account.findOne.mockResolvedValueOnce(mockAccount);
+      account.findOne.mockResolvedValueOnce(mockAccountData);
 
       passwordUtil.verifyPassword.mockResolvedValueOnce(false);
 
@@ -132,7 +156,7 @@ describe('authentication service', () => {
       });
       expect(passwordUtil.verifyPassword).toHaveBeenCalledWith(
         mockLoginField.password,
-        mockAccount.password,
+        mockAccountData.password,
       );
     });
 
