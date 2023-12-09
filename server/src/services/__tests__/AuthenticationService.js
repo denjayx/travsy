@@ -1,11 +1,11 @@
 const { ValidationError } = require('sequelize');
 const passwordUtil = require('../../utils/passwordUtil');
 const AuthenticationService = require('../AuthenticationService');
-const AccountService = require('../AccountService');
-const { Account, User } = require('../../models');
+const { account, user } = require('../../models');
 const BadRequestError = require('../../errors/BadRequestError');
-const ServerError = require('../../errors/ServerError');
 const UnauthorizedError = require('../../errors/UnauthorizedError');
+const NotFoundError = require('../../errors/NotFoundError');
+const ServerError = require('../../errors/ServerError');
 
 // mock the dependencies
 jest.mock('../../utils/passwordUtil');
@@ -16,62 +16,64 @@ describe('authentication service', () => {
   const authenticationService = AuthenticationService.getInstance();
 
   describe('register user account', () => {
-    const mockAccount = {
+    const mockAccountData = {
       email: 'johnchena@gmail.com',
       password: '$Pander#800@',
       role: 'tourist',
     };
-    const mockUser = {
+    const mockUserData = {
       username: 'johnchena',
     };
 
     it('should hash password and create account successfully', async () => {
-      passwordUtil.hashPassword.mockResolvedValueOnce(mockAccount.password);
+      passwordUtil.hashPassword.mockResolvedValueOnce(mockAccountData.password);
 
       await authenticationService.registerUserAccount({
-        account: mockAccount,
-        user: mockUser,
+        accountData: mockAccountData,
+        userData: mockUserData,
       });
 
       expect(passwordUtil.hashPassword).toHaveBeenCalledWith(
-        mockAccount.password,
+        mockAccountData.password,
       );
-      expect(Account.create).toHaveBeenCalledWith(
-        { ...mockAccount, password: mockAccount.password, User: mockUser },
-        { include: User, transaction: expect.any(Object) },
+      expect(account.create).toHaveBeenCalledWith(
+        {
+          ...mockAccountData,
+          password: mockAccountData.password,
+          user: mockUserData,
+        },
+        { include: user, transaction: expect.any(Object) },
       );
     });
 
     it('should throw BadRequestError when account is already registered', async () => {
-      Account.create.mockImplementationOnce(() => {
+      account.create.mockImplementationOnce(() => {
         throw new ValidationError();
       });
 
       await expect(
         authenticationService.registerUserAccount({
-          account: mockAccount,
-          user: mockUser,
+          accountData: mockAccountData,
+          userData: mockUserData,
         }),
       ).rejects.toThrow(BadRequestError);
     });
 
     it('should throw ServerError when an unexpected error occurs', async () => {
-      Account.create.mockImplementationOnce(() => {
+      account.create.mockImplementationOnce(() => {
         throw new Error();
       });
 
       await expect(
         authenticationService.registerUserAccount({
-          account: mockAccount,
-          user: mockUser,
+          accountData: mockAccountData,
+          userData: mockUserData,
         }),
       ).rejects.toThrow(ServerError);
     });
   });
 
   describe('verify user account', () => {
-    const accountService = AccountService.getInstance();
-
     const mockLoginField = {
       email: 'johnchena@gmail.com',
       password: '$Pander#800@',
@@ -83,35 +85,51 @@ describe('authentication service', () => {
     };
 
     it('should return the account when found', async () => {
-      accountService.getAccountByEmail = jest
-        .fn()
-        .mockResolvedValueOnce(mockAccount);
+      account.findOne.mockResolvedValueOnce(mockAccount);
 
       passwordUtil.verifyPassword.mockResolvedValueOnce(true);
 
-      const result = await authenticationService.verifyAccount(mockLoginField);
+      const accountData =
+        await authenticationService.verifyAccount(mockLoginField);
 
-      expect(result).toEqual(mockAccount);
-      expect(accountService.getAccountByEmail).toHaveBeenCalledWith(
-        mockLoginField.email,
-        ['id', 'password', 'role'],
-      );
+      expect(accountData).toEqual(mockAccount);
+      expect(account.findOne).toHaveBeenCalledWith({
+        where: { email: mockLoginField.email },
+        attributes: ['id', 'password', 'role'],
+        transaction: expect.any(Object),
+      });
       expect(passwordUtil.verifyPassword).toHaveBeenCalledWith(
         mockLoginField.password,
         mockAccount.password,
       );
     });
 
+    it('should throw NotFoundError if email not found', async () => {
+      account.findOne.mockResolvedValueOnce(null);
+
+      await expect(
+        authenticationService.verifyAccount(mockLoginField),
+      ).rejects.toThrow(NotFoundError);
+      expect(account.findOne).toHaveBeenCalledWith({
+        where: { email: mockLoginField.email },
+        attributes: ['id', 'password', 'role'],
+        transaction: expect.any(Object),
+      });
+    });
+
     it('should throw UnauthorizedError if password not match', async () => {
-      accountService.getAccountByEmail = jest
-        .fn()
-        .mockResolvedValueOnce(mockAccount);
+      account.findOne.mockResolvedValueOnce(mockAccount);
 
       passwordUtil.verifyPassword.mockResolvedValueOnce(false);
 
       await expect(
         authenticationService.verifyAccount(mockLoginField),
       ).rejects.toThrow(UnauthorizedError);
+      expect(account.findOne).toHaveBeenCalledWith({
+        where: { email: mockLoginField.email },
+        attributes: ['id', 'password', 'role'],
+        transaction: expect.any(Object),
+      });
       expect(passwordUtil.verifyPassword).toHaveBeenCalledWith(
         mockLoginField.password,
         mockAccount.password,
@@ -119,11 +137,9 @@ describe('authentication service', () => {
     });
 
     it('should throw ServerError when an error is thrown', async () => {
-      accountService.getAccountByEmail = jest
-        .fn()
-        .mockImplementationOnce(() => {
-          throw new Error();
-        });
+      account.findOne.mockImplementationOnce(() => {
+        throw new Error();
+      });
 
       await expect(
         authenticationService.verifyAccount(mockLoginField),
