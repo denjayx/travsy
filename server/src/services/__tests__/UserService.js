@@ -1,5 +1,5 @@
 const { ValidationError } = require('sequelize');
-const { Account, User } = require('../../models');
+const { account, user } = require('../../models');
 const UserService = require('../UserService');
 const NotFoundError = require('../../errors/NotFoundError');
 const ServerError = require('../../errors/ServerError');
@@ -11,7 +11,7 @@ jest.mock('../../models');
 describe('user service', () => {
   const userService = UserService.getInstance();
   const mockUsername = 'johndoe';
-  const mockUser = {
+  const mockUserProfile = {
     avatarUrl: null,
     firstName: null,
     lastName: null,
@@ -21,18 +21,17 @@ describe('user service', () => {
     province: null,
     city: null,
     gender: null,
-    cardNumber: null,
   };
   const mockAccount = { email: 'johndoe@example.com' };
   const accountId = 1;
 
   describe('get user profile', () => {
     const mockFetchedUserProfile = {
-      Account: mockAccount,
-      ...mockUser,
+      account: mockAccount,
+      ...mockUserProfile,
     };
     const mockReturnedUserProfile = {
-      email: mockFetchedUserProfile.Account.email,
+      email: mockFetchedUserProfile.account.email,
       avatarUrl: mockFetchedUserProfile.avatarUrl,
       firstName: mockFetchedUserProfile.firstName,
       lastName: mockFetchedUserProfile.lastName,
@@ -46,15 +45,33 @@ describe('user service', () => {
     };
 
     it('should return user profile when found', async () => {
-      User.findByPk.mockResolvedValueOnce(mockFetchedUserProfile);
+      user.findByPk.mockResolvedValueOnce(mockFetchedUserProfile);
 
       const result = await userService.getUserProfile(mockUsername);
 
       expect(result).toEqual(mockReturnedUserProfile);
+      expect(user.findByPk).toHaveBeenCalledWith(mockUsername, {
+        attributes: [
+          'avatarUrl',
+          'firstName',
+          'lastName',
+          'biography',
+          'nik',
+          'phone',
+          'province',
+          'city',
+          'gender',
+        ],
+        include: {
+          model: account,
+          attributes: ['email'],
+        },
+        transaction: expect.any(Object),
+      });
     });
 
     it('should throw NotFoundError when user profile not found', async () => {
-      User.findByPk.mockResolvedValueOnce(undefined);
+      user.findByPk.mockResolvedValueOnce(undefined);
 
       await expect(userService.getUserProfile(mockUsername)).rejects.toThrow(
         NotFoundError,
@@ -62,7 +79,7 @@ describe('user service', () => {
     });
 
     it('should throw ServerError when an error is thrown', async () => {
-      User.findByPk.mockImplementationOnce(() => {
+      user.findByPk.mockImplementationOnce(() => {
         throw new Error();
       });
 
@@ -70,74 +87,76 @@ describe('user service', () => {
         ServerError,
       );
     });
-
-    afterEach(() => {
-      expect(User.findByPk).toHaveBeenCalledWith(mockUsername, {
-        attributes: {
-          exclude: [
-            'username',
-            'accountId',
-            'createdAt',
-            'updatedAt',
-            'deletedAt',
-          ],
-        },
-        include: {
-          model: Account,
-          attributes: ['email'],
-        },
-        transaction: expect.any(Object),
-      });
-    });
   });
 
   describe('update user profile', () => {
     it('should successfully update user profile', async () => {
       const mockUserUpdated = { accountId };
 
-      User.update.mockResolvedValueOnce([1]);
-      User.findByPk.mockResolvedValueOnce(mockUserUpdated);
+      user.update.mockResolvedValueOnce([1]);
+      user.findByPk.mockResolvedValueOnce(mockUserUpdated);
 
-      await userService.updateUserProfile(mockUsername, mockUser, mockAccount);
+      await userService.updateUserProfile(
+        mockUsername,
+        mockUserProfile,
+        mockAccount,
+      );
 
-      expect(User.update).toHaveBeenCalledWith(mockUser, {
+      expect(user.update).toHaveBeenCalledWith(mockUserProfile, {
         where: { username: mockUsername },
         transaction: expect.any(Object),
       });
-      expect(User.findByPk).toHaveBeenCalledWith(mockUsername, {
+      expect(user.findByPk).toHaveBeenCalledWith(mockUsername, {
+        attributes: 'accountId',
         transaction: expect.any(Object),
       });
-      expect(Account.update).toHaveBeenCalledWith(mockAccount, {
+      expect(account.update).toHaveBeenCalledWith(mockAccount, {
         where: { id: mockUserUpdated.accountId },
         transaction: expect.any(Object),
       });
     });
 
     it('should throw NotFoundError when there are no user updated', async () => {
-      User.update.mockResolvedValueOnce([0]);
+      user.update.mockResolvedValueOnce([0]);
 
       await expect(
-        userService.updateUserProfile(mockUsername, mockUser, mockAccount),
+        userService.updateUserProfile(
+          mockUsername,
+          mockUserProfile,
+          mockAccount,
+        ),
       ).rejects.toThrow(NotFoundError);
+      expect(user.update).toHaveBeenCalledWith(mockUserProfile, {
+        where: { username: mockUsername },
+        transaction: expect.any(Object),
+      });
     });
 
     it('should throw BadRequestError when an ValidationError is thrown', async () => {
-      User.update.mockImplementationOnce(() => {
+      user.update.mockImplementationOnce(() => {
         throw new ValidationError();
       });
 
       await expect(
-        userService.updateUserProfile(mockUsername, mockUser, mockAccount),
+        userService.updateUserProfile(
+          mockUsername,
+          mockUserProfile,
+          mockAccount,
+        ),
       ).rejects.toThrow(BadRequestError);
     });
 
     it('should throw ServerError when an Error is thrown', async () => {
-      User.update.mockImplementationOnce(() => {
+      user.update.mockImplementationOnce(() => {
         throw new Error();
       });
 
       await expect(
-        userService.updateUserProfile(mockUsername, mockUser, mockAccount),
+        userService.updateUserProfile(
+          mockUsername,
+          mockUserProfile,
+          mockAccount,
+        ),
       ).rejects.toThrow(ServerError);
     });
   });

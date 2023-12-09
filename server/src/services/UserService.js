@@ -1,20 +1,12 @@
 const { ValidationError } = require('sequelize');
 const BaseService = require('./BaseService');
-const { User, Account } = require('../models');
+const { user, account } = require('../models');
 const BaseResponseError = require('../errors/BaseResponseError');
 const ServerError = require('../errors/ServerError');
 const NotFoundError = require('../errors/NotFoundError');
 const BadRequestError = require('../errors/BadRequestError');
 
-/**
- * Service for managing user profiles and accounts.
- * @extends BaseService
- */
 class UserService extends BaseService {
-  /**
-   * Get an instance of the UserService using the Singleton pattern.
-   * @returns {UserService} The singleton instance of UserService.
-   */
   static getInstance() {
     if (!UserService.INSTANCE) {
       UserService.INSTANCE = new UserService();
@@ -23,28 +15,23 @@ class UserService extends BaseService {
     return UserService.INSTANCE;
   }
 
-  /**
-   * Get the profile of a user, including associated account details.
-   * @param {string} username - The username of the user.
-   * @returns {Promise<Object>} The user profile, including account information.
-   * @throws {NotFoundError} If the user is not found.
-   * @throws {ServerError} If an unexpected error occurs during profile retrieval.
-   */
   async getUserProfile(username) {
     const findUserIncludeAccount = async (transaction) => {
       try {
-        const userProfile = await User.findByPk(username, {
-          attributes: {
-            exclude: [
-              'username',
-              'accountId',
-              'createdAt',
-              'updatedAt',
-              'deletedAt',
-            ],
-          },
+        const userProfile = await user.findByPk(username, {
+          attributes: [
+            'avatarUrl',
+            'firstName',
+            'lastName',
+            'biography',
+            'nik',
+            'phone',
+            'province',
+            'city',
+            'gender',
+          ],
           include: {
-            model: Account,
+            model: account,
             attributes: ['email'],
           },
           transaction,
@@ -55,7 +42,7 @@ class UserService extends BaseService {
         }
 
         return {
-          email: userProfile.Account.email,
+          email: userProfile.account.email,
           avatarUrl: userProfile.avatarUrl,
           firstName: userProfile.firstName,
           lastName: userProfile.lastName,
@@ -79,19 +66,10 @@ class UserService extends BaseService {
     return userProfile;
   }
 
-  /**
-   * Update the profile of a user and associated account details.
-   * @param {string} username - The username of the user to be updated.
-   * @param {Object} user - The updated user profile data.
-   * @param {Object} account - The updated account data.
-   * @throws {NotFoundError} If the user to be updated is not found.
-   * @throws {BadRequestError} If there is a validation error during the update.
-   * @throws {ServerError} If an unexpected error occurs during the update.
-   */
-  async updateUserProfile(username, user, account) {
+  async updateUserProfile(username, userData, accountData) {
     const updateData = async (transaction) => {
       try {
-        const affectedCount = await User.update(user, {
+        const affectedCount = await user.update(userData, {
           where: { username },
           transaction,
         });
@@ -100,9 +78,12 @@ class UserService extends BaseService {
           throw new NotFoundError('User not found');
         }
 
-        const userUpdated = await User.findByPk(username, { transaction });
+        const userUpdated = await user.findByPk(username, {
+          attributes: ['accountId'],
+          transaction,
+        });
 
-        await Account.update(account, {
+        await account.update(accountData, {
           where: { id: userUpdated.accountId },
           transaction,
         });
