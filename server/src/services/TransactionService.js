@@ -1,11 +1,10 @@
 const { Op } = require('sequelize');
+const axios = require('axios');
+const { v4: uuidv4 } = require('uuid');
 const BaseService = require('./BaseService');
-const BadRequestError = require('../errors/BadRequestError');
 const ServerError = require('../errors/ServerError');
 const NotFoundError = require('../errors/NotFoundError');
 const BaseResponseError = require('../errors/BaseResponseError');
-const axios = require('axios');
-const { v4: uuidv4 } = require('uuid');
 const {
   PAYMENT_API_ENDPOINT,
   PAYMENT_API_KEY,

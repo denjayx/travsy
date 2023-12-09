@@ -1,8 +1,8 @@
+const { ValidationError } = require('sequelize');
 const { Account, User } = require('../../models');
 const UserService = require('../UserService');
 const NotFoundError = require('../../errors/NotFoundError');
 const ServerError = require('../../errors/ServerError');
-const { ValidationError } = require('sequelize');
 const BadRequestError = require('../../errors/BadRequestError');
 
 jest.mock('../BaseService');
