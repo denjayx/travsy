@@ -1,8 +1,8 @@
 const { Op } = require('sequelize');
 const {
-  Package,
-  Destination,
-  Transaction: TransactionModel,
+  package: packageModel,
+  destination,
+  transaction: transactionModel,
   User,
 } = require('../models');
 const BaseService = require('./BaseService');
@@ -38,10 +38,10 @@ class PackageService extends BaseService {
             );
           }
 
-          const availablePackages = await Package.findAll({
+          const availablePackages = await packageModel.findAll({
             include: [
               {
-                model: TransactionModel,
+                model: transactionModel,
                 attributes: ['startDate', 'endDate'],
                 where: {
                   startDate: {
@@ -112,10 +112,10 @@ class PackageService extends BaseService {
         }
 
         // get packages with validated filters
-        const packages = await Package.findAll({
+        const packages = await packageModel.findAll({
           include: [
             {
-              model: Destination,
+              model: destination,
               attributes: ['destinationName', 'city'],
               where: {
                 [Op.and]: whereConditionsDestination,
@@ -157,10 +157,10 @@ class PackageService extends BaseService {
   async getPopularPackageList(limit) {
     const findPopularPackages = async (transaction) => {
       try {
-        const packages = await Package.findAll({
+        const packages = await packageModel.findAll({
           include: [
             {
-              model: Destination,
+              model: destination,
               attributes: ['destinationName', 'city'],
               required: true,
             },
@@ -195,10 +195,10 @@ class PackageService extends BaseService {
   async getPackageDetail(id) {
     const findPackageDetail = async (transaction) => {
       try {
-        const packageDetail = await Package.findByPk(id, {
+        const packageDetail = await packageModel.findByPk(id, {
           include: [
             {
-              model: Destination,
+              model: destination,
               attributes: {
                 exclude: ['createdAt', 'updatedAt', 'deletedAt'],
               },
@@ -239,7 +239,7 @@ class PackageService extends BaseService {
   async getUserPackageList(tourGuideId) {
     const findPackageByUsername = async (transaction) => {
       try {
-        const packages = await Package.findAll({
+        const packages = await packageModel.findAll({
           where: { tourGuideId },
           attributes: ['id', 'packageName', 'price', 'serviceDuration'],
           transaction,
@@ -261,29 +261,23 @@ class PackageService extends BaseService {
 
   // insert data package
   async createPackage(username, packageData) {
-    try {
-      const user = await User.findOne({ where: { username } });
+    const insertData = async (transaction) => {
+      try {
+        const createdPackage = await packageModel.create(
+          {
+            ...packageData,
+            tourGuideId: username,
+          },
+          { include: destination, transaction },
+        );
 
-      if (!user) {
-        throw new NotFoundError('Username not found');
+        return createdPackage;
+      } catch (error) {
+        throw new ServerError('Failed create package', error);
       }
+    };
 
-      const newPackage = await Package.create({
-        id: packageData.packageId,
-        tourGuideId: user.username, // Menggunakan username sebagai tur guide ID
-        packageName: packageData.packageName,
-        thumbnailUrl: packageData.thumbnailUrl,
-        price: packageData.price,
-        description: packageData.description,
-        serviceDuration: packageData.duration,
-        destinationCount: 0,
-        transactionCount: 0,
-      });
-
-      return newPackage;
-    } catch (error) {
-      throw new ServerError('Failed create package', error);
-    }
+    await this.createDbTransaction(insertData);
   }
 
   // update detail package by id dengan username
@@ -297,7 +291,7 @@ class PackageService extends BaseService {
         throw new NotFoundError('User not found');
       }
 
-      const packageToUpdate = await Package.findOne({
+      const packageToUpdate = await packageModel.findOne({
         where: {
           id,
           tourGuideId: username, // Menggunakan username sebagai tur guide ID
@@ -310,7 +304,7 @@ class PackageService extends BaseService {
 
       // lakukan update data
       await packageToUpdate.update(updatedPackageData);
-      const updatedPackage = await Package.findByPk(id);
+      const updatedPackage = await packageModel.findByPk(id);
 
       return updatedPackage;
     } catch (error) {
@@ -333,7 +327,7 @@ class PackageService extends BaseService {
         throw new NotFoundError('User not found');
       }
 
-      const deletedPackage = await Package.destroy({
+      const deletedPackage = await packageModel.destroy({
         where: {
           id,
           tourGuideId: username,

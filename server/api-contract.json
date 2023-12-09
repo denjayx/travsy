@@ -551,9 +551,6 @@
           "400": {
             "$ref": "#/components/responses/badRequest"
           },
-          "403": {
-            "$ref": "#/components/responses/forbidden"
-          },
           "404": {
             "$ref": "#/components/responses/notFound"
           },
@@ -1423,7 +1420,7 @@
             "type": "number",
             "example": 3
           },
-          "Destinations": {
+          "destinations": {
             "type": "array",
             "items": {
               "type": "object",
