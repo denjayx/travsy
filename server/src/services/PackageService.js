@@ -221,28 +221,28 @@ class PackageService extends BaseService {
   }
 
   // get detail package by id
-  async getPackageDetail(id) {
+  async getPackageDetail(packageId) {
     const findPackageDetail = async (transaction) => {
       try {
-        const packageDetail = await packageModel.findByPk(id, {
+        const packageDetail = await packageModel.findByPk(packageId, {
           include: [
             {
               model: destination,
-              attributes: {
-                exclude: ['createdAt', 'updatedAt', 'deletedAt'],
-              },
+              attributes: ['destinationName', 'city', 'description'],
               required: true,
             },
           ],
-          attributes: {
-            exclude: [
-              'destinationCount',
-              'transactionCount',
-              'createdAt',
-              'updatedAt',
-              'deletedAt',
-            ],
-          },
+          attributes: [
+            'id',
+            'tourGuideId',
+            'thumbnailUrl',
+            'packageName',
+            'price',
+            'description',
+            'serviceDuration',
+            'destinationCount',
+            'transactionCount',
+          ],
           transaction,
         });
 
@@ -250,7 +250,12 @@ class PackageService extends BaseService {
           throw new NotFoundError('Package Not Found');
         }
 
-        return packageDetail;
+        const tourGuide = await packageDetail.getTourGuide({
+          attributes: ['avatarUrl', 'firstName', 'lastName'],
+          transaction,
+        });
+
+        return { tourGuide, package: packageDetail };
       } catch (error) {
         if (error instanceof BaseResponseError) {
           throw error;
