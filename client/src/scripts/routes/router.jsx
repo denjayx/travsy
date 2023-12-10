@@ -11,6 +11,10 @@ import Register from '../views/pages/Register'
 import Homepage from '../views/pages/Homepage'
 import Auth from '../views/layouts/Auth'
 import Detail from '../views/pages/Detail'
+import Dashboard from '../views/layouts/Dashboard'
+import Packages from '../views/pages/Dashboard/Packages'
+import Orders from '../views/pages/Dashboard/Orders'
+import PackagesDetail from '../views/pages/Dashboard/PackagesDetail'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -24,6 +28,18 @@ const router = createBrowserRouter(
       <Route element={<Auth />}>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<Register />}></Route>
+      </Route>
+      <Route element={<Dashboard />}>
+        <Route path="/dashboard/packages" element={<Packages />}></Route>
+        <Route
+          path="/dashboard/packages/details"
+          element={<PackagesDetail />}
+        ></Route>
+        <Route path="/dashboard/orders" element={<Orders />}></Route>
+        {/* <Route path="/detail-packages" element={<DetailPackages />}></Route>
+        <Route path="/add-packages" element={<AddPackages />}></Route>
+        <Route path="/bookings" element={<Bookings />}></Route>
+        <Route path="/confirmation" element={<Confirmation />}></Route> */}
       </Route>
     </>,
   ),
