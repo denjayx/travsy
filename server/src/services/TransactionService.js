@@ -9,7 +9,13 @@ const {
   PAYMENT_API_ENDPOINT,
   PAYMENT_API_KEY,
 } = require('../../config/payment');
-const { Transaction: TransactionModel, User, Package } = require('../models');
+const {
+  transaction: transactionModel,
+  user,
+  package: packageModel,
+  account,
+} = require('../models');
+const ForbiddenError = require('../errors/ForbiddenError');
 
 class TransactionService extends BaseService {
   static getInstance() {
@@ -59,18 +65,35 @@ class TransactionService extends BaseService {
       const transactionId = uuidv4();
 
       try {
-        const user = await User.findByPk(username, {
-          attributes: ['firstName', 'lastName', 'phone'],
+        const userData = await user.findByPk(username, {
+          attributes: ['firstName', 'lastName', 'phone', 'accountId'],
+          transaction,
+        });
+        const packageData = await packageModel.findByPk(packageId, {
+          attributes: ['id', 'transactionCount'],
           transaction,
         });
 
-        if (!user) {
+        if (!userData) {
           throw new NotFoundError('User not found');
+        } else if (!packageData) {
+          throw new NotFoundError('Package not found');
         }
 
-        const token = await createPaymentToken(transactionId, user);
+        const accountData = await account.findByPk(userData.accountId, {
+          attributes: ['role'],
+          transaction,
+        });
 
-        await TransactionModel.create(
+        if (accountData.role !== 'tourist') {
+          throw new ForbiddenError(
+            'You are logged in as tour guide. To checkout package please login as tourist',
+          );
+        }
+
+        const token = await createPaymentToken(transactionId, userData);
+
+        await transactionModel.create(
           {
             packageId,
             touristId: username,
@@ -80,6 +103,11 @@ class TransactionService extends BaseService {
             totalPrice,
           },
           { transaction },
+        );
+
+        await packageModel.update(
+          { transactionCount: packageData.transactionCount + 1 },
+          { where: { id: packageData.id }, transaction },
         );
 
         return token;
@@ -100,7 +128,7 @@ class TransactionService extends BaseService {
   async getOrderList(username) {
     const findOrderList = async (transaction) => {
       try {
-        const tourPackageList = await Package.findAll({
+        const tourPackageList = await packageModel.findAll({
           where: { tourGuideId: username },
           attributes: ['id'],
           transaction,
@@ -110,10 +138,10 @@ class TransactionService extends BaseService {
           (tourPackage) => tourPackage.id,
         );
 
-        const orderList = await TransactionModel.findAll({
+        const orderList = await transactionModel.findAll({
           where: { packageId: { [Op.in]: packageIdList } },
           include: {
-            model: Package,
+            model: packageModel,
             attributes: ['id', 'packageName'],
           },
           attributes: ['id', 'packageId', 'touristId', 'status', 'orderDate'],
@@ -152,14 +180,14 @@ class TransactionService extends BaseService {
   async getDetailOrder(username, id) {
     const findOrderList = async (transaction) => {
       try {
-        const order = await TransactionModel.findByPk(id, {
+        const order = await transactionModel.findByPk(id, {
           include: [
             {
-              model: Package,
+              model: packageModel,
               attributes: ['id', 'packageName'],
             },
             {
-              model: User,
+              model: user,
               attributes: ['username', 'firstName', 'lastName'],
             },
           ],
@@ -183,7 +211,7 @@ class TransactionService extends BaseService {
     try {
       console.log(id);
       console.log(status);
-      const updatedOrder = await TransactionModel.update(
+      const updatedOrder = await transactionModel.update(
         { status },
         {
           where: {
@@ -206,13 +234,13 @@ class TransactionService extends BaseService {
   // get transaction history by username
   async getHistoryTransactionByUsername(username) {
     try {
-      const transactions = await TransactionModel.findAll({
+      const transactions = await transactionModel.findAll({
         where: {
           touristId: username,
         },
         include: [
           {
-            model: User,
+            model: user,
             attributes: ['username'], // Akan mengambil username dari tabel User
           },
         ],
@@ -242,13 +270,13 @@ class TransactionService extends BaseService {
   async getDetailHistoryTransactionByUsername(username, id) {
     try {
       // Cari transaksi berdasarkan username dan id
-      const transaction = await TransactionModel.findOne({
+      const transaction = await transactionModel.findOne({
         where: {
           id,
         },
         include: [
           {
-            model: User,
+            model: user,
             where: {
               username,
             },

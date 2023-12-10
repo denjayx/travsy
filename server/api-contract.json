@@ -1196,11 +1196,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "username": {
-                    "description": "Username pembeli",
-                    "type": "string",
-                    "example": "johndoe"
-                  },
                   "startDate": {
                     "description": "Diterima jika: format YYYY-MM-DD",
                     "type": "string",
@@ -1236,11 +1231,40 @@
           }
         },
         "responses": {
-          "201": {
-            "$ref": "#/components/responses/created"
+          "200": {
+            "description": "Transaksi sukses",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "OK"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Transaction success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "paymentToken": {
+                          "type": "string",
+                          "example": "c1d6a3b2-1c87-4294-9ce3-cc69b080a517"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
             "$ref": "#/components/responses/badRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
           },
           "403": {
             "$ref": "#/components/responses/forbidden"

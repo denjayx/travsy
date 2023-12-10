@@ -12,7 +12,7 @@ const {
   registerController,
   loginController,
   createPackageController,
-  // createTransactionController,
+  createTransactionController,
   getPackageListController,
   getPopularPackageListController,
   getPackageDetailController,
@@ -24,7 +24,7 @@ const {
   // getOrderController,
   // getOrderControllerById,
   // patchOrderController,
-  getOrderListController,
+  // getOrderListController,
   updateUserProfileController,
   updatePackageController,
   deletePackageController,
@@ -74,14 +74,16 @@ app
   )
   .delete(verifyAuthorization(), deletePackageController);
 
-app.route('/profile/orders').get(verifyAuthorization(), getOrderListController);
-
 app.route('/packages').get(getPackageListController);
 
 app.route('/packages/popular').get(getPopularPackageListController);
 
 app.route('/packages/:id').get(getPackageDetailController);
 
+app
+  .route('/packages/:id/pay')
+  .post(verifyAuthorization(), createTransactionController);
+// app.route('/profile/orders').get(verifyAuthorization(), getOrderListController);
 // // Transaction service
 // app.route('/user/:username/histories').get(getTransactionHistoriesController);
 // app
@@ -91,10 +93,6 @@ app.route('/packages/:id').get(getPackageDetailController);
 // app.route('/user/:username/orders').get(getOrderController);
 // app.route('/user/:username/orders/:id').get(getOrderControllerById);
 // app.route('/user/:username/orders/:id').patch(patchOrderController);
-
-// app
-//   .route('/packages/:id/pay')
-//   .post(verifyAuthorization(), createTransactionController);
 
 // Error handler
 app.use(errorHandler());
