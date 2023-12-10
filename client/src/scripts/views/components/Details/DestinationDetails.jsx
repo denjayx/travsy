@@ -16,7 +16,7 @@ export default function DestinationDetails() {
       <div className="py-2">
         <button
           onClick={() => setOpenAccordion1(!openAccordion1)}
-          className=" flex w-full items-center justify-between rounded-2xl bg-white p-5 text-lg font-semibold  text-primary-900"
+          className=" flex w-full items-center justify-between rounded-2xl bg-white p-5 text-lg font-semibold  text-primary-900 border-2 border-primary-200"
         >
           <span>Pura Tanah Lot</span>
           {openAccordion1 ? (
@@ -94,7 +94,7 @@ export default function DestinationDetails() {
       <div className="py-2">
         <button
           onClick={() => setOpenAccordion2(!openAccordion2)}
-          className=" flex w-full items-center justify-between rounded-2xl bg-white p-5 text-lg font-semibold  text-primary-900"
+          className=" flex w-full items-center justify-between rounded-2xl bg-white p-5 text-lg font-semibold  text-primary-900 border-2 border-primary-200"
         >
           <span>Pura Uluwatu</span>
           {openAccordion2 ? (
@@ -172,7 +172,7 @@ export default function DestinationDetails() {
       <div className="py-2">
         <button
           onClick={() => setOpenAccordion3(!openAccordion3)}
-          className=" flex w-full items-center justify-between rounded-2xl bg-white p-5 text-lg font-semibold  text-primary-900"
+          className=" flex w-full items-center justify-between rounded-2xl bg-white p-5 text-lg font-semibold  text-primary-900 border-2 border-primary-200"
         >
           <span>Pantai Kuta</span>
           {openAccordion3 ? (
