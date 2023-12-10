@@ -9,7 +9,7 @@ const getUserPackageDetailController = async (req, res, next) => {
     const packageService = PackageService.getInstance();
     const packageDetail = await packageService.getPackageDetail(packageId);
 
-    if (packageDetail.tourGuideId !== username) {
+    if (packageDetail.package.tourGuideId !== username) {
       throw new ForbiddenError();
     }
 

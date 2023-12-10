@@ -67,7 +67,11 @@ app
 app
   .route('/profile/packages/:id')
   .get(verifyAuthorization(), getUserPackageDetailController)
-  .put(verifyAuthorization(), updatePackageController)
+  .put(
+    verifyAuthorization(),
+    uploadImage(path.resolve('upload/thumbnail'), 'thumbnail'),
+    updatePackageController,
+  )
   .delete(verifyAuthorization(), deletePackageController);
 
 app.route('/profile/orders').get(verifyAuthorization(), getOrderListController);

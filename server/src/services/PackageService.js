@@ -321,7 +321,7 @@ class PackageService extends BaseService {
           { attributes: ['id'], transaction },
         );
 
-        await destinations.reduce(async (previousPromise, destinationData) => {
+        await destinations?.reduce(async (previousPromise, destinationData) => {
           await previousPromise;
 
           const createdDestination = await destination.create(
@@ -358,39 +358,74 @@ class PackageService extends BaseService {
   }
 
   // update detail package by id dengan username
-  async updatePackage(username, id, updatedPackageData) {
-    try {
-      const user = await user.findOne({
-        where: { username },
-      });
+  async updatePackage(username, packageId, packageData) {
+    const updateData = async (transaction) => {
+      try {
+        const userData = await user.findByPk(username, {
+          include: [{ model: account, attributes: ['role'] }],
+          attributes: ['username'],
+          transaction,
+        });
 
-      if (!user) {
-        throw new NotFoundError('User not found');
+        const packageToBeUpdated = await packageModel.findByPk(packageId, {
+          attributes: ['id', 'tourGuideId'],
+        });
+
+        if (!userData || !packageToBeUpdated) {
+          throw new NotFoundError('User or package not found');
+        }
+
+        if (
+          userData.account.role !== 'tour guide' ||
+          username !== packageToBeUpdated.tourGuideId
+        ) {
+          throw new ForbiddenError(
+            'You are prohibited from updating this package',
+          );
+        }
+
+        const { destinations, ...restPackageData } = packageData;
+
+        await packageModel.update(
+          { ...restPackageData },
+          { where: { id: packageToBeUpdated.id }, transaction },
+        );
+
+        await destinations?.reduce(async (previousPromise, destinationData) => {
+          await previousPromise;
+
+          const createdDestination = await destination.create(
+            {
+              destinationName: destinationData.destinationName,
+              city: destinationData.city,
+              description: destinationData.description,
+              packageId: packageToBeUpdated.id,
+            },
+            { transaction },
+          );
+
+          const currentPackage = await packageModel.findByPk(
+            packageToBeUpdated.id,
+            { attributes: ['id', 'destinationCount'], transaction },
+          );
+
+          await packageModel.update(
+            { destinationCount: currentPackage.destinationCount + 1 },
+            { where: { id: currentPackage.id }, transaction },
+          );
+
+          return Promise.resolve(createdDestination);
+        }, Promise.resolve());
+      } catch (error) {
+        if (error instanceof BaseResponseError) {
+          throw error;
+        } else {
+          throw new ServerError();
+        }
       }
+    };
 
-      const packageToUpdate = await packageModel.findOne({
-        where: {
-          id,
-          tourGuideId: username, // Menggunakan username sebagai tur guide ID
-        },
-      });
-
-      if (!packageToUpdate) {
-        throw new NotFoundError('Package not found');
-      }
-
-      // lakukan update data
-      await packageToUpdate.update(updatedPackageData);
-      const updatedPackage = await packageModel.findByPk(id);
-
-      return updatedPackage;
-    } catch (error) {
-      if (error instanceof NotFoundError) {
-        throw error;
-      } else {
-        throw new ServerError('Internal server error');
-      }
-    }
+    await this.createDbTransaction(updateData);
   }
 
   // delete detail package by username dan id
