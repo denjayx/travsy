@@ -429,35 +429,49 @@ class PackageService extends BaseService {
   }
 
   // delete detail package by username dan id
-  async deletePackage(username, id) {
-    try {
-      const user = await user.findOne({
-        where: { username },
-      });
+  async deletePackage(username, packageId) {
+    const deleteData = async (transaction) => {
+      try {
+        const userData = await user.findByPk(username, {
+          include: [{ model: account, attributes: ['role'] }],
+          attributes: ['username'],
+          transaction,
+        });
 
-      if (!user) {
-        throw new NotFoundError('User not found');
+        const packageToBeDeleted = await packageModel.findByPk(packageId, {
+          attributes: ['id', 'tourGuideId'],
+        });
+
+        if (!userData || !packageToBeDeleted) {
+          throw new NotFoundError('User or package not found');
+        }
+
+        if (
+          userData.account.role !== 'tour guide' ||
+          username !== packageToBeDeleted.tourGuideId
+        ) {
+          console.log(userData.account.role);
+          throw new ForbiddenError(
+            'You are prohibited from deleting this package',
+          );
+        }
+
+        await packageModel.destroy({
+          where: {
+            id: packageId,
+            tourGuideId: username,
+          },
+        });
+      } catch (error) {
+        if (error instanceof BaseResponseError) {
+          throw error;
+        } else {
+          throw new ServerError();
+        }
       }
+    };
 
-      const deletedPackage = await packageModel.destroy({
-        where: {
-          id,
-          tourGuideId: username,
-        },
-      });
-
-      if (!deletedPackage) {
-        throw new NotFoundError('Package not found');
-      }
-
-      return { message: 'Package deleted successfully' };
-    } catch (error) {
-      if (error instanceof NotFoundError) {
-        throw error;
-      } else {
-        throw new ServerError('Internal server error');
-      }
-    }
+    await this.createDbTransaction(deleteData);
   }
 }
 

@@ -2,11 +2,11 @@ const PackageService = require('../services/PackageService');
 
 const deletePackageController = async (req, res, next) => {
   const { username } = req.user;
-  const { id } = req.params;
+  const { id: packageId } = req.params;
 
   try {
     const packageService = PackageService.getInstance();
-    await packageService.deletePackage(username, id);
+    await packageService.deletePackage(username, packageId);
 
     res.status(200).json({
       status: 'OK',
