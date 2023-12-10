@@ -12,9 +12,10 @@ describe('user service', () => {
   const userService = UserService.getInstance();
   const mockUsername = 'johndoe';
   const mockUserProfile = {
+    email: 'johndoe@example.com',
     avatarUrl: null,
-    firstName: null,
-    lastName: null,
+    firstName: 'John',
+    lastName: 'Doe',
     biography: null,
     nik: null,
     phone: null,
@@ -22,26 +23,12 @@ describe('user service', () => {
     city: null,
     gender: null,
   };
-  const mockAccount = { email: 'johndoe@example.com' };
-  const accountId = 1;
+  const { email, ...userData } = mockUserProfile;
 
   describe('get user profile', () => {
     const mockFetchedUserProfile = {
-      account: mockAccount,
-      ...mockUserProfile,
-    };
-    const mockReturnedUserProfile = {
-      email: mockFetchedUserProfile.account.email,
-      avatarUrl: mockFetchedUserProfile.avatarUrl,
-      firstName: mockFetchedUserProfile.firstName,
-      lastName: mockFetchedUserProfile.lastName,
-      biography: mockFetchedUserProfile.biography,
-      nik: mockFetchedUserProfile.nik,
-      phone: mockFetchedUserProfile.phone,
-      province: mockFetchedUserProfile.province,
-      city: mockFetchedUserProfile.city,
-      gender: mockFetchedUserProfile.gender,
-      cardNumber: mockFetchedUserProfile.cardNumber,
+      account: { email },
+      ...userData,
     };
 
     it('should return user profile when found', async () => {
@@ -49,7 +36,28 @@ describe('user service', () => {
 
       const result = await userService.getUserProfile(mockUsername);
 
-      expect(result).toEqual(mockReturnedUserProfile);
+      expect(result).toEqual(mockUserProfile);
+    });
+
+    it('should throw NotFoundError when user profile not found', async () => {
+      user.findByPk.mockResolvedValueOnce(null);
+
+      await expect(userService.getUserProfile(mockUsername)).rejects.toThrow(
+        NotFoundError,
+      );
+    });
+
+    it('should throw ServerError when an error is thrown', async () => {
+      user.findByPk.mockImplementationOnce(() => {
+        throw new Error();
+      });
+
+      await expect(userService.getUserProfile(mockUsername)).rejects.toThrow(
+        ServerError,
+      );
+    });
+
+    afterEach(() => {
       expect(user.findByPk).toHaveBeenCalledWith(mockUsername, {
         attributes: [
           'avatarUrl',
@@ -69,67 +77,40 @@ describe('user service', () => {
         transaction: expect.any(Object),
       });
     });
-
-    it('should throw NotFoundError when user profile not found', async () => {
-      user.findByPk.mockResolvedValueOnce(undefined);
-
-      await expect(userService.getUserProfile(mockUsername)).rejects.toThrow(
-        NotFoundError,
-      );
-    });
-
-    it('should throw ServerError when an error is thrown', async () => {
-      user.findByPk.mockImplementationOnce(() => {
-        throw new Error();
-      });
-
-      await expect(userService.getUserProfile(mockUsername)).rejects.toThrow(
-        ServerError,
-      );
-    });
   });
 
   describe('update user profile', () => {
-    it('should successfully update user profile', async () => {
-      const mockUserUpdated = { accountId };
+    const mockUserUpdated = { acountId: 1 };
 
+    it('should successfully update user profile', async () => {
       user.update.mockResolvedValueOnce([1]);
       user.findByPk.mockResolvedValueOnce(mockUserUpdated);
 
-      await userService.updateUserProfile(
-        mockUsername,
-        mockUserProfile,
-        mockAccount,
-      );
+      await userService.updateUserProfile(mockUsername, mockUserProfile);
 
-      expect(user.update).toHaveBeenCalledWith(mockUserProfile, {
+      expect(user.update).toHaveBeenCalledWith(userData, {
         where: { username: mockUsername },
         transaction: expect.any(Object),
       });
       expect(user.findByPk).toHaveBeenCalledWith(mockUsername, {
-        attributes: 'accountId',
+        attributes: ['accountId'],
         transaction: expect.any(Object),
       });
-      expect(account.update).toHaveBeenCalledWith(mockAccount, {
-        where: { id: mockUserUpdated.accountId },
-        transaction: expect.any(Object),
-      });
+      expect(account.update).toHaveBeenCalledWith(
+        { email },
+        {
+          where: { id: mockUserUpdated.accountId },
+          transaction: expect.any(Object),
+        },
+      );
     });
 
     it('should throw NotFoundError when there are no user updated', async () => {
       user.update.mockResolvedValueOnce([0]);
 
       await expect(
-        userService.updateUserProfile(
-          mockUsername,
-          mockUserProfile,
-          mockAccount,
-        ),
+        userService.updateUserProfile(mockUsername, mockUserProfile),
       ).rejects.toThrow(NotFoundError);
-      expect(user.update).toHaveBeenCalledWith(mockUserProfile, {
-        where: { username: mockUsername },
-        transaction: expect.any(Object),
-      });
     });
 
     it('should throw BadRequestError when an ValidationError is thrown', async () => {
@@ -138,11 +119,7 @@ describe('user service', () => {
       });
 
       await expect(
-        userService.updateUserProfile(
-          mockUsername,
-          mockUserProfile,
-          mockAccount,
-        ),
+        userService.updateUserProfile(mockUsername, mockUserProfile),
       ).rejects.toThrow(BadRequestError);
     });
 
@@ -152,12 +129,18 @@ describe('user service', () => {
       });
 
       await expect(
-        userService.updateUserProfile(
-          mockUsername,
-          mockUserProfile,
-          mockAccount,
-        ),
+        userService.updateUserProfile(mockUsername, mockUserProfile),
       ).rejects.toThrow(ServerError);
+    });
+
+    afterEach(() => {
+      expect(user.update).toHaveBeenCalledWith(
+        { ...userData },
+        {
+          where: { username: mockUsername },
+          transaction: expect.any(Object),
+        },
+      );
     });
   });
 });

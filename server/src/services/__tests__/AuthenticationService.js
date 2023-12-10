@@ -26,9 +26,10 @@ describe('authentication service', () => {
     const mockUserData = {
       username: 'johnchena',
     };
+    const hashedPassword = 'h4sh3dP45w012d';
 
     it('should hash password and create account successfully', async () => {
-      passwordUtil.hashPassword.mockResolvedValueOnce(mockAccountData.password);
+      passwordUtil.hashPassword.mockResolvedValueOnce(hashedPassword);
 
       await authenticationService.registerUserAccount({
         accountData: mockAccountData,
@@ -41,7 +42,7 @@ describe('authentication service', () => {
       expect(account.create).toHaveBeenCalledWith(
         {
           ...mockAccountData,
-          password: mockAccountData.password,
+          password: hashedPassword,
           user: mockUserData,
         },
         { include: user, transaction: expect.any(Object) },
@@ -129,7 +130,7 @@ describe('authentication service', () => {
     });
 
     it('should throw NotFoundError if email not found', async () => {
-      account.findOne.mockResolvedValueOnce(undefined);
+      account.findOne.mockResolvedValueOnce(null);
 
       await expect(
         authenticationService.verifyAccount(mockLoginField),
