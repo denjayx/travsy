@@ -66,9 +66,11 @@ class UserService extends BaseService {
     return userProfile;
   }
 
-  async updateUserProfile(username, userData, accountData) {
+  async updateUserProfile(username, profileData) {
     const updateData = async (transaction) => {
       try {
+        const { email, ...userData } = profileData;
+
         const affectedCount = await user.update(userData, {
           where: { username },
           transaction,
@@ -83,10 +85,13 @@ class UserService extends BaseService {
           transaction,
         });
 
-        await account.update(accountData, {
-          where: { id: userUpdated.accountId },
-          transaction,
-        });
+        await account.update(
+          { email },
+          {
+            where: { id: userUpdated.accountId },
+            transaction,
+          },
+        );
       } catch (error) {
         if (error instanceof BaseResponseError) {
           throw error;

@@ -46,12 +46,8 @@ const updateUserProfileController = async (req, res, next) => {
       throw new BadRequestError(error.details[0].message);
     }
 
-    const { email: emailValidated, ...userValidated } = value;
-
     const userServiceInstance = UserService.getInstance();
-    await userServiceInstance.updateUserProfile(username, userValidated, {
-      email: emailValidated,
-    });
+    await userServiceInstance.updateUserProfile(username, value);
     const updatedData = await userServiceInstance.getUserProfile(username);
 
     res.status(200).json({
