@@ -4,7 +4,7 @@ import Avatar from '../../../../assets/avatar.png'
 import Labels from '../Labels/Lables'
 import { NavLink } from 'react-router-dom'
 
-const Card = ({ packagesData, tourguideData, labelData, cardId }) => {
+const Card = ({ packagesData, tourguideData, cardId }) => {
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('id-ID', {
       style: 'currency',
@@ -41,7 +41,9 @@ const Card = ({ packagesData, tourguideData, labelData, cardId }) => {
           {`${formatCurrency(packagesData.price)}`}
         </span>
         <footer>
-          <Labels {...labelData} />
+          {packagesData.destinations.map((destination, index) => {
+            return <Labels key={index} city={destination.city} />
+          })}
         </footer>
       </NavLink>
     </article>

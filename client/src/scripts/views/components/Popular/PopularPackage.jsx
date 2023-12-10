@@ -32,7 +32,6 @@ const PopularPackage = ({ className }) => {
             key={popularPackage.package.id}
             packagesData={popularPackage.package}
             tourguideData={popularPackage.tourGuide}
-            labelData={popularPackage.package.Destinations[0]}
             cardId={popularPackage.package.id}
           />
         ))}
