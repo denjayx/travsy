@@ -232,38 +232,52 @@ class TransactionService extends BaseService {
   }
 
   // get transaction history by username
-  async getHistoryTransactionByUsername(username) {
-    try {
-      const transactions = await transactionModel.findAll({
-        where: {
-          touristId: username,
-        },
-        include: [
-          {
-            model: user,
-            attributes: ['username'], // Akan mengambil username dari tabel User
+  async getHistoryList(username) {
+    const findHistories = async (transaction) => {
+      try {
+        const transactions = await transactionModel.findAll({
+          where: { touristId: username },
+          include: {
+            model: packageModel,
+            attributes: ['tourGuideId', 'packageName'],
+            required: true,
           },
-        ],
-      });
+          attributes: [
+            'id',
+            'packageId',
+            'status',
+            ['created_at', 'orderDate'],
+          ],
+          transaction,
+        });
 
-      if (!transactions || transactions.length === 0) {
-        throw new NotFoundError(
-          'Tidak ada transaksi ditemukan untuk pengguna ini',
-        );
-      }
+        const historyList = await Promise.all(
+          transactions.map(async (transactionHistory) => {
+            const tourGuide = await user.findByPk(
+              transactionHistory.package.tourGuideId,
+              {
+                attributes: ['avatarUrl', 'firstName', 'lastName'],
+                transaction,
+              },
+            );
 
-      return transactions;
-    } catch (error) {
-      console.error(error);
-      if (error instanceof BaseResponseError) {
-        throw error;
-      } else {
-        throw new ServerError(
-          'Terjadi kesalahan saat mengambil data transaksi',
-          error,
+            return { tourGuide, transaction: transactionHistory };
+          }),
         );
+
+        return historyList;
+      } catch (error) {
+        if (error instanceof BaseResponseError) {
+          throw error;
+        } else {
+          throw new ServerError();
+        }
       }
-    }
+    };
+
+    const histories = await this.createDbTransaction(findHistories);
+
+    return histories;
   }
 
   // get detail transaction history by username and id
