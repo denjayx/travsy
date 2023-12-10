@@ -45,7 +45,7 @@ const updatePackageController = async (req, res, next) => {
 
     const packageService = PackageService.getInstance();
     await packageService.updatePackage(username, packageId, value);
-    const updatedPackage = await packageService.getPackageDetail(packageId);
+    const updatedPackage = await packageService.getUserPackageDetail(packageId);
 
     res.status(200).json({
       status: 'OK',

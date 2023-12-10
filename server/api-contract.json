@@ -298,7 +298,7 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
                 "$ref": "#/components/schemas/profile"
               }
@@ -484,11 +484,11 @@
                   "properties": {
                     "status": {
                       "type": "string",
-                      "example": "success"
+                      "example": "OK"
                     },
                     "message": {
                       "type": "string",
-                      "example": "Data paket wisata berhasil didapatkan"
+                      "example": "Successfully got the user package list"
                     },
                     "data": {
                       "type": "array",
@@ -537,9 +537,9 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/package"
+                "$ref": "#/components/schemas/sendPackage"
               }
             }
           }
@@ -550,6 +550,9 @@
           },
           "400": {
             "$ref": "#/components/responses/badRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
           },
           "403": {
             "$ref": "#/components/responses/forbidden"
@@ -594,11 +597,11 @@
                   "properties": {
                     "status": {
                       "type": "string",
-                      "example": "success"
+                      "example": "OK"
                     },
                     "message": {
                       "type": "string",
-                      "example": "Data paket detail wisata berhasil didapatkan"
+                      "example": "Successfully got the user detail package"
                     },
                     "data": {
                       "$ref": "#/components/schemas/package"
@@ -610,9 +613,6 @@
           },
           "401": {
             "$ref": "#/components/responses/unauthorized"
-          },
-          "403": {
-            "$ref": "#/components/responses/forbidden"
           },
           "404": {
             "$ref": "#/components/responses/notFound"
@@ -644,9 +644,9 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/package"
+                "$ref": "#/components/schemas/sendPackage"
               }
             }
           }
@@ -661,11 +661,11 @@
                   "properties": {
                     "status": {
                       "type": "string",
-                      "example": "success"
+                      "example": "OK"
                     },
                     "message": {
                       "type": "string",
-                      "example": "Data paket wisata berhasil dirubah"
+                      "example": "Successfully update the package"
                     },
                     "data": {
                       "$ref": "#/components/schemas/package"
@@ -677,6 +677,9 @@
           },
           "400": {
             "$ref": "#/components/responses/badRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
           },
           "403": {
             "$ref": "#/components/responses/forbidden"
@@ -719,16 +722,19 @@
                   "properties": {
                     "status": {
                       "type": "string",
-                      "example": "Success"
+                      "example": "OK"
                     },
                     "message": {
                       "type": "string",
-                      "example": "Data paket wisata berhasil dihapus"
+                      "example": "Successfully delete the package"
                     }
                   }
                 }
               }
             }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
           },
           "403": {
             "$ref": "#/components/responses/forbidden"
@@ -1320,8 +1326,59 @@
       }
     },
     "schemas": {
+      "sendPackage": {
+        "properties": {
+          "packageName": {
+            "description": "Diterima jika: 3-50 karakter",
+            "type": "string",
+            "example": "Paket Wisata Tanah Lot"
+          },
+          "thumbnail": {
+            "type": "string",
+            "format": "binary",
+            "description": "Diterima jika: file image",
+            "example": "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
+          },
+          "price": {
+            "description": "Diterima jika: angka",
+            "type": "number",
+            "example": 500000
+          },
+          "description": {
+            "description": "Diterima jika: 3-100 karakter",
+            "type": "string",
+            "example": "Paket wisata ke Tanah Lot dengan durasi 3 hari 2 malam"
+          },
+          "serviceDuration": {
+            "description": "Diterima jika: angka",
+            "type": "number",
+            "example": 3
+          },
+          "destinations": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "destinationName": {
+                  "description": "Diterima jika: 3-50 karakter",
+                  "type": "string",
+                  "example": "Tanah Lot"
+                },
+                "city": {
+                  "description": "Diterima jika: memilih dari dropdown list",
+                  "type": "string",
+                  "example": "Denpasar"
+                },
+                "description": {
+                  "description": "Diterima jika: 3-100 karakter",
+                  "type": "string",
+                  "example": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                }
+              }
+            }
+          }
+        }
+      },
       "profile": {
-        "type": "object",
         "properties": {
           "email": {
             "description": "Diterima jika: email sesuai format dan unik",
@@ -1329,9 +1386,10 @@
             "format": "email",
             "example": "johndoe@gmail.com"
           },
-          "avatarUrl": {
-            "description": "Diterima jika: image URL",
+          "avatar": {
+            "description": "Diterima jika: image",
             "type": "string",
+            "format": "binary",
             "example": "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
           },
           "firstName": {
@@ -1400,10 +1458,6 @@
             "description": "Id paket wisata",
             "type": "string",
             "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "tourGuideId": {
-            "type": "string",
-            "example": "erna68"
           },
           "packageName": {
             "description": "Diterima jika: 3-50 karakter",

@@ -291,6 +291,47 @@ class PackageService extends BaseService {
     return packages;
   }
 
+  // get detail user package by id
+  async getUserPackageDetail(packageId) {
+    const findPackageDetail = async (transaction) => {
+      try {
+        const packageDetail = await packageModel.findByPk(packageId, {
+          include: [
+            {
+              model: destination,
+              attributes: ['destinationName', 'city', 'description'],
+              required: true,
+            },
+          ],
+          attributes: [
+            'id',
+            'packageName',
+            'thumbnailUrl',
+            'price',
+            'description',
+            'serviceDuration',
+          ],
+          transaction,
+        });
+
+        if (!packageDetail) {
+          throw new NotFoundError('Package Not Found');
+        }
+
+        return packageDetail;
+      } catch (error) {
+        if (error instanceof BaseResponseError) {
+          throw error;
+        }
+        throw new ServerError();
+      }
+    };
+
+    const packageDetail = await this.createDbTransaction(findPackageDetail);
+
+    return packageDetail;
+  }
+
   // insert data package
   async createPackage(username, packageData) {
     const insertData = async (transaction) => {
@@ -450,7 +491,6 @@ class PackageService extends BaseService {
           userData.account.role !== 'tour guide' ||
           username !== packageToBeDeleted.tourGuideId
         ) {
-          console.log(userData.account.role);
           throw new ForbiddenError(
             'You are prohibited from deleting this package',
           );
