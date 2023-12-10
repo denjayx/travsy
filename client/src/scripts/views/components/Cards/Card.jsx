@@ -24,16 +24,12 @@ const Card = () => {
       <h4 className="text-md font-semibold text-primary-950">
         Pura Tanah Lot - Pura Uluwatu - Pantai Kuta
       </h4>
-        <h1 className="text-md font-bold text-primary-500">
-          Rp.320.000
-        </h1>
+      <h1 className="text-md font-bold text-primary-500">Rp.320.000</h1>
       <footer>
         <Labels>Tanah Lot</Labels>
         <Labels>Uluwatu</Labels>
         <Labels>Pantai Kuta</Labels>
       </footer>
-
-
     </article>
   )
 }
