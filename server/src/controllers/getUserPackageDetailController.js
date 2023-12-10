@@ -3,11 +3,11 @@ const PackageService = require('../services/PackageService');
 
 const getUserPackageDetailController = async (req, res, next) => {
   const { username } = req.user;
-  const { id } = req.params;
+  const { id: packageId } = req.params;
 
   try {
     const packageService = PackageService.getInstance();
-    const packageDetail = await packageService.getPackageDetail(id);
+    const packageDetail = await packageService.getPackageDetail(packageId);
 
     if (packageDetail.tourGuideId !== username) {
       throw new ForbiddenError();

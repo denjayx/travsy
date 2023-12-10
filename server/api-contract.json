@@ -499,7 +499,7 @@
                             "type": "number",
                             "example": 1
                           },
-                          "name": {
+                          "packageName": {
                             "type": "string",
                             "example": "Paket Wisata Tanah Lot"
                           },
@@ -507,9 +507,9 @@
                             "type": "number",
                             "example": 500000
                           },
-                          "duration": {
-                            "type": "number",
-                            "example": 3
+                          "transactionCount": {
+                            "type": "integer",
+                            "example": 4
                           }
                         }
                       }
@@ -610,6 +610,9 @@
           },
           "401": {
             "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
           },
           "404": {
             "$ref": "#/components/responses/notFound"
@@ -1398,6 +1401,10 @@
             "type": "string",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
+          "tourGuideId": {
+            "type": "string",
+            "example": "erna68"
+          },
           "packageName": {
             "description": "Diterima jika: 3-50 karakter",
             "type": "string",
@@ -1464,13 +1471,13 @@
             "type": "string",
             "example": "erna68"
           },
-          "thumbnailUrl": {
-            "type": "string",
-            "example": "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
-          },
           "packageName": {
             "type": "string",
             "example": "Paket Wisata Tanah Lot"
+          },
+          "thumbnailUrl": {
+            "type": "string",
+            "example": "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
           },
           "price": {
             "type": "number",

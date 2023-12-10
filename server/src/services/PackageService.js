@@ -131,8 +131,8 @@ class PackageService extends BaseService {
           attributes: [
             'id',
             'tourGuideId',
-            'thumbnailUrl',
             'packageName',
+            'thumbnailUrl',
             'price',
             'destinationCount',
             'transactionCount',
@@ -186,8 +186,8 @@ class PackageService extends BaseService {
           attributes: [
             'id',
             'tourGuideId',
-            'thumbnailUrl',
             'packageName',
+            'thumbnailUrl',
             'price',
             'destinationCount',
             'transactionCount',
@@ -235,13 +235,11 @@ class PackageService extends BaseService {
           attributes: [
             'id',
             'tourGuideId',
-            'thumbnailUrl',
             'packageName',
+            'thumbnailUrl',
             'price',
             'description',
             'serviceDuration',
-            'destinationCount',
-            'transactionCount',
           ],
           transaction,
         });
@@ -275,7 +273,7 @@ class PackageService extends BaseService {
       try {
         const packages = await packageModel.findAll({
           where: { tourGuideId },
-          attributes: ['id', 'packageName', 'price', 'serviceDuration'],
+          attributes: ['id', 'packageName', 'price', 'transactionCount'],
           transaction,
         });
 
