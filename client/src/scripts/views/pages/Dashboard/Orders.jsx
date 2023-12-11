@@ -112,8 +112,14 @@ const Orders = () => {
               <button className="mr-2 mt-2 rounded bg-primary-500 px-4 py-2 font-bold text-white hover:bg-primary-600">
                 Konfirmasi
               </button>
-              <button className="mt-2 rounded bg-primary-500 px-4 py-2 font-bold text-white hover:bg-primary-600">
+              <button className="mr-2 rounded bg-primary-500 px-4 py-2 font-bold text-white hover:bg-primary-600">
                 Tolak
+              </button>
+              <button className="mr-2 rounded bg-primary-500 px-4 py-2 font-bold text-white hover:bg-primary-600">
+                Edit
+              </button>
+              <button className="mt-2 rounded bg-primary-500 px-4 py-2 font-bold text-white hover:bg-primary-600">
+                Hapus
               </button>
             </tr>
           </tbody>
