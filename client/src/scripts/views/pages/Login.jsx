@@ -1,18 +1,37 @@
 import InputPassword from '../components/Input/InputPassword'
 import InputEmail from '../components/Input/InputEmail'
+import { useState } from 'react'
+import { useNavigate, useOutletContext } from 'react-router-dom'
+import { login } from '../../data/api'
 
 export default function Login() {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const { setUser } = useOutletContext()
+  const navigate = useNavigate()
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    const user = await login({ email, password })
+    if (user) {
+      localStorage.setItem('user', user)
+      setUser(user)
+      navigate('/')
+    }
+  }
+
   return (
     <section className="flex flex-col gap-3">
       <h3 className="text-md font-bold text-primary-950">
         Masuk ke akun Travsy Anda.
       </h3>
-      <form className="flex flex-col gap-3">
+      <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
         <InputEmail
           id="email"
           label="email"
           condition="default"
           placeholder="Masukkan email yang terdaftar"
+          setEmail={setEmail}
         >
           Email
         </InputEmail>
@@ -21,6 +40,7 @@ export default function Login() {
           label="password"
           id="password"
           placeholder="Masukkan Kata Sandi"
+          setPassword={setPassword}
         >
           Kata Sandi
         </InputPassword>
@@ -39,7 +59,6 @@ export default function Login() {
             <a href="/register">Buat Akun</a>
           </span>
         </label>
-        
       </form>
     </section>
   )
