@@ -1,6 +1,6 @@
 const TransactionService = require('../services/TransactionService');
 
-const getOrderListContoller = async (req, res, next) => {
+const getOrderListController = async (req, res, next) => {
   const { username } = req.user;
 
   try {
@@ -16,4 +16,4 @@ const getOrderListContoller = async (req, res, next) => {
     next(error);
   }
 };
-module.exports = getOrderListContoller;
+module.exports = getOrderListController;
