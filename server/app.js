@@ -34,7 +34,7 @@ const {
 const app = express();
 
 // Middlewares
-app.use(cors());
+app.use(cors({ credentials: true }));
 app.use(express.json());
 app.use(express.static('upload'));
 app.use('/', swaggerUi.serve);
