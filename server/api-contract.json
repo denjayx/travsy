@@ -384,11 +384,11 @@
                   "properties": {
                     "status": {
                       "type": "string",
-                      "example": "Success"
+                      "example": "OK"
                     },
                     "message": {
                       "type": "string",
-                      "example": "Berhasil mendapatkan detail riwayat transaksi user"
+                      "example": "Successfully got the detail history"
                     },
                     "data": {
                       "type": "object",
