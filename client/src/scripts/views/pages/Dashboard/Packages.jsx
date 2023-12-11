@@ -78,6 +78,13 @@ const Packages = () => {
         </button>
       </div>
 
+      {/* bagian search */}
+      <input
+        type="text"
+        placeholder="Cari data..."
+        className="mb-2 h-8 rounded-full border-2 border-gray-300 bg-white px-5 pr-10 text-sm focus:outline-none"
+      />
+
       {/* bagian table */}
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table className="w-full text-left text-sm text-gray-500 rtl:text-right dark:text-gray-400">
@@ -139,6 +146,36 @@ const Packages = () => {
             </tr>
           </tbody>
         </table>
+      </div>
+
+      {/* bagian pagination */}
+      <div className="my-4 flex justify-start">
+        <nav className="inline-flex rounded-md shadow">
+          <a
+            href="#"
+            className="rounded-l-md bg-gray-200 px-3 py-2 text-gray-700 hover:bg-gray-300"
+          >
+            &laquo;
+          </a>
+          <a
+            href="#"
+            className="hover:bg-blue-600 bg-gray-400 px-3 py-2 text-gray-900"
+          >
+            1
+          </a>
+          <a
+            href="#"
+            className="bg-gray-200 px-3 py-2 text-gray-700 hover:bg-gray-300"
+          >
+            2
+          </a>
+          <a
+            href="#"
+            className="rounded-r-md bg-gray-200 px-3 py-2 text-gray-700 hover:bg-gray-300"
+          >
+            &raquo;
+          </a>
+        </nav>
       </div>
     </>
   )
