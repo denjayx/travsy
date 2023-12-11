@@ -2,9 +2,9 @@
 import CardImage from '../../../../assets/images/card-image.png'
 import Avatar from '../../../../assets/avatar.png'
 import Labels from '../Labels/Lables'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
-const Card = ({ packagesData, tourguideData, labelData, cardId }) => {
+const Card = ({ packagesData, tourguideData, cardId }) => {
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('id-ID', {
       style: 'currency',
@@ -15,7 +15,7 @@ const Card = ({ packagesData, tourguideData, labelData, cardId }) => {
 
   return (
     <article className="flex flex-col gap-4 rounded-2xl bg-white p-6 max-xl:flex-shrink-0 max-md:w-full md:w-6/12 lg:w-4/12">
-      <Link to={`/packages/${cardId}`}>
+      <NavLink to={`/packages/${cardId}`} className="flex flex-col gap-3">
         <figure className="h-64 w-full overflow-hidden rounded-lg">
           <img
             src={CardImage}
@@ -41,9 +41,11 @@ const Card = ({ packagesData, tourguideData, labelData, cardId }) => {
           {`${formatCurrency(packagesData.price)}`}
         </span>
         <footer>
-          <Labels {...labelData} />
+          {packagesData.destinations.map((destination, index) => {
+            return <Labels key={index} city={destination.city} />
+          })}
         </footer>
-      </Link>
+      </NavLink>
     </article>
   )
 }

@@ -1,11 +1,12 @@
+/* eslint-disable react/prop-types */
 import { useState } from 'react'
 import Button from '../Buttons/Button'
 import { NavLink } from 'react-router-dom'
 import Logo from '../Logo/Logo'
+import Avatar from '../Avatar/Avatar'
 
-export default function Navbar() {
+export default function Navbar({ user }) {
   const [isOpen, setIsOpen] = useState(false)
-
   return (
     <nav className="container fixed inset-x-0 top-0 z-50 flex w-full items-center justify-between gap-12 bg-primary-50 py-6">
       <div className="flex items-center">
@@ -62,26 +63,38 @@ export default function Navbar() {
               Riwayat
             </NavLink>
           </li>
-          <div className="flex flex-col md:hidden">
-            <NavLink to="/login">
-              <Button variant="text" className="">
-                Masuk
-              </Button>
-            </NavLink>
-            <NavLink to="/register">
-              <Button variant="text" className="font-semibold">
-                Buat Akun
-              </Button>
-            </NavLink>
+          <div className="bg-red-200 flex flex-col md:hidden">
+            {user.token ? (
+              <Avatar user={user.user} />
+            ) : (
+              <>
+                <NavLink to="/login">
+                  <Button variant="text" className="">
+                    Masuk
+                  </Button>
+                </NavLink>
+                <NavLink to="/register">
+                  <Button variant="text" className="font-semibold">
+                    Buat Akun
+                  </Button>
+                </NavLink>
+              </>
+            )}
           </div>
         </ul>
         <div className="flex flex-row gap-2 max-md:hidden">
-          <NavLink to="/login">
-            <Button variant="primary">Masuk</Button>
-          </NavLink>
-          <NavLink to="/register">
-            <Button variant="secondary">Buat Akun</Button>
-          </NavLink>
+          {user.token ? (
+            <Avatar user={user.user} />
+          ) : (
+            <>
+              <NavLink to="/login">
+                <Button variant="primary">Masuk</Button>
+              </NavLink>
+              <NavLink to="/register">
+                <Button variant="secondary">Buat Akun</Button>
+              </NavLink>
+            </>
+          )}
         </div>
       </div>
     </nav>

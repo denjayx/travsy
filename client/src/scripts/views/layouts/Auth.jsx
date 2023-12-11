@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom'
+import { Outlet, useOutletContext } from 'react-router-dom'
 import Logo from '../../../assets/logo.svg'
 
 const Auth = () => {
@@ -8,7 +8,7 @@ const Auth = () => {
         <div>
           <img src={Logo} alt="Logo" />
         </div>
-        <Outlet />
+        <Outlet context={useOutletContext()} />
       </div>
     </section>
   )

@@ -7,6 +7,7 @@ const InputPassword = ({
   label,
   id,
   children,
+  setPassword,
   ...props
 }) => {
   const [showPassword, setShowPassword] = useState(false)
@@ -30,6 +31,9 @@ const InputPassword = ({
           id={id}
           className={`${defaultClassName} ${className}`}
           {...props}
+          onChange={(event) => {
+            setPassword(event.target.value)
+          }}
           required
         />
         <button type="button" className="absolute right-4 top-3.5">
