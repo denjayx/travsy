@@ -112,7 +112,7 @@ class AuthenticationService extends BaseService {
         const credential = {
           token,
           role: accountData.role,
-          userData,
+          user: userData,
         };
 
         return credential;
