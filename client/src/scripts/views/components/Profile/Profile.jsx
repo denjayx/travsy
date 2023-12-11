@@ -5,7 +5,11 @@ import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import Button from '../Buttons/Button'
 
-const Avatar = ({ user }) => {
+const Profile = ({ user }) => {
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    window.location.reload()
+  }
   const [isOpen, setIsOpen] = useState(false)
   // eslint-disable-next-line no-unused-vars
   const avatarUrl = user?.avatarUrl || AvatarImage
@@ -32,11 +36,11 @@ const Avatar = ({ user }) => {
       >
         <li className="bg-whites flex flex-col">
           <NavLink to={'/'}>Profil</NavLink>
-          <Button>Keluar</Button>
+          <Button onClick={handleLogout}>Keluar</Button>
         </li>
       </ul>
     </div>
   )
 }
 
-export default Avatar
+export default Profile

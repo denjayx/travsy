@@ -3,7 +3,7 @@ import { useState } from 'react'
 import Button from '../Buttons/Button'
 import { NavLink } from 'react-router-dom'
 import Logo from '../Logo/Logo'
-import Avatar from '../Avatar/Avatar'
+import Profile from '../Profile/Profile'
 
 export default function Navbar({ user }) {
   const [isOpen, setIsOpen] = useState(false)
@@ -66,7 +66,7 @@ export default function Navbar({ user }) {
           </li>
           <div className="bg-red-200 flex flex-col md:hidden">
             {user.token ? (
-              <Avatar user={user.user} />
+              <Profile user={user.user} />
             ) : (
               <>
                 <NavLink to="/login">
@@ -85,7 +85,7 @@ export default function Navbar({ user }) {
         </ul>
         <div className="flex flex-row gap-2 max-md:hidden">
           {user.token ? (
-            <Avatar user={user.user} />
+            <Profile user={user.user} />
           ) : (
             <>
               <NavLink to="/login">
