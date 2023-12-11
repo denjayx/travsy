@@ -15,6 +15,9 @@ import Dashboard from '../views/layouts/Dashboard'
 import Packages from '../views/pages/Dashboard/Packages'
 import Orders from '../views/pages/Dashboard/Orders'
 import PackagesDetail from '../views/pages/Dashboard/PackagesDetail'
+import AddPackage from '../views/pages/Dashboard/AddPackage'
+import AddOrder from '../views/pages/Dashboard/AddOrder'
+import DetailOrder from '../views/pages/Dashboard/DetailOrder'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -31,11 +34,17 @@ const router = createBrowserRouter(
       </Route>
       <Route element={<Dashboard />}>
         <Route path="/dashboard/packages" element={<Packages />}></Route>
+        <Route path="/dashboard/packages/add" element={<AddPackage />}></Route>
         <Route
           path="/dashboard/packages/details"
           element={<PackagesDetail />}
         ></Route>
         <Route path="/dashboard/orders" element={<Orders />}></Route>
+        <Route path="/dashboard/orders/add" element={<AddOrder />}></Route>
+        <Route
+          path="/dashboard/orders/details"
+          element={<DetailOrder />}
+        ></Route>
         {/* <Route path="/detail-packages" element={<DetailPackages />}></Route>
         <Route path="/add-packages" element={<AddPackages />}></Route>
         <Route path="/bookings" element={<Bookings />}></Route>

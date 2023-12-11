@@ -1,4 +1,4 @@
-const PackagesDetail = () => {
+const AddPackage = () => {
   return (
     <>
       {/* breadcrumb */}
@@ -64,7 +64,7 @@ const PackagesDetail = () => {
                 />
               </svg>
               <span className="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400 md:ms-2">
-                Detail packages
+                Tambah Package
               </span>
             </div>
           </li>
@@ -74,14 +74,6 @@ const PackagesDetail = () => {
       {/* form detail */}
       <div className=" mt-8 ">
         <form className="mb-4 rounded bg-white px-8 pb-8 pt-6 shadow-md">
-          <div className="mb-4">
-            <label
-              className="mb-2 block text-sm font-bold text-gray-700 underline"
-              htmlFor="username"
-            >
-              0aeaef33-40ae-3a30-ae0e-307ae2de4c1e
-            </label>
-          </div>
           <div className="mb-4">
             <label
               className="mb-2 block text-sm font-bold text-gray-700"
@@ -281,7 +273,7 @@ const PackagesDetail = () => {
               py-2 font-bold text-white hover:bg-primary-700 focus:outline-none"
               type="button"
             >
-              Simpan Perubahan
+              Simpan
             </button>
           </div>
         </form>
@@ -290,4 +282,4 @@ const PackagesDetail = () => {
   )
 }
 
-export default PackagesDetail
+export default AddPackage

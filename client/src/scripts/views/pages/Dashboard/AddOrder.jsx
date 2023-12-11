@@ -1,4 +1,4 @@
-const PackagesDetail = () => {
+const AddOrder = () => {
   return (
     <>
       {/* breadcrumb */}
@@ -64,7 +64,7 @@ const PackagesDetail = () => {
                 />
               </svg>
               <span className="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400 md:ms-2">
-                Detail packages
+                Add Package
               </span>
             </div>
           </li>
@@ -76,18 +76,10 @@ const PackagesDetail = () => {
         <form className="mb-4 rounded bg-white px-8 pb-8 pt-6 shadow-md">
           <div className="mb-4">
             <label
-              className="mb-2 block text-sm font-bold text-gray-700 underline"
-              htmlFor="username"
-            >
-              0aeaef33-40ae-3a30-ae0e-307ae2de4c1e
-            </label>
-          </div>
-          <div className="mb-4">
-            <label
               className="mb-2 block text-sm font-bold text-gray-700"
-              htmlFor="namaPaket"
+              htmlFor="namaPemesan"
             >
-              Package Name
+              Nama Pemesan
             </label>
             <input
               className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
@@ -99,9 +91,9 @@ const PackagesDetail = () => {
           <div className="mb-4">
             <label
               className="mb-2 block text-sm font-bold text-gray-700"
-              htmlFor="deskripsiPaket"
+              htmlFor="namaPaket"
             >
-              Deskripsi Package
+              Nama Paket
             </label>
             <input
               className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
@@ -115,63 +107,37 @@ const PackagesDetail = () => {
               className="mb-2 block text-sm font-bold text-gray-700"
               htmlFor="price"
             >
-              Harga Paket Per Orang
+              Tanggal Mulai
             </label>
             <input
-              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-              id="username"
-              type="number"
-              placeholder="harga paket nya yang per orang"
+              type="date"
+              id="datepicker"
+              name="datepicker"
+              className="mb-3 block w-full appearance-none rounded border px-4 py-3 leading-tight 
+              text-gray-700 focus:bg-white focus:outline-none"
             ></input>
           </div>
           <div className="mb-4">
             <label
               className="mb-2 block text-sm font-bold text-gray-700"
-              htmlFor="thumbnail"
+              htmlFor="price"
             >
-              Gambar Thumbnail
+              Tanggal Selesai
             </label>
-            <div className="flex items-start justify-start">
-              <label className="hover:bg-blue flex w-64 cursor-pointer flex-col items-center rounded-lg border px-4 py-6 uppercase tracking-wide shadow-lg">
-                <svg
-                  className="h-6 w-6 text-white dark:text-gray-800"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 20 18"
-                >
-                  <path
-                    fill="currentColor"
-                    d="M13 5.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0ZM7.565 7.423 4.5 14h11.518l-2.516-3.71L11 13 7.565 7.423Z"
-                  />
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M18 1H2a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z"
-                  />
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M13 5.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0ZM7.565 7.423 4.5 14h11.518l-2.516-3.71L11 13 7.565 7.423Z"
-                  />
-                </svg>
-                <span className="mt-2 text-base leading-normal">
-                  pilih gambar
-                </span>
-                <input type="file" className="hidden" id="image" />
-              </label>
-            </div>
+            <input
+              type="date"
+              id="datepicker"
+              name="datepicker"
+              className="mb-3 block w-full appearance-none rounded border px-4 py-3 leading-tight 
+              text-gray-700 focus:bg-white focus:outline-none"
+            ></input>
           </div>
           <div className="mb-4">
             <label
               className="mb-2 block text-sm font-bold text-gray-700"
               htmlFor="deskripsi"
             >
-              Durasi Layanan
+              Jumlah Orang
             </label>
             <input
               className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
@@ -185,12 +151,12 @@ const PackagesDetail = () => {
               className="mb-2 block text-sm font-bold text-gray-700"
               htmlFor="deskripsi"
             >
-              Nama Destinasi
+              Total Harga
             </label>
             <input
               className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
               id="namaDestinasi"
-              type="text"
+              type="number"
               placeholder="Nama destinasi"
             ></input>
           </div>
@@ -199,81 +165,37 @@ const PackagesDetail = () => {
               className="mb-2 block text-sm font-bold text-gray-700"
               htmlFor="deskripsi"
             >
-              Kota
+              Tanggal Pemesanan
             </label>
-            <div className="relative">
-              <select
-                id="kota"
-                name="kota"
-                className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight 
-                text-gray-700 shadow focus:outline-none"
-              >
-                <option value="" disabled selected>
-                  Pilih kota
-                </option>
-                <option value="jakarta">Jakarta</option>
-                <option value="surabaya">Surabaya</option>
-                <option value="bandung">Bandung</option>
-              </select>
-            </div>
-          </div>
-          <div className="mb-4">
-            <label
-              className="mb-2 block text-sm font-bold text-gray-700"
-              htmlFor="thumbnail"
-            >
-              Gambar
-            </label>
-            <div className="flex items-start justify-start">
-              <label className="hover:bg-blue aspect-w-1 aspect-h-1 flex w-64 cursor-pointer flex-col items-center rounded-lg border px-4 py-6 uppercase tracking-wide shadow-lg">
-                <svg
-                  className="h-6 w-6 text-white dark:text-gray-800"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 20 18"
-                >
-                  <path
-                    fill="currentColor"
-                    d="M13 5.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0ZM7.565 7.423 4.5 14h11.518l-2.516-3.71L11 13 7.565 7.423Z"
-                  />
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M18 1H2a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z"
-                  />
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M13 5.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0ZM7.565 7.423 4.5 14h11.518l-2.516-3.71L11 13 7.565 7.423Z"
-                  />
-                </svg>
-                <span className="mt-2 text-base leading-normal">
-                  pilih gambar
-                </span>
-                <input type="file" className="hidden" id="image" />
-              </label>
-            </div>
+            <input
+              type="date"
+              id="datepicker"
+              name="datepicker"
+              className="mb-3 block w-full appearance-none rounded border px-4 py-3 leading-tight 
+              text-gray-700 focus:bg-white focus:outline-none"
+            ></input>
           </div>
           <div className="mb-4">
             <label
               className="mb-2 block text-sm font-bold text-gray-700"
               htmlFor="deskripsi"
             >
-              Deskripsi
+              Status
             </label>
-            <textarea
-              className="focus:shadow-outline w-full appearance-none 
-              rounded border px-3 py-2 leading-tight text-gray-700 shadow 
-              focus:outline-none"
-              id="deskripsi"
-              rows="4"
-              placeholder="masukan desksripsi"
-            ></textarea>
+            <select
+              id="status"
+              name="status"
+              className="block w-full appearance-none rounded border border-gray-200 
+             px-4 py-3 pr-8 leading-tight
+            focus:bg-white focus:outline-none"
+            >
+              <option value="" disabled selected>
+                Pilih status
+              </option>
+              <option value="terkonfirmasi">Terkonfirmasi</option>
+              <option value="pending">Pending</option>
+              <option value="ditolak">Ditolak</option>
+            </select>
           </div>
           <div className="flex items-end justify-end">
             <button
@@ -290,4 +212,4 @@ const PackagesDetail = () => {
   )
 }
 
-export default PackagesDetail
+export default AddOrder
