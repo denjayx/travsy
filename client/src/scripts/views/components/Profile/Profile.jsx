@@ -32,11 +32,19 @@ const Profile = ({ user }) => {
         <FaCaretDown />
       </button>
       <ul
-        className={`${!isOpen ? 'hidden' : 'block'} absolute right-0 bg-white`}
+        className={`${
+          !isOpen ? 'hidden' : 'block'
+        } absolute right-0 mt-6 flex flex-col gap-4 rounded-xl bg-white p-6 text-center md:mt-4`}
       >
-        <li className="bg-whites flex flex-col">
-          <NavLink to={'/'}>Profil</NavLink>
-          <Button onClick={handleLogout}>Keluar</Button>
+        <li>
+          <NavLink className="font-medium text-primary-700" to={'/'}>
+            Profil
+          </NavLink>
+        </li>
+        <li>
+          <Button variant="text" className="text-red/75" onClick={handleLogout}>
+            Keluar
+          </Button>
         </li>
       </ul>
     </div>

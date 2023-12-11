@@ -37,7 +37,6 @@ export default function Navbar({ user }) {
         </button>
       </div>
       <div
-        onClick={() => setIsOpen(!isOpen)}
         className={`absolute right-4 top-16 justify-between max-lg:mt-4 lg:static lg:flex lg:w-full lg:items-center ${
           isOpen ? 'block' : 'hidden'
         }`}
