@@ -123,51 +123,14 @@
                   "properties": {
                     "status": {
                       "type": "string",
-                      "example": "success"
+                      "example": "OK"
                     },
                     "message": {
                       "type": "string",
                       "example": "Login success"
                     },
                     "data": {
-                      "type": "object",
-                      "properties": {
-                        "token": {
-                          "description": "Token JWT",
-                          "type": "string",
-                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
-                        },
-                        "role": {
-                          "description": "Diterima jika: tipe data enum yaitu tourist atau tour guide",
-                          "type": "string",
-                          "example": "tourist"
-                        },
-                        "user": {
-                          "type": "object",
-                          "properties": {
-                            "username": {
-                              "description": "Diterima jika: tidak mengandung huruf besar, spasi, dan simbol selain underscore",
-                              "type": "string",
-                              "example": "johndoe"
-                            },
-                            "avatarUrl": {
-                              "description": "Diterima jika: image URL",
-                              "type": "string",
-                              "example": "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
-                            },
-                            "firstName": {
-                              "description": "Diterima jika: 3-20 character, must consist of lowercase and uppercase",
-                              "type": "string",
-                              "example": "John"
-                            },
-                            "lastName": {
-                              "description": "Diterima jika: 3-20 character, must consist of lowercase and uppercase",
-                              "type": "string",
-                              "example": "Doe"
-                            }
-                          }
-                        }
-                      }
+                      "$ref": "#/components/schemas/credential"
                     }
                   }
                 }
@@ -189,34 +152,18 @@
         }
       }
     },
-    "/logout": {
-      "post": {
+    "/revalidate": {
+      "get": {
         "tags": ["Authentication"],
-        "summary": "Logout user",
+        "summary": "Revalidate user",
         "security": [
           {
             "Bearer": []
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "username": {
-                    "type": "string",
-                    "example": "johndoe"
-                  }
-                },
-                "required": ["username"]
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
-            "description": "User berhasil logout",
+            "description": "Berhasil mendapatkan ulang credential",
             "content": {
               "application/json": {
                 "schema": {
@@ -224,19 +171,28 @@
                   "properties": {
                     "status": {
                       "type": "string",
-                      "example": "success"
+                      "example": "OK"
                     },
                     "message": {
                       "type": "string",
-                      "example": "Berhasil logout"
+                      "example": "Successfully got new credential"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/credential"
                     }
                   }
                 }
               }
             }
           },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
           "401": {
             "$ref": "#/components/responses/unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
           },
           "500": {
             "$ref": "#/components/responses/serverError"
@@ -1347,6 +1303,46 @@
       }
     },
     "schemas": {
+      "credential": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "description": "Token JWT",
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+          },
+          "role": {
+            "description": "Diterima jika: tipe data enum yaitu tourist atau tour guide",
+            "type": "string",
+            "example": "tourist"
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "username": {
+                "description": "Diterima jika: tidak mengandung huruf besar, spasi, dan simbol selain underscore",
+                "type": "string",
+                "example": "johndoe"
+              },
+              "avatarUrl": {
+                "description": "Diterima jika: image URL",
+                "type": "string",
+                "example": "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
+              },
+              "firstName": {
+                "description": "Diterima jika: 3-20 character, must consist of lowercase and uppercase",
+                "type": "string",
+                "example": "John"
+              },
+              "lastName": {
+                "description": "Diterima jika: 3-20 character, must consist of lowercase and uppercase",
+                "type": "string",
+                "example": "Doe"
+              }
+            }
+          }
+        }
+      },
       "sendPackage": {
         "properties": {
           "packageName": {

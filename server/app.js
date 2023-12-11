@@ -11,6 +11,7 @@ const {
 const {
   registerController,
   loginController,
+  revalidateController,
   createPackageController,
   createTransactionController,
   getPackageListController,
@@ -44,6 +45,8 @@ app.get('/', swaggerUi.setup(apiContract));
 app.route('/register').post(registerController);
 
 app.route('/login').post(loginController);
+
+app.route('/revalidate').get(verifyAuthorization(), revalidateController);
 
 app
   .route('/profile')

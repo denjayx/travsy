@@ -89,6 +89,45 @@ class AuthenticationService extends BaseService {
 
     return credential;
   }
+
+  async revalidateCredential(username) {
+    const generateCredential = async (transaction) => {
+      try {
+        const userData = await user.findByPk(username, {
+          attributes: ['username', 'avatarUrl', 'firstName', 'lastName'],
+          transaction,
+        });
+
+        const accountData = userData.getAccount({
+          attributes: ['role'],
+          transaction,
+        });
+
+        if (!userData) {
+          throw new NotFoundError('User not found');
+        }
+
+        const token = tokenUtil.generateToken({ username: userData.username });
+
+        const credential = {
+          token,
+          role: accountData.role,
+          userData,
+        };
+
+        return credential;
+      } catch (error) {
+        if (error instanceof BaseResponseError) {
+          throw error;
+        }
+        throw new ServerError();
+      }
+    };
+
+    const credential = await this.createDbTransaction(generateCredential);
+
+    return credential;
+  }
 }
 
 module.exports = AuthenticationService;
