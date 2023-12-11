@@ -3,9 +3,14 @@ import { FaCaretDown } from 'react-icons/fa'
 import AvatarImage from '../../../../assets/images/card-image.png'
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import Button from '../Buttons/Button'
 
-const Avatar = ({ user: { avatarUrl, firstName, lastName } }) => {
+const Avatar = ({ user }) => {
   const [isOpen, setIsOpen] = useState(false)
+  // eslint-disable-next-line no-unused-vars
+  const avatarUrl = user?.avatarUrl || AvatarImage
+  const fullName = `${user?.firstName || ''} ${user?.lastName || ''}`
+
   return (
     <div className="relative">
       <button
@@ -15,11 +20,11 @@ const Avatar = ({ user: { avatarUrl, firstName, lastName } }) => {
         <div className="h-10 w-10 overflow-hidden rounded-full outline outline-primary-400">
           <img
             src={AvatarImage}
-            alt={`${firstName} ${lastName} avatar`}
+            alt={`${fullName} avatar`}
             className="h-full w-full object-cover"
           />
         </div>
-        <span>{`${firstName} ${lastName}`}</span>
+        <span>{`${fullName}`}</span>
         <FaCaretDown />
       </button>
       <ul
@@ -27,7 +32,7 @@ const Avatar = ({ user: { avatarUrl, firstName, lastName } }) => {
       >
         <li className="bg-whites flex flex-col">
           <NavLink to={'/'}>Profil</NavLink>
-          <NavLink to={'/'}>Logout</NavLink>
+          <Button>Keluar</Button>
         </li>
       </ul>
     </div>

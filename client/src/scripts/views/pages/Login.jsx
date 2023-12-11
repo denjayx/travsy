@@ -14,7 +14,7 @@ export default function Login() {
     event.preventDefault()
     const user = await login({ email, password })
     if (user) {
-      localStorage.setItem('user', user)
+      localStorage.setItem('token', user.token)
       setUser(user)
       navigate('/')
     }
