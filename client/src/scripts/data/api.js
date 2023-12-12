@@ -46,7 +46,7 @@ export const login = async({ email, password }) => {
     localStorage.setItem('token', user.token);
     return user;
   } catch (error) {
-    console.error('Error fetching package detail:', error);
+    console.error('Error fetching login:', error);
     throw error;
   }
 }
@@ -67,4 +67,23 @@ export const revalidate = async (token) => {
   }
 };
 
+export const register = async ({ user, account }) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/register`,
+      {
+        user, account
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
 
+    return response.data.data;
+  } catch (error) {
+    console.error('Error fetching register:', error);
+    throw error;
+  }
+};
