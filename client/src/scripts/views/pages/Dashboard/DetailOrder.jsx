@@ -209,12 +209,13 @@ const DetailOrder = () => {
               <option value="ditolak">Ditolak</option>
             </select>
           </div>
-          <div className="flex items-end justify-end">
-            <button
-              className="focus:shadow-outline rounded bg-primary-500 px-4 
-              py-2 font-bold text-white hover:bg-primary-700 focus:outline-none"
-              type="button"
-            >
+          <div className="flex justify-between">
+            <NavLink to="/dashboard/orders">
+              <button className="rounded bg-primary-500 px-4 py-2 font-bold text-white hover:bg-primary-600">
+                Batalkan
+              </button>
+            </NavLink>
+            <button className="rounded bg-primary-500 px-4 py-2 font-bold text-white hover:bg-primary-600">
               Simpan Perubahan
             </button>
           </div>

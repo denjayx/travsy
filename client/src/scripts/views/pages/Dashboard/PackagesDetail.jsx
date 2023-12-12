@@ -1,3 +1,5 @@
+import { NavLink } from 'react-router-dom'
+
 const PackagesDetail = () => {
   return (
     <>
@@ -38,12 +40,11 @@ const PackagesDetail = () => {
                   d="m1 9 4-4-4-4"
                 />
               </svg>
-              <a
-                href="#"
-                className="hover:text-blue-600 ms-1 text-sm font-medium text-gray-700 dark:text-gray-400 dark:hover:text-white md:ms-2"
-              >
-                Dashboard
-              </a>
+              <NavLink to="/dashboard/packages">
+                <a className="hover:text-blue-600 ms-1 text-sm font-medium text-gray-700 dark:text-gray-400 dark:hover:text-white md:ms-2">
+                  Dashboard
+                </a>
+              </NavLink>
             </div>
           </li>
           <li aria-current="page">
@@ -275,12 +276,13 @@ const PackagesDetail = () => {
               placeholder="masukan desksripsi"
             ></textarea>
           </div>
-          <div className="flex items-end justify-end">
-            <button
-              className="focus:shadow-outline rounded bg-primary-500 px-4 
-              py-2 font-bold text-white hover:bg-primary-700 focus:outline-none"
-              type="button"
-            >
+          <div className="flex justify-between">
+            <NavLink to="/dashboard/packages">
+              <button className="rounded bg-primary-500 px-4 py-2 font-bold text-white hover:bg-primary-600">
+                Batalkan
+              </button>
+            </NavLink>
+            <button className="rounded bg-primary-500 px-4 py-2 font-bold text-white hover:bg-primary-600">
               Simpan Perubahan
             </button>
           </div>
