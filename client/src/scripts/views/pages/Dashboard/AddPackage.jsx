@@ -1,3 +1,5 @@
+import { NavLink } from 'react-router-dom'
+
 const AddPackage = () => {
   return (
     <>
@@ -38,12 +40,11 @@ const AddPackage = () => {
                   d="m1 9 4-4-4-4"
                 />
               </svg>
-              <a
-                href="#"
-                className="hover:text-blue-600 ms-1 text-sm font-medium text-gray-700 dark:text-gray-400 dark:hover:text-white md:ms-2"
-              >
-                Dashboard
-              </a>
+              <NavLink to="/dashboard/packages/">
+                <a className="hover:text-blue-600 ms-1 text-sm font-medium text-gray-700 dark:text-gray-400 dark:hover:text-white md:ms-2">
+                  Dashboard
+                </a>
+              </NavLink>
             </div>
           </li>
           <li aria-current="page">

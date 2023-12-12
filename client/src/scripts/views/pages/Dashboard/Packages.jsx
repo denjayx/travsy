@@ -1,3 +1,5 @@
+import { NavLink } from 'react-router-dom'
+
 const Packages = () => {
   return (
     <>
@@ -6,8 +8,8 @@ const Packages = () => {
         <ol className="inline-flex items-center space-x-1 rtl:space-x-reverse md:space-x-2">
           <li className="inline-flex items-center">
             <a
-              href="#"
-              className="hover:text-blue-600 inline-flex items-center text-sm font-medium text-gray-700 dark:text-gray-400 dark:hover:text-white"
+              className="hover:text-blue-600 inline-flex items-center text-sm font-medium 
+              text-gray-700 dark:text-gray-400 dark:hover:text-white"
             >
               <svg
                 className="me-2.5 h-3 w-3"
@@ -39,8 +41,8 @@ const Packages = () => {
                 />
               </svg>
               <a
-                href="#"
-                className="hover:text-blue-600 ms-1 text-sm font-medium text-gray-700 dark:text-gray-400 dark:hover:text-white md:ms-2"
+                className="hover:text-blue-600 ms-1 text-sm font-medium text-gray-700 
+                dark:text-gray-400 dark:hover:text-white md:ms-2"
               >
                 Dashboard
               </a>
@@ -73,9 +75,11 @@ const Packages = () => {
 
       {/* tombol tambah data */}
       <div className="flex items-end justify-end">
-        <button className="m-2 rounded bg-primary-500 px-4 py-2 font-bold text-white hover:bg-primary-700">
-          Tambah data
-        </button>
+        <NavLink to="/dashboard/packages/add">
+          <button className="m-2 rounded bg-primary-500 px-4 py-2 font-bold text-white hover:bg-primary-700">
+            Tambah data
+          </button>
+        </NavLink>
       </div>
 
       {/* bagian search */}
@@ -114,7 +118,7 @@ const Packages = () => {
               </th>
               <td className="px-6 py-4">Rp 500.000</td>
               <td className="px-6 py-4">3 hari</td>
-              <button className="mx-1 my-2 hover:bg-red">
+              <button className="mx-1 my-2">
                 <svg
                   className="h-6 w-6 text-gray-800 dark:text-white"
                   aria-hidden="true"
@@ -126,7 +130,7 @@ const Packages = () => {
                   <path d="M13.243 3.2 7.359 9.081a.5.5 0 0 0-.136.256L6.51 12.9a.5.5 0 0 0 .59.59l3.566-.713a.5.5 0 0 0 .255-.136L16.8 6.757 13.243 3.2Z" />
                 </svg>
               </button>
-              <button className="mx-1 my-2 hover:bg-red">
+              <button className="mx-1 my-2">
                 <svg
                   className="h-6 w-6 text-gray-800 dark:text-white"
                   aria-hidden="true"

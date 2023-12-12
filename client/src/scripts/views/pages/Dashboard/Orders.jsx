@@ -1,3 +1,5 @@
+import { NavLink } from 'react-router-dom'
+
 const Orders = () => {
   return (
     <>
@@ -6,8 +8,8 @@ const Orders = () => {
         <ol className="inline-flex items-center space-x-1 rtl:space-x-reverse md:space-x-2">
           <li className="inline-flex items-center">
             <a
-              href="#"
-              className="hover:text-blue-600 inline-flex items-center text-sm font-medium text-gray-700 dark:text-gray-400 dark:hover:text-white"
+              className="hover:text-blue-600 inline-flex items-center text-sm font-medium 
+            text-gray-700 dark:text-gray-400 dark:hover:text-white"
             >
               <svg
                 className="me-2.5 h-3 w-3"
@@ -39,8 +41,8 @@ const Orders = () => {
                 />
               </svg>
               <a
-                href="#"
-                className="hover:text-blue-600 ms-1 text-sm font-medium text-gray-700 dark:text-gray-400 dark:hover:text-white md:ms-2"
+                className="hover:text-blue-600 ms-1 text-sm font-medium text-gray-700 
+              dark:text-gray-400 dark:hover:text-white md:ms-2"
               >
                 Dashboard
               </a>
@@ -73,9 +75,11 @@ const Orders = () => {
 
       {/* button tambah data */}
       <div className="flex items-end justify-end">
-        <button className="m-2 rounded bg-primary-500 px-4 py-2 font-bold text-white hover:bg-primary-700">
-          Tambah data
-        </button>
+        <NavLink to="/dashboard/orders/add">
+          <button className="m-2 rounded bg-primary-500 px-4 py-2 font-bold text-white hover:bg-primary-700">
+            Tambah data
+          </button>
+        </NavLink>
       </div>
 
       {/* bagian search */}
@@ -124,9 +128,11 @@ const Orders = () => {
               <button className="mr-2 rounded bg-primary-500 px-4 py-2 font-bold text-white hover:bg-primary-600">
                 Tolak
               </button>
-              <button className="mr-2 rounded bg-primary-500 px-4 py-2 font-bold text-white hover:bg-primary-600">
-                Edit
-              </button>
+              <NavLink to="/dashboard/orders/details">
+                <button className="mr-2 rounded bg-primary-500 px-4 py-2 font-bold text-white hover:bg-primary-600">
+                  Edit
+                </button>
+              </NavLink>
               <button className="mt-2 rounded bg-primary-500 px-4 py-2 font-bold text-white hover:bg-primary-600">
                 Hapus
               </button>
