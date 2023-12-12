@@ -21,7 +21,7 @@ export default function Login() {
   }
 
   return (
-    <section className="flex flex-col gap-3">
+    <section className="flex flex-col gap-6">
       <h3 className="text-md font-bold text-primary-950">
         Masuk ke akun Travsy Anda.
       </h3>
