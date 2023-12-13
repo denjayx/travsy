@@ -11,14 +11,14 @@ const BookingFields = () => {
         </h1>
       </div>
       <form action="" className="flex flex-col gap-3">
-        <div className="container flex gap-3">
+        <div className="container flex w-full gap-3">
           <InputDate
             limitMinDate={new Date()}
-            placeholder="Mulai kapan kamu pergi"
+            placeholder="Mulai Kapan Kamu Pergi?"
           />
           <InputDate
             limitMinDate={new Date()}
-            placeholder="Sampai kapan kamu pergi"
+            placeholder="Sampai Kapan Kamu Pergi?"
           />
         </div>
         <Search />
