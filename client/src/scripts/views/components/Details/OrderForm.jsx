@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { FaCalendarDays } from 'react-icons/fa6'
@@ -8,6 +9,7 @@ const OrderForm = () => {
   const [startDate, setStartDate] = useState(null)
   const [endDate, setEndDate] = useState(null)
   const [jumlahTiket, setJumlahTiket] = useState(1)
+  const navigate = useNavigate()
 
   const tambahTiket = () => {
     setJumlahTiket((prev) => prev + 1)
@@ -20,11 +22,14 @@ const OrderForm = () => {
   }
 
   const handleConfirm = () => {
-    // Logika untuk menangani tombol Confirm
-    console.log('Tanggal Mulai:', startDate)
-    console.log('Tanggal Selesai:', endDate)
-    console.log('Jumlah Tiket:', jumlahTiket)
-    // Tambahkan logika lainnya sesuai kebutuhan
+    // Periksa apakah startDate, endDate, dan jumlahTiket telah terisi
+    if (startDate && endDate > 0) {
+      // Lakukan navigasi hanya jika semua form terisi
+      navigate('/order')
+    } else {
+      // Tampilkan pesan kesalahan atau lakukan tindakan lain sesuai kebutuhan
+      console.error('Harap isi semua formulir sebelum pesan.')
+    }
   }
 
   return (
@@ -56,6 +61,7 @@ const OrderForm = () => {
           <DatePicker
             selected={endDate}
             onChange={(date) => setEndDate(date)}
+            minDate={startDate} // set minDate ke startDate
             dateFormat="dd/MM/yyyy"
             placeholderText="Pilih tanggal akhir"
             className="w-full rounded-xl border border-primary-200  px-4 py-2 text-primary-950"
@@ -96,8 +102,13 @@ const OrderForm = () => {
       <div className="text-center">
         <button
           type="submit"
-          className="focus:ring-blue-300  rounded-3xl bg-primary-500 px-6 py-3 text-center text-base font-normal text-white hover:bg-primary-600 focus:outline-none focus:ring-4"
+          className={`focus:ring-blue-300 rounded-3xl px-6 py-3 text-center text-base font-normal text-white hover:bg-primary-600 focus:outline-none focus:ring-4 ${
+            !startDate || !endDate || jumlahTiket <= 0
+              ? 'cursor-not-allowed bg-gray-300'
+              : 'bg-primary-500'
+          }`}
           onClick={handleConfirm}
+          disabled={!startDate || !endDate || jumlahTiket <= 0}
         >
           Pesan Sekarang
         </button>

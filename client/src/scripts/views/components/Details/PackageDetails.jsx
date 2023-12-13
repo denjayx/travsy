@@ -2,8 +2,9 @@ import CardImage from '../../../../assets/images/card-image.png'
 import Avatar from '../../../../assets/avatar.png'
 import OrderForm from './OrderForm'
 import { useState } from 'react'
+import PropTypes from 'prop-types';
 
-export default function PackageDetails() {
+const PackageDetails = ({ showImage = true }) => {
   const [showOrderForm, setShowOrderForm] = useState(false)
 
   const handlePesanSekarang = () => {
@@ -15,13 +16,15 @@ export default function PackageDetails() {
       id="packagedetails"
       className=" flex w-full flex-col items-center gap-6 rounded-xl lg:flex-row "
     >
-      <div className="h-full w-full overflow-hidden rounded-lg md:rounded-l-lg lg:w-5/12">
-        <img
-          src={CardImage}
-          alt="Thumbnail Card"
-          className=" h-full w-full object-cover "
-        />
-      </div>
+      {showImage && (
+        <div className="h-full w-full overflow-hidden rounded-lg md:rounded-l-lg lg:w-5/12">
+          <img
+            src={CardImage}
+            alt="Thumbnail Card"
+            className=" h-full w-full object-cover "
+          />
+        </div>
+      )}
       <section className="flex h-full w-full flex-col justify-between gap-1 rounded-lg border-gray-200 bg-white p-5 md:rounded-l-lg">
         <div className="flex items-center">
           <img
@@ -63,3 +66,8 @@ export default function PackageDetails() {
     </section>
   )
 }
+
+PackageDetails.propTypes = {
+  showImage: PropTypes.bool
+};
+export default PackageDetails
