@@ -3,10 +3,11 @@ import { useState } from 'react'
 import Button from '../Buttons/Button'
 import { NavLink } from 'react-router-dom'
 import Logo from '../Logo/Logo'
-import Avatar from '../Avatar/Avatar'
+import Profile from '../Profile/Profile'
 
 export default function Navbar({ user }) {
   const [isOpen, setIsOpen] = useState(false)
+
   return (
     <nav className="container fixed inset-x-0 top-0 z-50 flex w-full items-center justify-between gap-12 bg-primary-50 py-6">
       <div className="flex items-center">
@@ -36,7 +37,6 @@ export default function Navbar({ user }) {
         </button>
       </div>
       <div
-        onClick={() => setIsOpen(!isOpen)}
         className={`absolute right-4 top-16 justify-between max-lg:mt-4 lg:static lg:flex lg:w-full lg:items-center ${
           isOpen ? 'block' : 'hidden'
         }`}
@@ -65,7 +65,7 @@ export default function Navbar({ user }) {
           </li>
           <div className="bg-red-200 flex flex-col md:hidden">
             {user.token ? (
-              <Avatar user={user.user} />
+              <Profile user={user.user} />
             ) : (
               <>
                 <NavLink to="/login">
@@ -84,7 +84,7 @@ export default function Navbar({ user }) {
         </ul>
         <div className="flex flex-row gap-2 max-md:hidden">
           {user.token ? (
-            <Avatar user={user.user} />
+            <Profile user={user.user} />
           ) : (
             <>
               <NavLink to="/login">
