@@ -142,15 +142,22 @@ class TransactionService extends BaseService {
           where: { packageId: { [Op.in]: packageIdList } },
           include: {
             model: packageModel,
-            attributes: ['id', 'packageName'],
+            attributes: ['packageName'],
+            required: true,
           },
-          attributes: ['id', 'packageId', 'touristId', 'status', 'orderDate'],
+          attributes: [
+            'id',
+            'packageId',
+            'touristId',
+            'status',
+            ['created_at', 'orderDate'],
+          ],
           transaction,
         });
 
         const mappedOrderList = await Promise.all(
           orderList.map(async (order) => {
-            const tourist = await order.getUser({
+            const tourist = await order.getTourist({
               attributes: ['avatarUrl', 'firstName', 'lastName'],
               transaction,
             });
@@ -166,7 +173,7 @@ class TransactionService extends BaseService {
 
         return mappedOrderList;
       } catch (error) {
-        console.error(error);
+        console.log(error);
         throw new ServerError();
       }
     };

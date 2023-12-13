@@ -24,7 +24,7 @@ const {
   getHistoryDetailController,
   // getOrderControllerById,
   // patchOrderController,
-  // getOrderListController,
+  getOrderListController,
   updateUserProfileController,
   updatePackageController,
   deletePackageController,
@@ -94,7 +94,7 @@ app
   .route('/profile/histories/:id')
   .get(verifyAuthorization(), getHistoryDetailController);
 
-// app.route('/profile/orders').get(verifyAuthorization(), getOrderListController);
+app.route('/profile/orders').get(verifyAuthorization(), getOrderListController);
 // // Transaction service
 // app
 //   .route('/user/:username/histories/:id')
