@@ -22,7 +22,7 @@ const {
   getUserPackageDetailController,
   getHistoryListController,
   getHistoryDetailController,
-  // getOrderControllerById,
+  getOrderDetailController,
   // patchOrderController,
   getOrderListController,
   updateUserProfileController,
@@ -95,14 +95,10 @@ app
   .get(verifyAuthorization(), getHistoryDetailController);
 
 app.route('/profile/orders').get(verifyAuthorization(), getOrderListController);
-// // Transaction service
-// app
-//   .route('/user/:username/histories/:id')
-//   .get(getDetailTransactionHistoriesController);
 
-// app.route('/user/:username/orders').get(getOrderController);
-// app.route('/user/:username/orders/:id').get(getOrderControllerById);
-// app.route('/user/:username/orders/:id').patch(patchOrderController);
+app
+  .route('/profile/orders/:id')
+  .get(verifyAuthorization(), getOrderDetailController);
 
 // Error handler
 app.use(errorHandler());

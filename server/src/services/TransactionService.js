@@ -173,7 +173,6 @@ class TransactionService extends BaseService {
 
         return mappedOrderList;
       } catch (error) {
-        console.log(error);
         throw new ServerError();
       }
     };
@@ -184,33 +183,46 @@ class TransactionService extends BaseService {
   }
 
   // get order berdasarkan id
-  async getDetailOrder(username, id) {
+  async getOrderDetail(id) {
     const findOrderList = async (transaction) => {
       try {
         const order = await transactionModel.findByPk(id, {
           include: [
             {
               model: packageModel,
-              attributes: ['id', 'packageName'],
+              attributes: ['packageName'],
+              required: true,
             },
-            {
-              model: user,
-              attributes: ['username', 'firstName', 'lastName'],
-            },
+          ],
+          attributes: [
+            'id',
+            'packageId',
+            'touristId',
+            'status',
+            ['created_at', 'orderDate'],
           ],
           transaction,
         });
 
-        return order;
+        const tourist = await order.getTourist({
+          attributes: ['avatarUrl', 'firstName', 'lastName'],
+          transaction,
+        });
+
+        const mappedOrder = {
+          tourist,
+          transaction: order,
+        };
+
+        return mappedOrder;
       } catch (error) {
-        console.error(error);
         throw new ServerError();
       }
     };
 
-    const orderList = await this.createDbTransaction(findOrderList);
+    const mappedOrder = await this.createDbTransaction(findOrderList);
 
-    return orderList;
+    return mappedOrder;
   }
 
   // patch untuk patch order
