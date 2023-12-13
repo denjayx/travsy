@@ -281,35 +281,55 @@ class TransactionService extends BaseService {
   }
 
   // get detail transaction history by username and id
-  async getDetailHistoryTransactionByUsername(username, id) {
-    try {
-      // Cari transaksi berdasarkan username dan id
-      const transaction = await transactionModel.findOne({
-        where: {
-          id,
-        },
-        include: [
-          {
-            model: user,
-            where: {
-              username,
+  async getHistoryDetail(username, id) {
+    const findHistoryDetail = async (transaction) => {
+      try {
+        const transactionHistory = await transactionModel.findByPk(id, {
+          where: { touristId: username },
+          include: [
+            {
+              model: packageModel,
+              attributes: ['tourGuideId', 'packageName'],
+              required: true,
             },
-          },
-        ],
-      });
+          ],
+          attributes: [
+            'id',
+            'packageId',
+            'status',
+            ['created_at', 'orderDate'],
+            'startDate',
+            'endDate',
+            'totalPerson',
+            'totalPrice',
+          ],
+          transaction,
+        });
 
-      if (!transaction) {
-        throw new NotFoundError('Transaction not found');
-      }
+        if (!transactionHistory) {
+          throw new NotFoundError('Transaction not found');
+        }
 
-      return transaction;
-    } catch (error) {
-      if (error instanceof NotFoundError) {
-        throw error;
-      } else {
-        throw new ServerError('Error fetching transaction details');
+        const tourGuide = await user.findByPk(
+          transactionHistory.package.tourGuideId,
+          { attributes: ['avatarUrl', 'firstName', 'lastName'], transaction },
+        );
+
+        const history = { tourGuide, transaction: transactionHistory };
+
+        return history;
+      } catch (error) {
+        if (error instanceof BaseResponseError) {
+          throw error;
+        } else {
+          throw new ServerError('Error fetching transaction details');
+        }
       }
-    }
+    };
+
+    const history = await this.createDbTransaction(findHistoryDetail);
+
+    return history;
   }
 }
 

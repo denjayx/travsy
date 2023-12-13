@@ -6,11 +6,10 @@ const getHistoryDetailController = async (req, res, next) => {
 
   try {
     const transactionService = TransactionService.getInstance();
-    const historyDetail =
-      await transactionService.getDetailHistoryTransactionByUsername(
-        username,
-        transactionId,
-      );
+    const historyDetail = await transactionService.getHistoryDetail(
+      username,
+      transactionId,
+    );
 
     res.status(200).json({
       status: 'OK',

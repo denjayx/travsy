@@ -21,7 +21,7 @@ const {
   getUserPackageListController,
   getUserPackageDetailController,
   getHistoryListController,
-  // getDetailTransactionHistoriesController,
+  getHistoryDetailController,
   // getOrderControllerById,
   // patchOrderController,
   // getOrderListController,
@@ -89,6 +89,10 @@ app
 app
   .route('/profile/histories')
   .get(verifyAuthorization(), getHistoryListController);
+
+app
+  .route('/profile/histories/:id')
+  .get(verifyAuthorization(), getHistoryDetailController);
 
 // app.route('/profile/orders').get(verifyAuthorization(), getOrderListController);
 // // Transaction service
