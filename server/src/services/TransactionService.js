@@ -1,4 +1,4 @@
-const { Op } = require('sequelize');
+const { Op, ValidationError } = require('sequelize');
 const axios = require('axios');
 const { v4: uuidv4 } = require('uuid');
 const BaseService = require('./BaseService');
@@ -16,6 +16,7 @@ const {
   account,
 } = require('../models');
 const ForbiddenError = require('../errors/ForbiddenError');
+const BadRequestError = require('../errors/BadRequestError');
 
 class TransactionService extends BaseService {
   static getInstance() {
@@ -204,6 +205,10 @@ class TransactionService extends BaseService {
           transaction,
         });
 
+        if (!order) {
+          throw new NotFoundError('Transaction not found');
+        }
+
         const tourist = await order.getTourist({
           attributes: ['avatarUrl', 'firstName', 'lastName'],
           transaction,
@@ -226,28 +231,66 @@ class TransactionService extends BaseService {
   }
 
   // patch untuk patch order
-  async patchOrderForStatus(username, id, status) {
-    try {
-      console.log(id);
-      console.log(status);
-      const updatedOrder = await transactionModel.update(
-        { status },
-        {
-          where: {
-            id,
+  async patchOrderStatus(id, status) {
+    const updateStatus = async (transaction) => {
+      try {
+        const updatedCount = await transactionModel.update(
+          { status },
+          {
+            where: {
+              id,
+            },
+            transaction,
           },
-        },
-      );
+        );
 
-      return updatedOrder;
-    } catch (error) {
-      console.error(error);
-      if (error instanceof NotFoundError) {
-        throw error;
-      } else {
-        throw new ServerError('Gagal memperbarui status pesanan', error);
+        if (!updatedCount[0]) {
+          throw new NotFoundError('Transaction not found');
+        }
+
+        const updatedOrder = await transactionModel.findByPk(id, {
+          include: [
+            {
+              model: packageModel,
+              attributes: ['packageName'],
+              required: true,
+            },
+          ],
+          attributes: [
+            'id',
+            'packageId',
+            'touristId',
+            'status',
+            ['created_at', 'orderDate'],
+          ],
+          transaction,
+        });
+
+        const tourist = await updatedOrder.getTourist({
+          attributes: ['avatarUrl', 'firstName', 'lastName'],
+          transaction,
+        });
+
+        const mappedOrder = {
+          tourist,
+          transaction: updatedOrder,
+        };
+
+        return mappedOrder;
+      } catch (error) {
+        if (error instanceof ValidationError) {
+          throw new BadRequestError(error.message);
+        } else if (error instanceof BaseResponseError) {
+          throw error;
+        } else {
+          throw new ServerError();
+        }
       }
-    }
+    };
+
+    const updatedOrder = await this.createDbTransaction(updateStatus);
+
+    return updatedOrder;
   }
 
   // get transaction history by username

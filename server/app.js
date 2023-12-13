@@ -23,7 +23,7 @@ const {
   getHistoryListController,
   getHistoryDetailController,
   getOrderDetailController,
-  // patchOrderController,
+  patchOrderStatusController,
   getOrderListController,
   updateUserProfileController,
   updatePackageController,
@@ -98,7 +98,8 @@ app.route('/profile/orders').get(verifyAuthorization(), getOrderListController);
 
 app
   .route('/profile/orders/:id')
-  .get(verifyAuthorization(), getOrderDetailController);
+  .get(verifyAuthorization(), getOrderDetailController)
+  .patch(verifyAuthorization(), patchOrderStatusController);
 
 // Error handler
 app.use(errorHandler());
