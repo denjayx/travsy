@@ -1,8 +1,19 @@
 /* eslint-disable react/prop-types */
 import Card from '../Cards/Card'
 import Paragraph from '../Paragraph/Paragraph'
+import { getPopularPackages } from '../../../data/api'
+import { useEffect, useState } from 'react'
 
 const PopularPackage = ({ className }) => {
+  const [popularPackages, setPopularPackages] = useState([])
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getPopularPackages()
+      setPopularPackages(data)
+    }
+    fetchData()
+  }, [])
+
   return (
     <section
       id="popular"
@@ -16,10 +27,14 @@ const PopularPackage = ({ className }) => {
         </Paragraph>
       </div>
       <section className="flex gap-8 overflow-x-scroll">
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+        {popularPackages.map((popularPackage) => (
+          <Card
+            key={popularPackage.package.id}
+            packagesData={popularPackage.package}
+            tourguideData={popularPackage.tourGuide}
+            cardId={popularPackage.package.id}
+          />
+        ))}
       </section>
     </section>
   )

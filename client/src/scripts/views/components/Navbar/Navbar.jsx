@@ -1,9 +1,11 @@
+/* eslint-disable react/prop-types */
 import { useState } from 'react'
 import Button from '../Buttons/Button'
 import { NavLink } from 'react-router-dom'
 import Logo from '../Logo/Logo'
+import Profile from '../Profile/Profile'
 
-export default function Navbar() {
+export default function Navbar({ user }) {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -35,7 +37,6 @@ export default function Navbar() {
         </button>
       </div>
       <div
-        onClick={() => setIsOpen(!isOpen)}
         className={`absolute right-4 top-16 justify-between max-lg:mt-4 lg:static lg:flex lg:w-full lg:items-center ${
           isOpen ? 'block' : 'hidden'
         }`}
@@ -62,26 +63,38 @@ export default function Navbar() {
               Riwayat
             </NavLink>
           </li>
-          <div className="flex flex-col md:hidden">
-            <NavLink to="/login">
-              <Button variant="text" className="">
-                Masuk
-              </Button>
-            </NavLink>
-            <NavLink to="/register">
-              <Button variant="text" className="font-semibold">
-                Buat Akun
-              </Button>
-            </NavLink>
+          <div className="bg-red-200 flex flex-col md:hidden">
+            {user.token ? (
+              <Profile user={user.user} />
+            ) : (
+              <>
+                <NavLink to="/login">
+                  <Button variant="text" className="">
+                    Masuk
+                  </Button>
+                </NavLink>
+                <NavLink to="/register">
+                  <Button variant="text" className="font-semibold">
+                    Buat Akun
+                  </Button>
+                </NavLink>
+              </>
+            )}
           </div>
         </ul>
         <div className="flex flex-row gap-2 max-md:hidden">
-          <NavLink to="/login">
-            <Button variant="primary">Masuk</Button>
-          </NavLink>
-          <NavLink to="/register">
-            <Button variant="secondary">Buat Akun</Button>
-          </NavLink>
+          {user.token ? (
+            <Profile user={user.user} />
+          ) : (
+            <>
+              <NavLink to="/login">
+                <Button variant="primary">Masuk</Button>
+              </NavLink>
+              <NavLink to="/register">
+                <Button variant="secondary">Buat Akun</Button>
+              </NavLink>
+            </>
+          )}
         </div>
       </div>
     </nav>

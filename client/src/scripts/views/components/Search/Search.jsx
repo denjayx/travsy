@@ -2,7 +2,7 @@ import Button from '../Buttons/Button'
 
 const Search = () => {
   return (
-    <form className="container flex items-center gap-2">
+    <section className="container flex items-center gap-2">
       <label htmlFor="simple-search" className="sr-only">
         Search
       </label>
@@ -15,10 +15,10 @@ const Search = () => {
           required
         />
       </div>
-      <Button variant="primary" className="rounded-xl">
+      <Button type="submit" variant="primary" className="rounded-xl">
         Cari
       </Button>
-    </form>
+    </section>
   )
 }
 

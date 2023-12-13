@@ -1,27 +1,102 @@
-/* eslint-disable react/no-unknown-property */
-const InputDate = () => {
+/* eslint-disable react/prop-types */
+import 'react-datepicker/dist/react-datepicker.css'
+import { Datepicker } from 'flowbite-react'
+
+const customTheme = {
+  root: {
+    base: 'relative',
+  },
+  popup: {
+    root: {
+      base: 'absolute top-10 z-50 block pt-2',
+      inline: 'relative top-0 z-auto',
+      inner: 'inline-block rounded-lg bg-white p-4 shadow-lg',
+    },
+    header: {
+      base: '',
+      title: 'px-2 py-3 text-center font-semibold text-gray-900',
+      selectors: {
+        base: 'flex justify-between mb-2',
+        button: {
+          base: 'text-sm rounded-lg text-gray-900 bg-white font-semibold py-2.5 px-5 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 view-switch',
+          prev: '',
+          next: '',
+          view: '',
+        },
+      },
+    },
+    view: {
+      base: 'p-1',
+    },
+    footer: {
+      base: 'flex mt-2 space-x-2',
+      button: {
+        base: 'w-full rounded-lg px-5 py-2 text-center text-sm font-medium focus:ring-4 focus:ring-primary-300',
+        today: 'bg-primary-500 text-white hover:bg-primary-800',
+        clear:
+          'border border-gray-300 bg-white text-gray-900 hover:bg-gray-100',
+      },
+    },
+  },
+  views: {
+    days: {
+      header: {
+        base: 'grid grid-cols-7 mb-1',
+        title:
+          'dow h-6 text-center text-sm font-medium leading-6 text-gray-500',
+      },
+      items: {
+        base: 'grid w-64 grid-cols-7',
+        item: {
+          base: 'block flex-1 cursor-pointer rounded-lg border-0 text-center text-sm font-semibold leading-9 text-gray-900 hover:bg-gray-100',
+          selected: 'bg-primary-500 text-white hover:bg-primary-600',
+          disabled: 'text-gray-500',
+        },
+      },
+    },
+    months: {
+      items: {
+        base: 'grid w-64 grid-cols-4',
+        item: {
+          base: 'block flex-1 cursor-pointer rounded-lg border-0 text-center text-sm font-semibold leading-9 text-gray-900 hover:bg-gray-100',
+          selected: 'bg-primary-500 text-white hover:bg-primary-600',
+          disabled: 'text-gray-500',
+        },
+      },
+    },
+    years: {
+      items: {
+        base: 'grid w-64 grid-cols-4',
+        item: {
+          base: 'block flex-1 cursor-pointer rounded-lg border-0 text-center text-sm font-semibold leading-9 hover:bg-gray-100 text-gray-900',
+          selected: 'bg-primary-500 text-white hover:bg-primary-600',
+          disabled: 'text-gray-500',
+        },
+      },
+    },
+    decades: {
+      items: {
+        base: 'grid w-64 grid-cols-4',
+        item: {
+          base: 'block flex-1 cursor-pointer rounded-lg border-0 text-center text-sm font-semibold leading-9  hover:bg-gray-100 text-gray-900',
+          selected: 'bg-primary-500 text-white hover:bg-primary-600',
+          disabled: 'text-gray-500',
+        },
+      },
+    },
+  },
+}
+
+const InputDate = ({ limitMaxDate, limitMinDate, placeholder }) => {
   return (
-    <>
-      <div className="relative max-w-sm">
-        <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3.5">
-          <svg
-            className="h-4 w-4 text-gray-500"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-          >
-            <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
-          </svg>
-        </div>
-        <input
-          datepicker
-          type="text"
-          className="focus:ring-blue-500 focus:border-blue-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 ps-10 text-sm text-gray-900"
-          placeholder="Select date"
-        />
-      </div>
-    </>
+    <Datepicker
+      theme={customTheme}
+      language="id"
+      maxDate={limitMaxDate}
+      minDate={limitMinDate}
+      autoHide={false}
+      placeholder={placeholder}
+    />
   )
 }
 

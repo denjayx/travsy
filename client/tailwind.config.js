@@ -1,12 +1,14 @@
 /* eslint-disable no-undef */
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}', './node_modules/flowbite/**/*.js'
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}',
+  './node_modules/flowbite/**/*.js',
+  'node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}'
 ],
   theme: {
     extend: {
       boxShadow: {
-        btn: '2px 8px 12.7px 0px rgba(0, 152, 205, 0.15);',
+        'btn': '2px 8px 12.7px 0px rgba(0, 152, 205, 0.15);',
       },
     },
     container: {
@@ -45,7 +47,7 @@ export default {
         800: '#67676c',
         900: '#565759',
         950: '#323234',
-      },
+      },    
     },
     fontSize: {
       xs: [

@@ -10,10 +10,19 @@ const BookingFields = () => {
           <span className="ml-2 text-primary-700">Bersama Travsy</span>
         </h1>
       </div>
-      <div>
-        <InputDate />
-      </div>
-      <Search />
+      <form action="" className="flex flex-col gap-3">
+        <div className="container flex gap-3">
+          <InputDate
+            limitMinDate={new Date()}
+            placeholder="Mulai kapan kamu pergi"
+          />
+          <InputDate
+            limitMinDate={new Date()}
+            placeholder="Sampai kapan kamu pergi"
+          />
+        </div>
+        <Search />
+      </form>
     </section>
   )
 }
