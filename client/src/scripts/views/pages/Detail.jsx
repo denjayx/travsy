@@ -1,9 +1,11 @@
-const Detail = () => {
+import DestinationDetails from '../components/Details/DestinationDetails'
+import PackageDetails from '../components/Details/PackageDetails'
+
+export default function Details() {
   return (
-    <div>
-      <h2>Detail Page</h2>
-    </div>
+    <section className="container mt-32">
+      <PackageDetails />
+      <DestinationDetails />
+    </section>
   )
 }
-
-export default Detail

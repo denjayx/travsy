@@ -18,19 +18,22 @@ import PackagesDetail from '../views/pages/Dashboard/PackagesDetail'
 import AddPackage from '../views/pages/Dashboard/AddPackage'
 import AddOrder from '../views/pages/Dashboard/AddOrder'
 import DetailOrder from '../views/pages/Dashboard/DetailOrder'
+import Root from '../views/layouts/Root'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="/" element={<RootLayout />}>
-        <Route index element={<Homepage />}></Route>
-        <Route path="/package" element={<TourPackage />}></Route>
-        <Route path="/history" element={<PackageHistory />}></Route>
-        <Route path="/packages/:id" element={<Detail />}></Route>
-      </Route>
-      <Route element={<Auth />}>
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/register" element={<Register />}></Route>
+      <Route element={<Root />}>
+        <Route path="/" element={<RootLayout />}>
+          <Route index element={<Homepage />}></Route>
+          <Route path="/package" element={<TourPackage />}></Route>
+          <Route path="/history" element={<PackageHistory />}></Route>
+          <Route path="/packages/:id" element={<Detail />}></Route>
+        </Route>
+        <Route element={<Auth />}>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/register" element={<Register />}></Route>
+        </Route>
       </Route>
       <Route element={<Dashboard />}>
         <Route path="/dashboard/packages" element={<Packages />}></Route>

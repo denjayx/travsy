@@ -6,6 +6,7 @@ const InputEmail = ({
   label,
   id,
   children,
+  setEmail,
   ...props
 }) => {
   const conditions = {
@@ -24,6 +25,9 @@ const InputEmail = ({
         className={defaultClassName}
         {...props}
         required
+        onChange={(event) => {
+          setEmail(event.target.value)
+        }}
       />
     </div>
   )

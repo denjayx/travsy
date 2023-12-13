@@ -5,7 +5,8 @@ export default function TourPackage() {
   return (
     <section className="mt-32">
       <Search />
-      <PopularPackage className="mt-16" />
+
+      <PopularPackage />
     </section>
   )
 }
