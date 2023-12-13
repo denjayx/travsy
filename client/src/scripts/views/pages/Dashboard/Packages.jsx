@@ -1,6 +1,18 @@
+// import { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
+// import { getProfilePackages } from '../../../data/api'
 
 const Packages = () => {
+  // const [packageList, setPackageList] = useState([])
+  // useEffect(() => {
+  //   const fetchPackageList = async () => {
+  //     const result = await getProfilePackages()
+  //     setPackageList(result)
+  //   }
+  //   fetchPackageList()
+  //   console.log(packageList)
+  // }, [])
+
   return (
     <>
       {/* breadcrumb */}
@@ -101,7 +113,7 @@ const Packages = () => {
                 Harga Paket
               </th>
               <th scope="col" className="px-6 py-3">
-                Durasi
+                Jumlah Transaksi
               </th>
               <th scope="col" className="px-6 py-3">
                 aksi
@@ -109,6 +121,8 @@ const Packages = () => {
             </tr>
           </thead>
           <tbody>
+            {/* {packageList.map((packageData) => ( ))} */}
+            {/* key={packageData.id} */}
             <tr className="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600">
               <th
                 scope="row"
