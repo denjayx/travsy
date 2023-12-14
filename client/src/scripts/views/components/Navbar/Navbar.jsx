@@ -73,7 +73,7 @@ export default function Navbar({ user }) {
                     Masuk
                   </Button>
                 </NavLink>
-                <NavLink to="/register">
+                <NavLink to="/register" state={{ role: 'tourist' }}>
                   <Button variant="text" className="font-semibold">
                     Buat Akun
                   </Button>
@@ -90,7 +90,7 @@ export default function Navbar({ user }) {
               <NavLink to="/login">
                 <Button variant="primary">Masuk</Button>
               </NavLink>
-              <NavLink to="/register">
+              <NavLink to="/register" state={{ role: 'tourist' }}>
                 <Button variant="secondary">Buat Akun</Button>
               </NavLink>
             </>
