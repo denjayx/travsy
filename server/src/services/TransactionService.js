@@ -1,4 +1,4 @@
-const { Op, ValidationError } = require('sequelize');
+const { Op } = require('sequelize');
 const axios = require('axios');
 const { v4: uuidv4 } = require('uuid');
 const BaseService = require('./BaseService');
@@ -16,7 +16,6 @@ const {
   account,
 } = require('../models');
 const ForbiddenError = require('../errors/ForbiddenError');
-const BadRequestError = require('../errors/BadRequestError');
 
 class TransactionService extends BaseService {
   static getInstance() {
