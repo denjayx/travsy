@@ -75,7 +75,7 @@ class AuthenticationService extends BaseService {
           role: accountData.role,
           user: {
             username: userData.username,
-            avatartUrl: userData.avatarUrl,
+            avatarUrl: userData.avatarUrl,
             firstName: userData.firstName,
             lastName: userData.lastName,
           },
@@ -125,7 +125,7 @@ class AuthenticationService extends BaseService {
           role: accountData.role,
           user: {
             username: userData.username,
-            avatartUrl: userData.avatarUrl,
+            avatarUrl: userData.avatarUrl,
             firstName: userData.firstName,
             lastName: userData.lastName,
           },
