@@ -73,7 +73,12 @@ class AuthenticationService extends BaseService {
         const credential = {
           token,
           role: accountData.role,
-          user: userData,
+          user: {
+            username: userData.username,
+            avatartUrl: userData.avatarUrl,
+            firstName: userData.firstName,
+            lastName: userData.lastName,
+          },
         };
 
         return credential;
@@ -94,11 +99,17 @@ class AuthenticationService extends BaseService {
     const generateCredential = async (transaction) => {
       try {
         const userData = await user.findByPk(username, {
-          attributes: ['username', 'avatarUrl', 'firstName', 'lastName'],
+          attributes: [
+            'username',
+            'accountId',
+            'avatarUrl',
+            'firstName',
+            'lastName',
+          ],
           transaction,
         });
 
-        const accountData = userData.getAccount({
+        const accountData = await userData.getAccount({
           attributes: ['role'],
           transaction,
         });
@@ -112,7 +123,12 @@ class AuthenticationService extends BaseService {
         const credential = {
           token,
           role: accountData.role,
-          user: userData,
+          user: {
+            username: userData.username,
+            avatartUrl: userData.avatarUrl,
+            firstName: userData.firstName,
+            lastName: userData.lastName,
+          },
         };
 
         return credential;
