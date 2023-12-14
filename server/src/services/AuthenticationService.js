@@ -109,14 +109,14 @@ class AuthenticationService extends BaseService {
           transaction,
         });
 
+        if (!userData) {
+          throw new NotFoundError('User not found');
+        }
+
         const accountData = await userData.getAccount({
           attributes: ['role'],
           transaction,
         });
-
-        if (!userData) {
-          throw new NotFoundError('User not found');
-        }
 
         const token = tokenUtil.generateToken({ username: userData.username });
 

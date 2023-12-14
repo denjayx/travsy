@@ -233,6 +233,9 @@
               }
             }
           },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
           "401": {
             "$ref": "#/components/responses/unauthorized"
           },
@@ -344,6 +347,9 @@
               }
             }
           },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
           "401": {
             "$ref": "#/components/responses/unauthorized"
           },
@@ -405,6 +411,9 @@
                 }
               }
             }
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
           },
           "401": {
             "$ref": "#/components/responses/unauthorized"
@@ -472,6 +481,9 @@
               }
             }
           },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
           "401": {
             "$ref": "#/components/responses/unauthorized"
           },
@@ -506,12 +518,6 @@
           },
           "401": {
             "$ref": "#/components/responses/unauthorized"
-          },
-          "403": {
-            "$ref": "#/components/responses/forbidden"
-          },
-          "404": {
-            "$ref": "#/components/responses/notFound"
           },
           "500": {
             "$ref": "#/components/responses/serverError"
@@ -563,6 +569,9 @@
                 }
               }
             }
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
           },
           "401": {
             "$ref": "#/components/responses/unauthorized"
@@ -634,9 +643,6 @@
           "401": {
             "$ref": "#/components/responses/unauthorized"
           },
-          "403": {
-            "$ref": "#/components/responses/forbidden"
-          },
           "404": {
             "$ref": "#/components/responses/notFound"
           },
@@ -686,11 +692,11 @@
               }
             }
           },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
           "401": {
             "$ref": "#/components/responses/unauthorized"
-          },
-          "403": {
-            "$ref": "#/components/responses/forbidden"
           },
           "404": {
             "$ref": "#/components/responses/notFound"
@@ -745,11 +751,11 @@
               }
             }
           },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
           "401": {
             "$ref": "#/components/responses/unauthorized"
-          },
-          "404": {
-            "$ref": "#/components/responses/notFound"
           },
           "500": {
             "$ref": "#/components/responses/serverError"
@@ -810,6 +816,9 @@
               }
             }
           },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
           "401": {
             "$ref": "#/components/responses/unauthorized"
           },
@@ -850,7 +859,7 @@
                   "status": {
                     "description": "Diterima jika: pending, accepted, rejected, completed, canceled",
                     "type": "string",
-                    "example": "accepted"
+                    "example": "terkonfirmasi"
                   }
                 },
                 "required": ["status"]
@@ -893,8 +902,8 @@
           "400": {
             "$ref": "#/components/responses/badRequest"
           },
-          "403": {
-            "$ref": "#/components/responses/forbidden"
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
           },
           "404": {
             "$ref": "#/components/responses/notFound"
@@ -1218,9 +1227,6 @@
           },
           "401": {
             "$ref": "#/components/responses/unauthorized"
-          },
-          "403": {
-            "$ref": "#/components/responses/forbidden"
           },
           "404": {
             "$ref": "#/components/responses/notFound"
@@ -1710,26 +1716,6 @@
                 "message": {
                   "type": "string",
                   "example": "Invalid token"
-                }
-              }
-            }
-          }
-        }
-      },
-      "forbidden": {
-        "description": "Tidak memiliki akses ke sumber daya ini",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "string",
-                  "example": "Forbidden"
-                },
-                "message": {
-                  "type": "string",
-                  "example": "You do not have access to this resource."
                 }
               }
             }

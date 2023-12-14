@@ -13,9 +13,7 @@ const {
   transaction: transactionModel,
   user,
   package: packageModel,
-  account,
 } = require('../models');
-const ForbiddenError = require('../errors/ForbiddenError');
 
 class TransactionService extends BaseService {
   static getInstance() {
@@ -78,17 +76,6 @@ class TransactionService extends BaseService {
           throw new NotFoundError('User not found');
         } else if (!packageData) {
           throw new NotFoundError('Package not found');
-        }
-
-        const accountData = await account.findByPk(userData.accountId, {
-          attributes: ['role'],
-          transaction,
-        });
-
-        if (accountData.role !== 'tourist') {
-          throw new ForbiddenError(
-            'You are logged in as tour guide. To checkout package please login as tourist',
-          );
         }
 
         const token = await createPaymentToken(transactionId, userData);
@@ -245,7 +232,7 @@ class TransactionService extends BaseService {
   async patchOrderStatus(id, status) {
     const updateStatus = async (transaction) => {
       try {
-        const updatedCount = await transactionModel.update(
+        const affectedCount = await transactionModel.update(
           { status },
           {
             where: {
@@ -255,7 +242,7 @@ class TransactionService extends BaseService {
           },
         );
 
-        if (!updatedCount[0]) {
+        if (!affectedCount[0]) {
           throw new NotFoundError('Transaction not found');
         }
 

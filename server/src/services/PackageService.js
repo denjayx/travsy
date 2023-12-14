@@ -3,15 +3,12 @@ const {
   package: packageModel,
   destination,
   transaction: transactionModel,
-  account,
-  user,
 } = require('../models');
 const BaseService = require('./BaseService');
 const BadRequestError = require('../errors/BadRequestError');
 const ServerError = require('../errors/ServerError');
 const NotFoundError = require('../errors/NotFoundError');
 const BaseResponseError = require('../errors/BaseResponseError');
-const ForbiddenError = require('../errors/ForbiddenError');
 
 class PackageService extends BaseService {
   // Desc: Implementasi singleton
@@ -363,22 +360,6 @@ class PackageService extends BaseService {
   async createPackage(username, packageData) {
     const insertData = async (transaction) => {
       try {
-        const userData = await user.findByPk(username, {
-          include: [{ model: account, attributes: ['role'] }],
-          attributes: ['username'],
-          transaction,
-        });
-
-        if (!userData) {
-          throw new NotFoundError('User not found');
-        }
-
-        if (userData.account.role !== 'tour guide') {
-          throw new ForbiddenError(
-            'You logged in as tourist. Please logged in as tour guide to create a package',
-          );
-        }
-
         const { destinations, ...restPackageData } = packageData;
 
         const createdPackage = await packageModel.create(
@@ -429,35 +410,16 @@ class PackageService extends BaseService {
   async updatePackage(username, packageId, packageData) {
     const updateData = async (transaction) => {
       try {
-        const userData = await user.findByPk(username, {
-          include: [{ model: account, attributes: ['role'] }],
-          attributes: ['username'],
-          transaction,
-        });
-
-        const packageToBeUpdated = await packageModel.findByPk(packageId, {
-          attributes: ['id', 'tourGuideId'],
-        });
-
-        if (!userData || !packageToBeUpdated) {
-          throw new NotFoundError('User or package not found');
-        }
-
-        if (
-          userData.account.role !== 'tour guide' ||
-          username !== packageToBeUpdated.tourGuideId
-        ) {
-          throw new ForbiddenError(
-            'You are prohibited from updating this package',
-          );
-        }
-
         const { destinations, ...restPackageData } = packageData;
 
-        await packageModel.update(
+        const affectedCount = await packageModel.update(
           { ...restPackageData },
-          { where: { id: packageToBeUpdated.id }, transaction },
+          { where: { id: packageId, tourGuideId: username }, transaction },
         );
+
+        if (!affectedCount[0]) {
+          throw new NotFoundError('Package not found');
+        }
 
         await destinations?.reduce(async (previousPromise, destinationData) => {
           await previousPromise;
@@ -467,15 +429,15 @@ class PackageService extends BaseService {
               destinationName: destinationData.destinationName,
               city: destinationData.city,
               description: destinationData.description,
-              packageId: packageToBeUpdated.id,
+              packageId,
             },
             { transaction },
           );
 
-          const currentPackage = await packageModel.findByPk(
-            packageToBeUpdated.id,
-            { attributes: ['id', 'destinationCount'], transaction },
-          );
+          const currentPackage = await packageModel.findByPk(packageId, {
+            attributes: ['id', 'destinationCount'],
+            transaction,
+          });
 
           await packageModel.update(
             { destinationCount: currentPackage.destinationCount + 1 },
@@ -500,35 +462,17 @@ class PackageService extends BaseService {
   async deletePackage(username, packageId) {
     const deleteData = async (transaction) => {
       try {
-        const userData = await user.findByPk(username, {
-          include: [{ model: account, attributes: ['role'] }],
-          attributes: ['username'],
-          transaction,
-        });
-
-        const packageToBeDeleted = await packageModel.findByPk(packageId, {
-          attributes: ['id', 'tourGuideId'],
-        });
-
-        if (!userData || !packageToBeDeleted) {
-          throw new NotFoundError('User or package not found');
-        }
-
-        if (
-          userData.account.role !== 'tour guide' ||
-          username !== packageToBeDeleted.tourGuideId
-        ) {
-          throw new ForbiddenError(
-            'You are prohibited from deleting this package',
-          );
-        }
-
-        await packageModel.destroy({
+        const affectedCount = await packageModel.destroy({
           where: {
             id: packageId,
             tourGuideId: username,
           },
+          transaction,
         });
+
+        if (!affectedCount) {
+          throw new NotFoundError('Package not found');
+        }
       } catch (error) {
         if (error instanceof BaseResponseError) {
           throw error;
