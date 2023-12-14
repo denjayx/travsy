@@ -2,7 +2,7 @@ import { useState } from 'react'
 import InputField from '../components/Input/InputField'
 import { register } from '../../data/api'
 import Button from '../components/Buttons/Button'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import InputSelect from '../components/Input/InputSelect'
 
 const Register = () => {
@@ -105,9 +105,9 @@ const Register = () => {
         </Button>
       </form>
       <label className="block text-center text-base text-primary-950 ">
-        Daftar jadi Tour Guide{' '}
+        Masuk ke akun{' '}
         <span className="font-semibold  text-primary-700 underline underline-offset-2">
-          <a href="#">disini</a>
+          <Link to={'/login'}>disini</Link>
         </span>
       </label>
     </section>

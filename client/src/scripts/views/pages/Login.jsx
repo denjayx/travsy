@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate, useOutletContext } from 'react-router-dom'
+import { Link, useNavigate, useOutletContext } from 'react-router-dom'
 import { login } from '../../data/api'
 import InputField from '../components/Input/InputField'
 
@@ -63,7 +63,9 @@ export default function Login() {
         <label className="mt-3 block text-center text-base text-primary-950 ">
           Belum punya akun?{' '}
           <span className="font-semibold  text-primary-700 underline underline-offset-2">
-            <a href="/register">Buat Akun</a>
+            <Link to={'/register'} state={{ role: 'tourist' }}>
+              Buat Akun
+            </Link>
           </span>
         </label>
       </form>
