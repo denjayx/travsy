@@ -21,9 +21,9 @@ const CustomDateRangePicker = () => {
   };
 
   return (
-    <div className="container flex items-center gap-24">
+    <div className="container flex flex-wrap items-center gap-8">
       {/* Start Date Picker */}
-      <div className="relative flex-1 h-14 w-auto">
+      <div className="relative flex-1 h-14 w-full md:w-auto lg:w-1/4">
         <DatePicker
           selected={startDate}
           onChange={handleStartDateChange}
@@ -31,7 +31,7 @@ const CustomDateRangePicker = () => {
           startDate={startDate}
           endDate={endDate}
           dateFormat="yyyy-MM-dd"
-          className="relative block w-80 rounded-xl border justify-between border-primary-300 bg-white px-6 py-3 text-gray-900 focus:border-primary-500 focus:outline-none focus:ring-primary-500"
+          className="relative block w-full md:w-80 rounded-xl border justify-between border-primary-300 bg-white px-6 py-3 text-gray-900 focus:border-primary-500 focus:outline-none focus:ring-primary-500"
           placeholderText="Select date start"
         />
         <svg
@@ -46,7 +46,7 @@ const CustomDateRangePicker = () => {
       </div>
 
       {/* End Date Picker */}
-      <div className="relative flex-1 h-14 w-auto">
+      <div className="relative flex-1 h-14 w-full md:w-auto lg:w-1/4">
         <DatePicker
           selected={endDate}
           onChange={handleEndDateChange}
@@ -55,7 +55,7 @@ const CustomDateRangePicker = () => {
           endDate={endDate}
           minDate={startDate}
           dateFormat="yyyy-MM-dd"
-          className="relative block w-80 rounded-xl border justify-between border-primary-300 bg-white px-6 py-3 text-gray-900 focus:border-primary-500 focus:outline-none focus:ring-primary-500"
+          className="relative block w-full md:w-80 rounded-xl border justify-between border-primary-300 bg-white px-6 py-3 text-gray-900 focus:border-primary-500 focus:outline-none focus:ring-primary-500"
           placeholderText="Select date end"
         />
         <svg
@@ -70,14 +70,14 @@ const CustomDateRangePicker = () => {
       </div>
 
       {/* Number Input */}
-      <div className="relative flex-1 h-14 w-auto">
+      <div className="relative flex-1 h-14 w-full md:w-auto lg:w-1/4">
         <div className="flex items-center">
           <input
             type="number"
             id="numberInput"
             value={numberInput}
             onChange={handleNumberInputChange}
-            className="relative block w-80 rounded-xl border justify-between border-primary-300 bg-white px-6 py-3 text-gray-900 focus:border-primary-500 focus:outline-none focus:ring-primary-500"
+            className="relative block w-full md:w-80 rounded-xl border justify-between border-primary-300 bg-white px-6 py-3 text-gray-900 focus:border-primary-500 focus:outline-none focus:ring-primary-500"
           />
           <div className="pointer-events-none absolute inset-x-0 right-0 flex items-center pr-3"></div>
         </div>
