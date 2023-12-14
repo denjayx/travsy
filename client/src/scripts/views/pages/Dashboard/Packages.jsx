@@ -1,17 +1,18 @@
-// import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
-// import { getProfilePackages } from '../../../data/api'
+import { getProfilePackages } from '../../../data/api'
 
 const Packages = () => {
-  // const [packageList, setPackageList] = useState([])
-  // useEffect(() => {
-  //   const fetchPackageList = async () => {
-  //     const result = await getProfilePackages()
-  //     setPackageList(result)
-  //   }
-  //   fetchPackageList()
-  //   console.log(packageList)
-  // }, [])
+  const [packageList, setPackageList] = useState([])
+  useEffect(() => {
+    const fetchPackageList = async (token) => {
+      const result = await getProfilePackages(token)
+      setPackageList(result)
+    }
+    const token = localStorage.getItem('token')
+    fetchPackageList(token)
+    console.log(packageList)
+  }, [])
 
   return (
     <>

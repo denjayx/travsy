@@ -32,10 +32,14 @@ export const packageDetail = async (id) => {
   }
 }
 
-export const getProfilePackages = async () => {
+export const getProfilePackages = async (token) => {
   try {
-    const response = axios(`${BASE_URL}/profile/packages`)
-    return response.data
+    const response = await axios.get(`${BASE_URL}/profile/packages`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data.data
   } catch (error) {
     console.error('Error fetching package list:', error)
     throw error
