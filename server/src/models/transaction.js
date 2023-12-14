@@ -49,6 +49,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.INTEGER,
       },
+      orderDate: {
+        type: DataTypes.STRING,
+        field: 'created_at',
+      },
     },
     {
       sequelize,

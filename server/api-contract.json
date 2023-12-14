@@ -1403,8 +1403,8 @@
             "format": "email",
             "example": "johndoe@gmail.com"
           },
-          "avatar": {
-            "description": "Diterima jika: image",
+          "avatarUrl": {
+            "description": "Diterima jika: url",
             "type": "string",
             "format": "binary",
             "example": "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
@@ -1506,11 +1506,6 @@
             "items": {
               "type": "object",
               "properties": {
-                "id": {
-                  "description": "Id destinasi wisata",
-                  "type": "string",
-                  "example": "123e4567-e89b-12d3-a456-426614174000"
-                },
                 "destinationName": {
                   "description": "Diterima jika: 3-50 karakter",
                   "type": "string",
@@ -1537,10 +1532,6 @@
           "id": {
             "type": "string",
             "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "tourGuideId": {
-            "type": "string",
-            "example": "erna68"
           },
           "packageName": {
             "type": "string",
@@ -1583,7 +1574,7 @@
       "transaction": {
         "type": "object",
         "properties": {
-          "transactionId": {
+          "id": {
             "description": "Id transaksi",
             "type": "string",
             "example": "123e4567-e89b-12d3-a456-426614174000"
@@ -1591,7 +1582,7 @@
           "package": {
             "type": "object",
             "properties": {
-              "name": {
+              "packageName": {
                 "description": "Nama paket wisata",
                 "type": "string",
                 "example": "Paket Wisata Tanah Lot"
@@ -1636,14 +1627,14 @@
       "miniTransaction": {
         "type": "object",
         "properties": {
-          "transactionId": {
+          "id": {
             "type": "string",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
           "package": {
             "type": "object",
             "properties": {
-              "name": {
+              "packageName": {
                 "description": "Nama paket wisata",
                 "type": "string",
                 "example": "Paket Wisata Tanah Lot"

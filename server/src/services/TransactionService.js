@@ -146,13 +146,7 @@ class TransactionService extends BaseService {
             attributes: ['packageName'],
             required: true,
           },
-          attributes: [
-            'id',
-            'packageId',
-            'touristId',
-            'status',
-            ['created_at', 'orderDate'],
-          ],
+          attributes: ['id', 'touristId', 'status', 'orderDate'],
           transaction,
         });
 
@@ -165,7 +159,12 @@ class TransactionService extends BaseService {
 
             const mappedOrder = {
               tourist,
-              transaction: order,
+              transaction: {
+                id: order.id,
+                package: order.package,
+                status: order.status,
+                orderDate: order.orderDate,
+              },
             };
 
             return mappedOrder;
@@ -185,7 +184,7 @@ class TransactionService extends BaseService {
 
   // get order berdasarkan id
   async getOrderDetail(id) {
-    const findOrderList = async (transaction) => {
+    const findOrderDetail = async (transaction) => {
       try {
         const order = await transactionModel.findByPk(id, {
           include: [
@@ -200,7 +199,11 @@ class TransactionService extends BaseService {
             'packageId',
             'touristId',
             'status',
-            ['created_at', 'orderDate'],
+            'orderDate',
+            'startDate',
+            'endDate',
+            'totalPerson',
+            'totalPrice',
           ],
           transaction,
         });
@@ -216,7 +219,16 @@ class TransactionService extends BaseService {
 
         const mappedOrder = {
           tourist,
-          transaction: order,
+          transaction: {
+            id: order.id,
+            package: order.package,
+            status: order.status,
+            orderDate: order.orderDate,
+            startDate: order.startDate,
+            endDate: order.endDate,
+            totalPerson: order.totalPerson,
+            totalPrice: order.totalPrice,
+          },
         };
 
         return mappedOrder;
@@ -225,7 +237,7 @@ class TransactionService extends BaseService {
       }
     };
 
-    const mappedOrder = await this.createDbTransaction(findOrderList);
+    const mappedOrder = await this.createDbTransaction(findOrderDetail);
 
     return mappedOrder;
   }
@@ -258,10 +270,13 @@ class TransactionService extends BaseService {
           ],
           attributes: [
             'id',
-            'packageId',
             'touristId',
             'status',
-            ['created_at', 'orderDate'],
+            'orderDate',
+            'startDate',
+            'endDate',
+            'totalPerson',
+            'totalPrice',
           ],
           transaction,
         });
@@ -273,7 +288,16 @@ class TransactionService extends BaseService {
 
         const mappedOrder = {
           tourist,
-          transaction: updatedOrder,
+          transaction: {
+            id: updatedOrder.id,
+            package: updatedOrder.package,
+            status: updatedOrder.status,
+            orderDate: updatedOrder.orderDate,
+            startDate: updatedOrder.startDate,
+            endDate: updatedOrder.endDate,
+            totalPerson: updatedOrder.totalPerson,
+            totalPrice: updatedOrder.totalPrice,
+          },
         };
 
         return mappedOrder;
@@ -304,26 +328,28 @@ class TransactionService extends BaseService {
             attributes: ['tourGuideId', 'packageName'],
             required: true,
           },
-          attributes: [
-            'id',
-            'packageId',
-            'status',
-            ['created_at', 'orderDate'],
-          ],
+          attributes: ['id', 'status', 'orderDate'],
           transaction,
         });
 
         const historyList = await Promise.all(
-          transactions.map(async (transactionHistory) => {
-            const tourGuide = await user.findByPk(
-              transactionHistory.package.tourGuideId,
-              {
-                attributes: ['avatarUrl', 'firstName', 'lastName'],
-                transaction,
-              },
-            );
+          transactions.map(async (order) => {
+            const tourGuide = await user.findByPk(order.package.tourGuideId, {
+              attributes: ['avatarUrl', 'firstName', 'lastName'],
+              transaction,
+            });
 
-            return { tourGuide, transaction: transactionHistory };
+            return {
+              tourGuide,
+              transaction: {
+                id: order.id,
+                package: {
+                  packageName: order.package.packageName,
+                },
+                status: order.status,
+                orderDate: order.orderDate,
+              },
+            };
           }),
         );
 
@@ -346,7 +372,7 @@ class TransactionService extends BaseService {
   async getHistoryDetail(username, id) {
     const findHistoryDetail = async (transaction) => {
       try {
-        const transactionHistory = await transactionModel.findByPk(id, {
+        const order = await transactionModel.findByPk(id, {
           where: { touristId: username },
           include: [
             {
@@ -357,9 +383,8 @@ class TransactionService extends BaseService {
           ],
           attributes: [
             'id',
-            'packageId',
             'status',
-            ['created_at', 'orderDate'],
+            'orderDate',
             'startDate',
             'endDate',
             'totalPerson',
@@ -368,16 +393,30 @@ class TransactionService extends BaseService {
           transaction,
         });
 
-        if (!transactionHistory) {
+        if (!order) {
           throw new NotFoundError('Transaction not found');
         }
 
-        const tourGuide = await user.findByPk(
-          transactionHistory.package.tourGuideId,
-          { attributes: ['avatarUrl', 'firstName', 'lastName'], transaction },
-        );
+        const tourGuide = await user.findByPk(order.package.tourGuideId, {
+          attributes: ['avatarUrl', 'firstName', 'lastName'],
+          transaction,
+        });
 
-        const history = { tourGuide, transaction: transactionHistory };
+        const history = {
+          tourGuide,
+          transaction: {
+            id: order.id,
+            package: {
+              packageName: order.package.packageName,
+            },
+            status: order.status,
+            orderDate: order.orderDate,
+            startDate: order.startDate,
+            endDate: order.endDate,
+            totalPerson: order.totalPerson,
+            totalPrice: order.totalPrice,
+          },
+        };
 
         return history;
       } catch (error) {

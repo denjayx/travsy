@@ -150,7 +150,15 @@ class PackageService extends BaseService {
 
             return {
               tourGuide,
-              package: tourPackage,
+              package: {
+                id: tourPackage.id,
+                packageName: tourPackage.packageName,
+                thumbnailUrl: tourPackage.thumbnailUrl,
+                price: tourPackage.price,
+                destinationCount: tourPackage.destinationCount,
+                transactionCount: tourPackage.transactionCount,
+                destinations: tourPackage.destinations,
+              },
             };
           }),
         );
@@ -204,7 +212,15 @@ class PackageService extends BaseService {
 
             return {
               tourGuide,
-              package: tourPackage,
+              package: {
+                id: tourPackage.id,
+                packageName: tourPackage.packageName,
+                thumbnailUrl: tourPackage.thumbnailUrl,
+                price: tourPackage.price,
+                destinationCount: tourPackage.destinationCount,
+                transactionCount: tourPackage.transactionCount,
+                destinations: tourPackage.destinations,
+              },
             };
           }),
         );
@@ -253,7 +269,18 @@ class PackageService extends BaseService {
           transaction,
         });
 
-        return { tourGuide, package: packageDetail };
+        return {
+          tourGuide,
+          package: {
+            id: packageDetail.id,
+            packageName: packageDetail.packageName,
+            thumbnailUrl: packageDetail.thumbnailUrl,
+            price: packageDetail.price,
+            description: packageDetail.description,
+            serviceDuration: packageDetail.serviceDuration,
+            destinations: packageDetail.destinations,
+          },
+        };
       } catch (error) {
         if (error instanceof BaseResponseError) {
           throw error;
