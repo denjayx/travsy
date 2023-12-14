@@ -302,9 +302,7 @@ class TransactionService extends BaseService {
 
         return mappedOrder;
       } catch (error) {
-        if (error instanceof ValidationError) {
-          throw new BadRequestError(error.message);
-        } else if (error instanceof BaseResponseError) {
+        if (error instanceof BaseResponseError) {
           throw error;
         } else {
           throw new ServerError();

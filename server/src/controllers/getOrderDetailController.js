@@ -13,8 +13,6 @@ const getOrderDetailController = async (req, res, next) => {
       data: order,
     });
   } catch (error) {
-    console.error(error);
-
     next(error);
   }
 };
