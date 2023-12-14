@@ -19,6 +19,7 @@ import AddPackage from '../views/pages/Dashboard/AddPackage'
 import AddOrder from '../views/pages/Dashboard/AddOrder'
 import DetailOrder from '../views/pages/Dashboard/DetailOrder'
 import Root from '../views/layouts/Root'
+import Profile from '../views/pages/Dashboard/Profile'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -52,6 +53,7 @@ const router = createBrowserRouter(
         <Route path="/add-packages" element={<AddPackages />}></Route>
         <Route path="/bookings" element={<Bookings />}></Route>
         <Route path="/confirmation" element={<Confirmation />}></Route> */}
+        <Route path="/profile" element={<Profile />}></Route>
       </Route>
     </>,
   ),

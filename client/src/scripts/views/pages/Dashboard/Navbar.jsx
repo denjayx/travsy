@@ -1,4 +1,4 @@
-// import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 const Navbar = () => {
   return (
@@ -6,9 +6,11 @@ const Navbar = () => {
       <nav className="flex w-full items-center justify-between bg-gray-900 p-4 text-white">
         <div className="flex items-center space-x-4"></div>
         <div className="flex items-center space-x-4">
-          <a href="#" className="hover:text-gray-300">
-            Profile
-          </a>
+          <NavLink to="/profile">
+            <a href="#" className="hover:text-gray-300">
+              Profile
+            </a>
+          </NavLink>
           <a href="#" className="hover:text-gray-300">
             Logout
           </a>
