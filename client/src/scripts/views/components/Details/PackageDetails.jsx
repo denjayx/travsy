@@ -2,7 +2,7 @@ import CardImage from '../../../../assets/images/card-image.png'
 import Avatar from '../../../../assets/avatar.png'
 import OrderForm from './OrderForm'
 import { useState } from 'react'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
 const PackageDetails = ({ showImage = true }) => {
   const [showOrderForm, setShowOrderForm] = useState(false)
@@ -68,6 +68,6 @@ const PackageDetails = ({ showImage = true }) => {
 }
 
 PackageDetails.propTypes = {
-  showImage: PropTypes.bool
-};
+  showImage: PropTypes.bool,
+}
 export default PackageDetails
