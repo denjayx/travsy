@@ -159,6 +159,9 @@ class TransactionService extends BaseService {
 
         return mappedOrderList;
       } catch (error) {
+        if (error instanceof BaseResponseError) {
+          throw error;
+        }
         throw new ServerError();
       }
     };
@@ -219,6 +222,9 @@ class TransactionService extends BaseService {
 
         return mappedOrder;
       } catch (error) {
+        if (error instanceof BaseResponseError) {
+          throw error;
+        }
         throw new ServerError();
       }
     };
@@ -290,9 +296,8 @@ class TransactionService extends BaseService {
       } catch (error) {
         if (error instanceof BaseResponseError) {
           throw error;
-        } else {
-          throw new ServerError();
         }
+        throw new ServerError();
       }
     };
 
@@ -341,9 +346,8 @@ class TransactionService extends BaseService {
       } catch (error) {
         if (error instanceof BaseResponseError) {
           throw error;
-        } else {
-          throw new ServerError();
         }
+        throw new ServerError();
       }
     };
 
@@ -406,9 +410,8 @@ class TransactionService extends BaseService {
       } catch (error) {
         if (error instanceof BaseResponseError) {
           throw error;
-        } else {
-          throw new ServerError('Error fetching transaction details');
         }
+        throw new ServerError();
       }
     };
 

@@ -449,9 +449,8 @@ class PackageService extends BaseService {
       } catch (error) {
         if (error instanceof BaseResponseError) {
           throw error;
-        } else {
-          throw new ServerError();
         }
+        throw new ServerError();
       }
     };
 
@@ -476,9 +475,8 @@ class PackageService extends BaseService {
       } catch (error) {
         if (error instanceof BaseResponseError) {
           throw error;
-        } else {
-          throw new ServerError();
         }
+        throw new ServerError();
       }
     };
 
