@@ -1,31 +1,29 @@
-import React, { useState } from 'react'
-import DatePicker from 'react-datepicker'
-import 'react-datepicker/dist/react-datepicker.css'
+import React, { useState } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const CustomDateRangePicker = () => {
-  const [startDate, setStartDate] = useState(null)
-  const [endDate, setEndDate] = useState(null)
-  const [numberInput, setNumberInput] = useState(0)
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [numberInput, setNumberInput] = useState(0);
 
   const handleStartDateChange = (date) => {
-    setStartDate(date)
-  }
+    setStartDate(date);
+  };
 
   const handleEndDateChange = (date) => {
-    setEndDate(date)
-  }
+    setEndDate(date);
+  };
 
   const handleNumberInputChange = (e) => {
-    const value = parseInt(e.target.value, 10)
-    setNumberInput(value || 0)
-  }
+    const value = parseInt(e.target.value, 10);
+    setNumberInput(value || 0);
+  };
 
   return (
-    <div
-      className="container flex items-center gap-1"
-    >
+    <div className="container flex items-center gap-24">
       {/* Start Date Picker */}
-      <div className="relative flex-1">
+      <div className="relative flex-1 h-14 w-auto">
         <DatePicker
           selected={startDate}
           onChange={handleStartDateChange}
@@ -33,11 +31,11 @@ const CustomDateRangePicker = () => {
           startDate={startDate}
           endDate={endDate}
           dateFormat="yyyy-MM-dd"
-          className=" relative block    w-80 rounded-xl border justify-between  border-primary-300 bg-white px-6 py-3 text-gray-900 focus:border-primary-500 focus:outline-none focus:ring-primary-500"
+          className="relative block w-80 rounded-xl border justify-between border-primary-300 bg-white px-6 py-3 text-gray-900 focus:border-primary-500 focus:outline-none focus:ring-primary-500"
           placeholderText="Select date start"
         />
         <svg
-          className="absolute right-4  top-4  left-1  h-4 w-4 text-gray-500 dark:text-gray-400 "
+          className="absolute right-4 top-4 left-1 h-4 w-4 text-gray-500 dark:text-gray-400"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           fill="currentColor"
@@ -47,7 +45,8 @@ const CustomDateRangePicker = () => {
         </svg>
       </div>
 
-      <div className=" relative flex-1 ">
+      {/* End Date Picker */}
+      <div className="relative flex-1 h-14 w-auto">
         <DatePicker
           selected={endDate}
           onChange={handleEndDateChange}
@@ -56,11 +55,11 @@ const CustomDateRangePicker = () => {
           endDate={endDate}
           minDate={startDate}
           dateFormat="yyyy-MM-dd"
-          className=" relative block    w-80 rounded-xl border justify-between border-primary-300 bg-white px-6 py-3 text-gray-900 focus:border-primary-500 focus:outline-none focus:ring-primary-500"
+          className="relative block w-80 rounded-xl border justify-between border-primary-300 bg-white px-6 py-3 text-gray-900 focus:border-primary-500 focus:outline-none focus:ring-primary-500"
           placeholderText="Select date end"
-          />
-       <svg
-          className="absolute right-4  top-4  left-1  h-4 w-4 text-gray-500 dark:text-gray-400 "
+        />
+        <svg
+          className="absolute right-4 top-4 left-1 h-4 w-4 text-gray-500 dark:text-gray-400"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           fill="currentColor"
@@ -70,21 +69,21 @@ const CustomDateRangePicker = () => {
         </svg>
       </div>
 
-      <div className="relative flex-1">
+      {/* Number Input */}
+      <div className="relative flex-1 h-14 w-auto">
         <div className="flex items-center">
           <input
             type="number"
             id="numberInput"
             value={numberInput}
             onChange={handleNumberInputChange}
-            className=" relative block    w-80 rounded-xl border justify-between border-primary-300 bg-white px-6 py-3 text-gray-900 focus:border-primary-500 focus:outline-none focus:ring-primary-500"
+            className="relative block w-80 rounded-xl border justify-between border-primary-300 bg-white px-6 py-3 text-gray-900 focus:border-primary-500 focus:outline-none focus:ring-primary-500"
           />
-          <div className="pointer-events-none absolute inset-x-0 right-0 flex items-center pr-3">
-          </div>
+          <div className="pointer-events-none absolute inset-x-0 right-0 flex items-center pr-3"></div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CustomDateRangePicker
+export default CustomDateRangePicker;
