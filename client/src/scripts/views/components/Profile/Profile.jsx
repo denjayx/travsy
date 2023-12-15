@@ -42,6 +42,14 @@ const Profile = ({ user }) => {
           </NavLink>
         </li>
         <li>
+          <NavLink
+            className="font-medium text-primary-700"
+            to={'/dashboard/packages'}
+          >
+            Dashboard
+          </NavLink>
+        </li>
+        <li>
           <Button variant="text" className="text-red/75" onClick={handleLogout}>
             Keluar
           </Button>

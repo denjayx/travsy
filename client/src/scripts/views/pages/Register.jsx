@@ -2,10 +2,11 @@ import { useState } from 'react'
 import InputField from '../components/Input/InputField'
 import { register } from '../../data/api'
 import Button from '../components/Buttons/Button'
-import { useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import InputSelect from '../components/Input/InputSelect'
 
 const Register = () => {
+  const { state } = useLocation()
   const [formData, setFormData] = useState({
     email: '',
     username: '',
@@ -52,8 +53,14 @@ const Register = () => {
   }
 
   const roleOptions = [
-    { label: 'Tourist', value: 'tourist' },
-    { label: 'Tour Guide', value: 'tour guide' },
+    {
+      label: state.role === 'tourist' ? 'Tourist' : 'Tour Guide',
+      value: state.role === 'tourist' ? 'tourist' : 'tour guide',
+    },
+    {
+      label: state.role !== 'tourist' ? 'Tourist' : 'Tour Guide',
+      value: state.role !== 'tourist' ? 'tourist' : 'tour guide',
+    },
   ]
 
   return (
@@ -98,9 +105,9 @@ const Register = () => {
         </Button>
       </form>
       <label className="block text-center text-base text-primary-950 ">
-        Daftar jadi Tour Guide{' '}
+        Masuk ke akun{' '}
         <span className="font-semibold  text-primary-700 underline underline-offset-2">
-          <a href="#">disini</a>
+          <Link to={'/login'}>disini</Link>
         </span>
       </label>
     </section>

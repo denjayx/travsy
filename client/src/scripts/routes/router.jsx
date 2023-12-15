@@ -2,6 +2,7 @@ import {
   createBrowserRouter,
   Route,
   createRoutesFromElements,
+  Navigate,
 } from 'react-router-dom'
 import RootLayout from '../views/layouts/RootLayout'
 import TourPackage from '../views/pages/TourPackage'
@@ -28,9 +29,18 @@ const router = createBrowserRouter(
       <Route element={<Root />}>
         <Route path="/" element={<RootLayout />}>
           <Route index element={<Homepage />}></Route>
-          <Route path="/package" element={<TourPackage />}></Route>
-          <Route path="/history" element={<PackageHistory />}></Route>
-          <Route path="/packages/:id" element={<Detail />}></Route>
+          <Route path="packages" element={<TourPackage />}></Route>
+          <Route path="packages/:id" element={<Detail />}></Route>
+          <Route path="history" element={<PackageHistory />}></Route>
+          <Route path="dashboard" element={<Dashboard />}>
+            <Route index element={<Navigate to={'packages'} />}></Route>
+            <Route path="packages" element={<Packages />}></Route>
+            <Route path="packages/add" element={<AddPackage />}></Route>
+            <Route path="packages/:id" element={<PackagesDetail />}></Route>
+            <Route path="orders" element={<Orders />}></Route>
+            <Route path="orders/add" element={<AddOrder />}></Route>
+            <Route path="orders/:id" element={<DetailOrder />}></Route>
+          </Route>
         </Route>
         <Route element={<Auth />}>
           <Route path="/login" element={<Login />}></Route>
@@ -38,18 +48,6 @@ const router = createBrowserRouter(
         </Route>
       </Route>
       <Route element={<Dashboard />}>
-        <Route path="/dashboard/packages" element={<Packages />}></Route>
-        <Route path="/dashboard/packages/add" element={<AddPackage />}></Route>
-        <Route
-          path="/dashboard/packages/details"
-          element={<PackagesDetail />}
-        ></Route>
-        <Route path="/dashboard/orders" element={<Orders />}></Route>
-        <Route path="/dashboard/orders/add" element={<AddOrder />}></Route>
-        <Route
-          path="/dashboard/orders/details"
-          element={<DetailOrder />}
-        ></Route>
         {/* <Route path="/detail-packages" element={<DetailPackages />}></Route>
         <Route path="/add-packages" element={<AddPackages />}></Route>
         <Route path="/bookings" element={<Bookings />}></Route>
