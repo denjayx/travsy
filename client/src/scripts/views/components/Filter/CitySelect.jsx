@@ -73,11 +73,11 @@ const CitySelect = () => {
       }}
     >
       <div className="relative">
-        <label className="block text-sm font-bold font-medium">Kota</label>
+        <label className=" block text-sm font-bold font-bold">Kota</label>
         <Select
-          className={`rounded-md border ${
-            selectedCity ? 'border-b border-gray-300' : ''
-          } p-2 focus:border-primary-500 focus:outline-none focus:ring focus:ring-primary-200 focus:ring-opacity-50`}
+          className={`rounded-md border w-60 h-10 ${
+            selectedCity ? 'border-b border-gray-300 ' : ''
+          } p-2 focus:border-primary-500 focus:outline-none focus:ring focus:ring-primary-200 focus:ring-opacity-50 w-60 h-10`}
           value={selectedCity}
           onChange={handleCityChange}
           options={baliCities}
@@ -86,7 +86,7 @@ const CitySelect = () => {
       </div>
 
       <div className="relative">
-        <label className="block text-sm font-bold font-medium">
+        <label className="block text-sm font-bold font-bold">
           Jumlah Destinasi
         </label>
         <input
@@ -94,12 +94,12 @@ const CitySelect = () => {
           value={numDestinations}
           onChange={handleNumDestinationsChange}
           placeholder="Enter the number of destinations"
-          className="rounded-md border border-gray-300 p-2 focus:border-primary-500 focus:outline-none focus:ring focus:ring-primary-200 focus:ring-opacity-50"
+          className="rounded-md border border-gray-300 p-2 focus:border-primary-500 focus:outline-none focus:ring focus:ring-primary-200 focus:ring-opacity-50 w-60 h-10"
         />
       </div>
 
       <div className="relative">
-        <label className="block text-sm font-bold font-medium">
+        <label className="block text-sm font-bold font-bold">
           Harga Minimal
         </label>
         <input
@@ -107,12 +107,12 @@ const CitySelect = () => {
           value={minPrice}
           onChange={handleMinPriceChange}
           placeholder="Rp."
-          className="rounded-md border border-gray-300 p-2 focus:border-primary-500 focus:outline-none focus:ring focus:ring-primary-200 focus:ring-opacity-50"
+          className="rounded-md border border-gray-300 p-2 focus:border-primary-500 focus:outline-none focus:ring focus:ring-primary-200 focus:ring-opacity-50 w-60 h-10"
         />
       </div>
 
       <div className="relative">
-        <label className="block text-sm font-bold font-medium">
+        <label className="block text-sm font-bold font-bold">
           Harga Maksimal
         </label>
         <input
@@ -120,7 +120,7 @@ const CitySelect = () => {
           value={maxPrice}
           onChange={handleMaxPriceChange}
           placeholder="Rp."
-          className="rounded-md border border-gray-300 p-2 focus:border-primary-500 focus:outline-none focus:ring focus:ring-primary-200 focus:ring-opacity-50"
+          className="rounded-md border border-gray-300 p-2 focus:border-primary-500 focus:outline-none focus:ring focus:ring-primary-200 focus:ring-opacity-50 w-60 h-10"
         />
       </div>
     </div>
