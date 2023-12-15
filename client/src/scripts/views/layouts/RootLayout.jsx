@@ -11,7 +11,7 @@ export default function RootLayout() {
       </header>
 
       <main className="min-h-screen">
-        <Outlet />
+        <Outlet context={{ user }} />
       </main>
 
       <footer className="mt-auto w-full bg-primary-500">

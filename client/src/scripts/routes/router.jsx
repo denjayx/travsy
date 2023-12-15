@@ -2,7 +2,6 @@ import {
   createBrowserRouter,
   Route,
   createRoutesFromElements,
-  Navigate,
 } from 'react-router-dom'
 import RootLayout from '../views/layouts/RootLayout'
 import TourPackage from '../views/pages/TourPackage'
@@ -32,7 +31,6 @@ const router = createBrowserRouter(
           <Route path="packages/:id" element={<Detail />}></Route>
           <Route path="history" element={<PackageHistory />}></Route>
           <Route path="dashboard" element={<Dashboard />}>
-            <Route index element={<Navigate to={'packages'} />}></Route>
             <Route path="packages" element={<Packages />}></Route>
             <Route path="packages/add" element={<AddPackage />}></Route>
             <Route path="packages/:id" element={<PackagesDetail />}></Route>
