@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { FaAngleDown } from 'react-icons/fa6'
 
 /* eslint-disable react/prop-types */
 const InputSelect = ({ label, options, onSelect }) => {
@@ -19,7 +18,7 @@ const InputSelect = ({ label, options, onSelect }) => {
       <label>{label}</label>
       <div className="relative">
         <select
-          className="focus:ring-violet-300 w-full appearance-none rounded-lg border px-4 py-3 outline-none focus:outline-none focus:ring "
+          className="w-full rounded-lg border border-gray-200 px-4 py-3 outline-none focus:outline-none focus:ring focus:ring-primary-300"
           value={selectedValue}
           onChange={handleChange}
         >
@@ -29,7 +28,6 @@ const InputSelect = ({ label, options, onSelect }) => {
             </option>
           ))}
         </select>
-        <FaAngleDown className="absolute right-4 top-4 text-gray-600" />
       </div>
     </div>
   )

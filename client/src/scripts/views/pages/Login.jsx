@@ -54,8 +54,8 @@ export default function Login() {
         />
         <button
           type="submit"
-          className="focus:ring-blue-300 container my-4 rounded-3xl bg-primary-500 px-6 py-3
-          text-center text-base font-medium text-white hover:bg-primary-600 focus:outline-none focus:ring-4"
+          className="container my-4 rounded-3xl bg-primary-500 px-6 py-3 text-center
+          text-base font-medium text-white hover:bg-primary-600 focus:outline-none focus:ring-4 focus:ring-blue-300"
         >
           Masuk
         </button>

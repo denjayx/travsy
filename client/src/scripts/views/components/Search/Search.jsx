@@ -1,6 +1,18 @@
+import { useState } from 'react'
 import Button from '../Buttons/Button'
 
 const Search = () => {
+  const [searchData, setSearchData] = useState([])
+
+  const handleSearchChange = (event) => {
+    setSearchData(event.target.value)
+  }
+
+  const handleSearchSubmit = (event) => {
+    event.preventDefault()
+    console.log(searchData)
+  }
+
   return (
     <section className="container flex items-center gap-2">
       <label htmlFor="simple-search" className="sr-only">
@@ -15,7 +27,12 @@ const Search = () => {
           required
         />
       </div>
-      <Button type="submit" variant="primary" className="rounded-xl">
+      <Button
+        onChange={handleSearchChange}
+        onSubmit={handleSearchSubmit}
+        variant="primary"
+        className="rounded-xl"
+      >
         Cari
       </Button>
     </section>
