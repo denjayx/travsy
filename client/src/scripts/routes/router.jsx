@@ -20,6 +20,7 @@ import AddOrder from '../views/pages/Dashboard/AddOrder'
 import DetailOrder from '../views/pages/Dashboard/DetailOrder'
 import Root from '../views/layouts/Root'
 import Profile from '../views/pages/Dashboard/Profile'
+import UpdateProfile from '../views/pages/Dashboard/UpdateProfile'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -54,6 +55,7 @@ const router = createBrowserRouter(
         <Route path="/bookings" element={<Bookings />}></Route>
         <Route path="/confirmation" element={<Confirmation />}></Route> */}
         <Route path="/profile" element={<Profile />}></Route>
+        <Route path="/update-profile" element={<UpdateProfile />}></Route>
       </Route>
     </>,
   ),
