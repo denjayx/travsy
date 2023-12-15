@@ -49,7 +49,7 @@ export default function Navbar({ user }) {
           </li>
           <li>
             <NavLink
-              to="/package"
+              to="/packages"
               className="block rounded-xl px-6 py-3 lg:px-2"
             >
               Paket Wisata
