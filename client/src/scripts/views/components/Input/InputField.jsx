@@ -18,7 +18,7 @@ const InputField = ({
     setShowPassword(!showPassword)
   }
   const defaultClassName =
-    'border py-3 rounded-lg px-4 w-full outline-none focus:outline-none focus:ring focus:ring-violet-300 '
+    'border py-3 rounded-lg px-4 w-full border-gray-200 outline-none focus:outline-none focus:ring focus:ring-primary-300 '
   const isPassword = type === 'password'
   return (
     <div className="space-y-2">
@@ -40,9 +40,9 @@ const InputField = ({
             onClick={handleShowPassword}
           >
             {showPassword ? (
-              <HiOutlineEye size={22} />
+              <HiOutlineEye size={22} className="text-gray-400" />
             ) : (
-              <HiOutlineEyeOff size={22} />
+              <HiOutlineEyeOff size={22} className="text-gray-400" />
             )}
           </button>
         )}
