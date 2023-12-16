@@ -97,7 +97,7 @@ export const login = async ({ email, password }) => {
     return user
   } catch (error) {
     console.error('Error fetching login:', error)
-    throw error
+    throw new Error(error.response.data.message)
   }
 }
 
@@ -160,10 +160,10 @@ export const filterPackages = async (
       },
     })
 
-    return response.data.data // Sesuaikan ini sesuai dengan format respons yang sebenarnya
+    return response.data.data 
   } catch (error) {
     console.error('Error fetching packages:', error)
-    throw error // Bisa dihapus jika tidak perlu dilemparkan ke luar
+    throw error
   }
 }
 

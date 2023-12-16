@@ -42,7 +42,6 @@ const Register = () => {
       setPostData(response)
       navigate('/login')
     } catch (error) {
-      console.log('Error registering user:', error.message)
       setErrorMessage(error.message)
     }
   }

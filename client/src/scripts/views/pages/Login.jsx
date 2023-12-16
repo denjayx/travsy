@@ -2,10 +2,12 @@ import { useState } from 'react'
 import { Link, useNavigate, useOutletContext } from 'react-router-dom'
 import { login } from '../../data/api'
 import InputField from '../components/Input/InputField'
+import { IoIosAlert } from 'react-icons/io'
 
 export default function Login() {
   const { setUser } = useOutletContext()
   const navigate = useNavigate()
+  const [errorMessage, setErrorMessage] = useState(null)
 
   const [formData, setFormData] = useState({
     email: '',
@@ -19,14 +21,18 @@ export default function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    const user = await login({
-      email: formData.email,
-      password: formData.password,
-    })
-    if (user) {
-      localStorage.setItem('token', user.token)
-      setUser(user)
-      navigate('/')
+    try {
+      const user = await login({
+        email: formData.email,
+        password: formData.password,
+      })
+      if (user) {
+        localStorage.setItem('token', user.token)
+        setUser(user)
+        navigate('/')
+      }
+    } catch (error) {
+      setErrorMessage(error.message)
     }
   }
 
@@ -52,6 +58,20 @@ export default function Login() {
           placeholder="************"
           onChange={handleChange}
         />
+        {errorMessage && (
+          <div
+            className="text-red-800 bg-red-50 mt-4 rounded-lg p-4"
+            role="alert"
+          >
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center">
+                <IoIosAlert size={18} className="mr-2" />
+                <span className="font-medium">Ups! Ada yang salah</span>
+              </div>
+              <p>{errorMessage}</p>
+            </div>
+          </div>
+        )}
         <button
           type="submit"
           className="focus:ring-blue-300 container my-4 rounded-3xl bg-primary-500 px-6 py-3
@@ -59,7 +79,6 @@ export default function Login() {
         >
           Masuk
         </button>
-
         <label className="mt-3 block text-center text-base text-primary-950 ">
           Belum punya akun?{' '}
           <span className="font-semibold  text-primary-700 underline underline-offset-2">
