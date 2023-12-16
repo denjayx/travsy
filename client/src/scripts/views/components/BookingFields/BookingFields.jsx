@@ -1,7 +1,12 @@
-import InputDate from '../Input/InputDate'
+import { useState } from 'react'
 import Search from '../Search/Search'
+import DatePicker from 'react-datepicker'
+import InputField from '../Input/InputField'
 
 const BookingFields = () => {
+  const [startDate, setStartDate] = useState(null)
+  const [endDate, setEndDate] = useState(null)
+
   return (
     <section className="space-y-4">
       <div className="container">
@@ -10,19 +15,36 @@ const BookingFields = () => {
           <span className="ml-2 text-primary-700">Bersama Travsy</span>
         </h1>
       </div>
-      <form action="" className="flex flex-col gap-3">
-        <div className="container flex w-full gap-3">
-          <InputDate
-            limitMinDate={new Date()}
-            placeholder="Mulai Kapan Kamu Pergi?"
-          />
-          <InputDate
-            limitMinDate={new Date()}
-            placeholder="Sampai Kapan Kamu Pergi?"
-          />
+      <div className="flex flex-col gap-3">
+        <div className="container flex w-full items-center justify-center gap-2">
+          <div className="flex w-full items-center gap-2">
+            <DatePicker
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+              dateFormat="dd/MM/yyyy"
+              placeholderText="Mulai kapan kamu pergi?"
+              className="w-full rounded-lg border px-4 py-3 outline-none focus:outline-none focus:ring-1 focus:ring-primary-300 "
+              wrapperClassName="w-full"
+            />
+            <DatePicker
+              selected={endDate}
+              onChange={(date) => setEndDate(date)}
+              minDate={startDate}
+              dateFormat="dd/MM/yyyy"
+              placeholderText="Sampai kapan kamu pergi?"
+              className="w-full rounded-lg border px-4 py-3 outline-none focus:outline-none focus:ring-1 focus:ring-primary-300 "
+              wrapperClassName="w-full"
+            />
+            <InputField
+              type="number"
+              placeholder="Jumlah Tiket"
+              className="w-full"
+              showCounter
+            />
+          </div>
         </div>
         <Search />
-      </form>
+      </div>
     </section>
   )
 }

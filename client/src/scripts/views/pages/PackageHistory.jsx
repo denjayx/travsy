@@ -1,3 +1,3 @@
 export default function PackageHistory() {
-  return <div>PackageHistory</div>
+  return <div className="item container mt-32 ">packagehistory</div>
 }

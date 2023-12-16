@@ -1,8 +1,9 @@
+/* eslint-disable react/prop-types */
 import { useState } from 'react'
 import Button from '../Buttons/Button'
 
-const Search = () => {
-  const [searchData, setSearchData] = useState([])
+const Search = ({ onSearch }) => {
+  const [searchData, setSearchData] = useState('')
 
   const handleSearchChange = (event) => {
     setSearchData(event.target.value)
@@ -10,7 +11,7 @@ const Search = () => {
 
   const handleSearchSubmit = (event) => {
     event.preventDefault()
-    console.log(searchData)
+    onSearch(searchData)
   }
 
   return (
@@ -22,13 +23,13 @@ const Search = () => {
         <input
           type="text"
           id="simple-search"
-          className="block w-full rounded-xl border border-primary-300 bg-white px-6 py-3 text-gray-900 focus:border-primary-500 focus:outline-none focus:ring-primary-500"
+          className="block w-full rounded-xl border border-primary-300 bg-white px-6 py-3 text-gray-900 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-300"
           placeholder="Lagi pingin liburan kemana nih?"
+          onChange={handleSearchChange}
           required
         />
       </div>
       <Button
-        onChange={handleSearchChange}
         onSubmit={handleSearchSubmit}
         variant="primary"
         className="rounded-xl"

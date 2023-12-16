@@ -16,9 +16,9 @@ const SideBarFilter = ({ className }) => {
       </div>
       <div className="flex h-fit flex-col gap-4 rounded-2xl bg-white p-6">
         <InputSelect label="Kota" options={cityOptions} />
-        <InputField label="Jumlah destinasi" placeholder="0" />
-        <InputField label="Harga Minimal" placeholder="Rp. " />
-        <InputField label="Harga Maksimal" placeholder="Rp. " />
+        <InputField label="Jumlah destinasi" type="number" placeholder="0" />
+        <InputField label="Harga Minimal" type="number" placeholder="Rp. " />
+        <InputField label="Harga Maksimal" type="number" placeholder="Rp. " />
       </div>
     </section>
   )

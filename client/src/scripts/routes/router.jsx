@@ -12,6 +12,7 @@ import Homepage from '../views/pages/Homepage'
 import Auth from '../views/layouts/Auth'
 import Detail from '../views/pages/Detail'
 import Root from '../views/layouts/Root'
+import OrderDetails from '../views/pages/OrderDetail'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -22,6 +23,7 @@ const router = createBrowserRouter(
           <Route path="/package" element={<TourPackage />}></Route>
           <Route path="/history" element={<PackageHistory />}></Route>
           <Route path="/packages/:id" element={<Detail />}></Route>
+          <Route path="/order" element={<OrderDetails />}></Route>
         </Route>
         <Route element={<Auth />}>
           <Route path="/login" element={<Login />}></Route>
