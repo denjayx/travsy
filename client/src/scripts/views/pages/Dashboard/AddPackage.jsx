@@ -1,6 +1,23 @@
+import { useRef } from 'react'
 import { NavLink } from 'react-router-dom'
+import uploadImgIcon from '../../../../assets/upload-img.svg'
 
 const AddPackage = () => {
+  const selectedImage = useRef()
+  const inputImage = useRef()
+
+  const displayImage = () => {
+    if (inputImage.current.files && inputImage.current.files[0]) {
+      const reader = new FileReader()
+
+      reader.onload = (e) => {
+        selectedImage.current.src = e.target.result
+      }
+
+      reader.readAsDataURL(inputImage.current.files[0])
+    }
+  }
+
   return (
     <>
       {/* breadcrumb */}
@@ -80,7 +97,7 @@ const AddPackage = () => {
               className="mb-2 block text-sm font-bold text-gray-700"
               htmlFor="namaPaket"
             >
-              Package Name
+              Nama Paket
             </label>
             <input
               className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
@@ -94,7 +111,7 @@ const AddPackage = () => {
               className="mb-2 block text-sm font-bold text-gray-700"
               htmlFor="deskripsiPaket"
             >
-              Deskripsi Package
+              Deskripsi Paket
             </label>
             <input
               className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
@@ -125,38 +142,25 @@ const AddPackage = () => {
               Gambar Thumbnail
             </label>
             <div className="flex items-start justify-start">
-              <label className="hover:bg-blue flex w-64 cursor-pointer flex-col items-center rounded-lg border px-4 py-6 uppercase tracking-wide shadow-lg">
-                <svg
-                  className="h-6 w-6 text-white dark:text-gray-800"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 20 18"
-                >
-                  <path
-                    fill="currentColor"
-                    d="M13 5.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0ZM7.565 7.423 4.5 14h11.518l-2.516-3.71L11 13 7.565 7.423Z"
-                  />
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M18 1H2a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z"
-                  />
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M13 5.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0ZM7.565 7.423 4.5 14h11.518l-2.516-3.71L11 13 7.565 7.423Z"
-                  />
-                </svg>
-                <span className="mt-2 text-base leading-normal">
-                  pilih gambar
-                </span>
-                <input type="file" className="hidden" id="image" />
+              <label
+                className="hover:bg-blue flex w-64 cursor-pointer flex-col items-center rounded-lg border px-4 py-6 tracking-wide shadow-lg"
+                htmlFor="selectImage"
+              >
+                <img
+                  ref={selectedImage}
+                  src={uploadImgIcon}
+                  alt="selectedImage"
+                  className="w-48"
+                />
+                Upload Image
               </label>
+              <input
+                ref={inputImage}
+                onChange={displayImage}
+                type="file"
+                className="hidden"
+                id="selectImage"
+              />
             </div>
           </div>
           <div className="mb-4">
@@ -208,48 +212,6 @@ const AddPackage = () => {
                 <option value="surabaya">Surabaya</option>
                 <option value="bandung">Bandung</option>
               </select>
-            </div>
-          </div>
-          <div className="mb-4">
-            <label
-              className="mb-2 block text-sm font-bold text-gray-700"
-              htmlFor="thumbnail"
-            >
-              Gambar
-            </label>
-            <div className="flex items-start justify-start">
-              <label className="hover:bg-blue aspect-w-1 aspect-h-1 flex w-64 cursor-pointer flex-col items-center rounded-lg border px-4 py-6 uppercase tracking-wide shadow-lg">
-                <svg
-                  className="h-6 w-6 text-white dark:text-gray-800"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 20 18"
-                >
-                  <path
-                    fill="currentColor"
-                    d="M13 5.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0ZM7.565 7.423 4.5 14h11.518l-2.516-3.71L11 13 7.565 7.423Z"
-                  />
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M18 1H2a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z"
-                  />
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M13 5.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0ZM7.565 7.423 4.5 14h11.518l-2.516-3.71L11 13 7.565 7.423Z"
-                  />
-                </svg>
-                <span className="mt-2 text-base leading-normal">
-                  pilih gambar
-                </span>
-                <input type="file" className="hidden" id="image" />
-              </label>
             </div>
           </div>
           <div className="mb-4">
