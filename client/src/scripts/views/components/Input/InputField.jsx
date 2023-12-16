@@ -106,7 +106,7 @@ const InputField = ({
 
   return (
     <div className="w-full">
-      <label>{label}</label>
+      <label className="text-primary-950">{label}</label>
       <div className="relative w-full">{generateInputField(type)}</div>
     </div>
   )

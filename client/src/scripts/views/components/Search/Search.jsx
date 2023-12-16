@@ -1,17 +1,23 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import { useState } from 'react'
 import Button from '../Buttons/Button'
+import { useEffect } from 'react'
 
-const Search = ({ onSearch }) => {
+const Search = ({ onSearchChange }) => {
   const [searchData, setSearchData] = useState('')
 
+  useEffect(() => {
+    onSearchChange(searchData)
+  }, [searchData])
+
   const handleSearchChange = (event) => {
-    setSearchData(event.target.value)
+    const value = event.target.value
+    setSearchData(value)
   }
 
   const handleSearchSubmit = (event) => {
     event.preventDefault()
-    onSearch(searchData)
   }
 
   return (

@@ -12,16 +12,6 @@ export const getPopularPackages = async () => {
   }
 }
 
-export const getPackageList = async () => {
-  try {
-    const response = axios(`${BASE_URL}/packages`)
-    return response.data.data
-  } catch (error) {
-    console.error('Error fetching package list:', error)
-    throw error
-  }
-}
-
 export const packageDetail = async (id) => {
   try {
     const response = axios(`${BASE_URL}/packages/${id}`)
@@ -138,54 +128,13 @@ export const register = async ({ user, account }) => {
   }
 }
 
-export const filterPackages = async (
-  search,
-  city,
-  pmin,
-  pmax,
-  ndest,
-  sdate,
-  edate,
+export const getPackageList = async (
+  queryParams
 ) => {
   try {
     const response = await axios.get(`${BASE_URL}/packages`, {
       params: {
-        search,
-        city,
-        pmin,
-        pmax,
-        ndest,
-        sdate,
-        edate,
-      },
-    })
-
-    return response.data.data 
-  } catch (error) {
-    console.error('Error fetching packages:', error)
-    throw error
-  }
-}
-
-export const filtrePackages = async (
-  search,
-  city,
-  pmin,
-  pmax,
-  ndest,
-  sdate,
-  edate,
-) => {
-  try {
-    const response = await axios.get(`${BASE_URL}/packages`, {
-      params: {
-        search,
-        city,
-        pmin,
-        pmax,
-        ndest,
-        sdate,
-        edate,
+        ...queryParams
       },
     })
     return response.data.data
