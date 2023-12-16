@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { NavLink, useOutletContext } from 'react-router-dom'
 import uploadImgIcon from '../../../../assets/upload-img.svg'
 import InputField from '../../components/Input/InputField'
+import DestinationInput from '../../components/Details/DestinationInput'
 
 const AddPackage = () => {
   const selectedImage = useRef()
@@ -28,7 +29,9 @@ const AddPackage = () => {
     }
   }
 
-  useEffect(() => {}, [])
+  useEffect(() => {
+    console.log(packageData)
+  }, [packageData])
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -125,20 +128,15 @@ const AddPackage = () => {
             placeholder="masukkan deskripsi paket"
             onChange={handleChange}
           />
-          <div className="mb-4">
-            <label
-              className="mb-2 block text-sm font-bold text-gray-700"
-              htmlFor="price"
-            >
-              Harga Paket Per Orang
-            </label>
-            <input
-              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-              id="username"
-              type="number"
-              placeholder="harga paket nya yang per orang"
-            ></input>
-          </div>
+          <InputField
+            type="number"
+            showCounter
+            name="serviceDuration"
+            label="Durasi Layanan"
+            value={packageData.serviceDuration}
+            placeholder="0 hari"
+            onChange={handleChange}
+          />
           <div className="mb-4">
             <label
               className="mb-2 block text-sm font-bold text-gray-700"
@@ -167,73 +165,6 @@ const AddPackage = () => {
                 id="selectImage"
               />
             </div>
-          </div>
-          <div className="mb-4">
-            <label
-              className="mb-2 block text-sm font-bold text-gray-700"
-              htmlFor="deskripsi"
-            >
-              Durasi Layanan
-            </label>
-            <input
-              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-              id="durasiLayanan"
-              type="number"
-              placeholder="Berapa Hari"
-            ></input>
-          </div>
-          <div className="mb-4">
-            <label
-              className="mb-2 block text-sm font-bold text-gray-700"
-              htmlFor="deskripsi"
-            >
-              Nama Destinasi
-            </label>
-            <input
-              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-              id="namaDestinasi"
-              type="text"
-              placeholder="Nama destinasi"
-            ></input>
-          </div>
-          <div className="mb-4">
-            <label
-              className="mb-2 block text-sm font-bold text-gray-700"
-              htmlFor="deskripsi"
-            >
-              Kota
-            </label>
-            <div className="relative">
-              <select
-                id="kota"
-                name="kota"
-                className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight 
-                text-gray-700 shadow focus:outline-none"
-              >
-                <option value="" disabled selected>
-                  Pilih kota
-                </option>
-                <option value="jakarta">Jakarta</option>
-                <option value="surabaya">Surabaya</option>
-                <option value="bandung">Bandung</option>
-              </select>
-            </div>
-          </div>
-          <div className="mb-4">
-            <label
-              className="mb-2 block text-sm font-bold text-gray-700"
-              htmlFor="deskripsi"
-            >
-              Deskripsi
-            </label>
-            <textarea
-              className="focus:shadow-outline w-full appearance-none 
-              rounded border px-3 py-2 leading-tight text-gray-700 shadow 
-              focus:outline-none"
-              id="deskripsi"
-              rows="4"
-              placeholder="masukan desksripsi"
-            ></textarea>
           </div>
           <div className="flex justify-between">
             <NavLink to="/dashboard/packages">

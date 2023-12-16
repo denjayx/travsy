@@ -40,7 +40,17 @@ const InputField = ({
 
   const generateInputField = (type) => {
     if (type === 'textArea') {
-      return <textarea>{value}</textarea>
+      return (
+        <textarea
+          className={`${defaultClassName} ${className}`}
+          name={name}
+          placeholder={placeholder}
+          onChange={onChange}
+          {...props}
+        >
+          {value}
+        </textarea>
+      )
     } else {
       return (
         <>
@@ -63,12 +73,14 @@ const InputField = ({
             <section className="flex">
               <button
                 className="absolute right-11 top-2.5 h-6 rounded-md bg-red/5 px-2 py-1"
+                type="button"
                 onClick={decrement}
               >
                 <FaMinus className="items-center text-red" size={15} />
               </button>
               <button
                 className="absolute right-2 top-2.5 h-6 rounded-md bg-primary-50 px-2 py-1"
+                type="button"
                 onClick={increment}
               >
                 <FaPlus className="text-primary-800" size={15} />

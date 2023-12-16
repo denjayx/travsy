@@ -2,7 +2,7 @@ import { FaAngleDown } from 'react-icons/fa'
 import { useState } from 'react'
 
 /* eslint-disable react/prop-types */
-const InputSelect = ({ label, options, onSelect }) => {
+const InputSelect = ({ label, options, onSelect, name }) => {
   const [selectedValue, setSelectedValue] = useState('')
 
   const handleChange = (event) => {
@@ -10,7 +10,7 @@ const InputSelect = ({ label, options, onSelect }) => {
     setSelectedValue(value)
 
     if (onSelect) {
-      onSelect(value)
+      onSelect(name, value)
     }
   }
 
@@ -19,7 +19,8 @@ const InputSelect = ({ label, options, onSelect }) => {
       <label>{label}</label>
       <div className="relative">
         <select
-          className="w-full appearance-none rounded-lg border border-gray-200 px-4 py-3 outline-none focus:outline-none focus:ring focus:ring-primary-300"
+          name={name}
+          className="w-full cursor-pointer appearance-none rounded-lg border border-gray-200 px-4 py-3 outline-none focus:outline-none focus:ring focus:ring-primary-300"
           value={selectedValue}
           onChange={handleChange}
         >
