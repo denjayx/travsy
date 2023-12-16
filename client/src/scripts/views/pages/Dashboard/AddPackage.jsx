@@ -1,10 +1,20 @@
-import { useRef } from 'react'
-import { NavLink } from 'react-router-dom'
+import { useEffect, useRef, useState } from 'react'
+import { NavLink, useOutletContext } from 'react-router-dom'
 import uploadImgIcon from '../../../../assets/upload-img.svg'
+import InputField from '../../components/Input/InputField'
 
 const AddPackage = () => {
   const selectedImage = useRef()
   const inputImage = useRef()
+  const [packageData, setPackageData] = useState({
+    packageName: '',
+    thumbnail: '',
+    price: '',
+    description: '',
+    serviceDuration: '',
+    destinations: [],
+  })
+  const { user } = useOutletContext()
 
   const displayImage = () => {
     if (inputImage.current.files && inputImage.current.files[0]) {
@@ -16,6 +26,13 @@ const AddPackage = () => {
 
       reader.readAsDataURL(inputImage.current.files[0])
     }
+  }
+
+  useEffect(() => {}, [])
+
+  const handleChange = (event) => {
+    const { name, value } = event.target
+    setPackageData({ ...packageData, [name]: value })
   }
 
   return (
@@ -90,36 +107,24 @@ const AddPackage = () => {
       </nav>
 
       {/* form detail */}
-      <div className=" mt-8 ">
-        <form className="mb-4 rounded bg-white px-8 pb-8 pt-6 shadow-md">
-          <div className="mb-4">
-            <label
-              className="mb-2 block text-sm font-bold text-gray-700"
-              htmlFor="namaPaket"
-            >
-              Nama Paket
-            </label>
-            <input
-              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-              id="namaPaket"
-              type="text"
-              placeholder="masukan nama paket"
-            ></input>
-          </div>
-          <div className="mb-4">
-            <label
-              className="mb-2 block text-sm font-bold text-gray-700"
-              htmlFor="deskripsiPaket"
-            >
-              Deskripsi Paket
-            </label>
-            <input
-              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-              id="deskripsiPaket"
-              type="text"
-              placeholder="deskripsi paket"
-            ></input>
-          </div>
+      <div className="mt-8">
+        <form className="colum mb-4 flex flex-col gap-3 rounded bg-white px-8 pb-8 pt-6 shadow-md">
+          <InputField
+            type="text"
+            name="packageName"
+            label="Nama Paket"
+            value={packageData.packageName}
+            placeholder="masukkan nama paket"
+            onChange={handleChange}
+          />
+          <InputField
+            type="textArea"
+            name="description"
+            label="Deskripsi Paket"
+            value={packageData.description}
+            placeholder="masukkan deskripsi paket"
+            onChange={handleChange}
+          />
           <div className="mb-4">
             <label
               className="mb-2 block text-sm font-bold text-gray-700"

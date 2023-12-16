@@ -20,33 +20,54 @@ const InputField = ({
   const defaultClassName =
     'border py-3 rounded-lg px-4 w-full outline-none focus:outline-none focus:ring focus:ring-violet-300 '
   const isPassword = type === 'password'
-  return (
-    <div className="space-y-2">
-      <label>{label}</label>
-      <div className="relative">
-        <input
+
+  const generateInputField = (type) => {
+    if (type === 'textArea') {
+      return (
+        <textarea
           className={`${defaultClassName} ${className}`}
-          type={!isPassword ? type : showPassword ? 'text' : 'password'}
           name={name}
-          value={value}
           placeholder={placeholder}
           onChange={onChange}
           {...props}
-        />
-        {isPassword && (
-          <button
-            className="absolute inset-y-0 right-4 text-gray-600"
-            type="button"
-            onClick={handleShowPassword}
-          >
-            {showPassword ? (
-              <HiOutlineEye size={22} />
-            ) : (
-              <HiOutlineEyeOff size={22} />
-            )}
-          </button>
-        )}
-      </div>
+        >
+          {value}
+        </textarea>
+      )
+    } else {
+      return (
+        <>
+          <input
+            className={`${defaultClassName} ${className}`}
+            type={!isPassword ? type : showPassword ? 'text' : 'password'}
+            name={name}
+            value={value}
+            placeholder={placeholder}
+            onChange={onChange}
+            {...props}
+          />
+          {isPassword && (
+            <button
+              className="absolute inset-y-0 right-4 text-gray-600"
+              type="button"
+              onClick={handleShowPassword}
+            >
+              {showPassword ? (
+                <HiOutlineEye size={22} />
+              ) : (
+                <HiOutlineEyeOff size={22} />
+              )}
+            </button>
+          )}
+        </>
+      )
+    }
+  }
+
+  return (
+    <div className="space-y-2">
+      <label>{label}</label>
+      <div className="relative">{generateInputField(type)}</div>
     </div>
   )
 }
