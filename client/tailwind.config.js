@@ -11,7 +11,6 @@ export default {
         'btn': '2px 8px 12.7px 0px rgba(0, 152, 205, 0.15);',
       },
       colors: {
-        red: '#D70000',
         white: '#ffffff',
         primary: {
           50: '#f0faff',

@@ -29,7 +29,7 @@ const InputField = ({
   }
 
   const decrement = () => {
-    if (count > 1) {
+    if (count > 0) {
       setCount((prev) => prev - 1)
     }
   }
