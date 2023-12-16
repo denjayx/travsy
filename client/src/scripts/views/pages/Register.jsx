@@ -110,9 +110,9 @@ const Register = () => {
         </Button>
       </form>
       <label className="block text-center text-base text-primary-950 ">
-        Masuk ke akun{' '}
+        Sudah punya akun?{' '}
         <span className="font-semibold  text-primary-700 underline underline-offset-2">
-          <Link to={'/login'}>disini</Link>
+          <Link to={'/login'}>Masuk</Link>
         </span>
       </label>
     </section>
