@@ -20,7 +20,7 @@ const Hero = () => {
           <NavLink to="/package">
             <Button variant="secondary">Mulai Trip</Button>
           </NavLink>
-          <NavLink to="/register">
+          <NavLink to="/register" state={{ status: 'tour guide' }}>
             <Button variant="primary">Jadi Tourguide</Button>
           </NavLink>
         </div>

@@ -1,8 +1,6 @@
 /* eslint-disable react/prop-types */
 import 'react-datepicker/dist/react-datepicker.css'
-import moment from 'moment'
 import { Datepicker } from 'flowbite-react'
-import { useState } from 'react'
 
 const customTheme = {
   root: {
@@ -90,14 +88,13 @@ const customTheme = {
   },
 }
 
-const InputDate = ({ limitMaxDate, limitMinDate, placeholder }) => {
-  const [selectedDate, setSelectedDate] = useState(placeholder)
-
-  const handleDatePickerChange = (date) => {
-    const formatedDate = moment(date).format('YYYY-MM-DD')
-    setSelectedDate(formatedDate)
-  }
-
+const InputDate = ({
+  limitMaxDate,
+  limitMinDate,
+  placeholder,
+  selectedDate,
+  onSelectedDateChanged,
+}) => {
   return (
     <Datepicker
       theme={customTheme}
@@ -106,7 +103,8 @@ const InputDate = ({ limitMaxDate, limitMinDate, placeholder }) => {
       minDate={limitMinDate}
       autoHide={false}
       value={selectedDate}
-      onSelectedDateChanged={handleDatePickerChange}
+      onSelectedDateChanged={onSelectedDateChanged}
+      placeholder={placeholder}
     />
   )
 }

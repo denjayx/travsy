@@ -1,25 +1,22 @@
 import { useState, useEffect } from 'react'
-import CardImage from '../../../../assets/images/card-image.png'
 
 export default function DestinationDetails() {
-  const [openAccordion1, setOpenAccordion1] = useState(true)
-  const [openAccordion2, setOpenAccordion2] = useState(true)
-  const [openAccordion3, setOpenAccordion3] = useState(true)
+  const [openAccordion, setOpenAccordion] = useState(true)
 
   useEffect(() => {
-    // Menetapkan state agar hanya accordion pertama yang terbuka saat halaman direfresh
-    setOpenAccordion1(false)
-  }, []) // Efek ini hanya akan dijalankan sekali setelah render pertama
+    setOpenAccordion(false)
+  }, [])
 
   return (
     <div className="flex flex-col gap-6 py-7">
       <div className="py-2">
         <button
-          onClick={() => setOpenAccordion1(!openAccordion1)}
-          className=" flex w-full items-center justify-between rounded-2xl bg-white p-5 text-lg font-semibold  text-primary-900 border-2 border-primary-200"
+          onClick={() => setOpenAccordion(!openAccordion)}
+          className=" flex w-full items-center justify-between rounded-2xl border-2 border-primary-200 bg-white p-5  text-lg font-semibold text-primary-900"
+          type="button"
         >
           <span>Pura Tanah Lot</span>
-          {openAccordion1 ? (
+          {openAccordion ? (
             <svg
               className="h-[16px] w-[16px] text-primary-900 "
               aria-hidden="true"
@@ -54,8 +51,8 @@ export default function DestinationDetails() {
           )}
         </button>
         <div
-          className={`oveflow-hidden mt-4 flex flex-col gap-6 rounded-xl bg-white p-5 ${
-            openAccordion1 ? 'hidden' : 'block'
+          className={`oveflow-hidden flex flex-col gap-6 rounded-xl bg-white px-5 ${
+            openAccordion ? 'hidden' : 'block'
           }`}
         >
           <div className="flex flex-col gap-5 md:flex-row ">

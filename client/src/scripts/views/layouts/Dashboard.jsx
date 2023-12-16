@@ -1,8 +1,8 @@
 import { Outlet, useNavigate, useOutletContext } from 'react-router-dom'
-import Logo from '../../../assets/logo.svg'
+import Sidebar from '../pages/Dashboard/Sidebar'
 import { useEffect, useState } from 'react'
 
-const Auth = () => {
+const Dashboard = () => {
   const [loadContext, setLoadContext] = useState(true)
   const { user } = useOutletContext()
   const navigate = useNavigate()
@@ -15,22 +15,20 @@ const Auth = () => {
 
   useEffect(() => {
     if (!loadContext) {
-      if (user.token) {
+      if (!user.token) {
         navigate('/')
       }
     }
   }, [loadContext, user, navigate])
 
   return (
-    <section className="container flex h-screen items-center justify-center text-primary-950 max-xl:mt-24">
-      <div className="items-center justify-center space-y-4 rounded-3xl bg-white p-12 md:w-8/12 lg:w-6/12">
-        <div>
-          <img src={Logo} alt="Logo" />
-        </div>
+    <>
+      <div className="mt-32 p-4 sm:ml-64">
+        <Sidebar />
         <Outlet context={useOutletContext()} />
       </div>
-    </section>
+    </>
   )
 }
 
-export default Auth
+export default Dashboard

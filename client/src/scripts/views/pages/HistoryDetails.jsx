@@ -12,7 +12,7 @@ export default function HistoryDetails() {
     <div className="item container mt-32 flex flex-col gap-2 lg:flex-row ">
       <section
         id="packagehistory"
-        className=" container flex w-full flex-col items-center gap-7 rounded-xl bg-white p-6 "
+        className=" container mx-3 flex w-full flex-col items-center gap-7 rounded-xl bg-white p-6 "
       >
         <div className="w-full overflow-hidden rounded-lg md:rounded-l-lg ">
           <img
@@ -49,7 +49,7 @@ export default function HistoryDetails() {
         </section>
       </section>
 
-      <div className=" mx-3 flex h-full w-full lg:w-2/4 flex-col gap-1 rounded-xl bg-white p-6 ">
+      <div className=" mx-3 flex h-full w-2/4 flex-col gap-1 rounded-xl bg-white p-6 ">
         <h4 className="mb-2 text-md font-semibold text-primary-950">
           Data Pesanan
         </h4>

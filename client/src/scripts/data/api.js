@@ -27,7 +27,54 @@ export const packageDetail = async (id) => {
     throw error;
   }
 }
-export const login = async({ email, password }) => {
+
+export const getProfilePackages = async (token) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/profile/packages`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data.data
+  } catch (error) {
+    console.error('Error fetching package list:', error)
+    throw error
+  }
+}
+
+export const getProfilePackageDetail = async (token, id) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/profile/packages/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data.data
+  } catch (error) {
+    console.error('Error fetching package list:', error)
+    throw error
+  }
+}
+
+export const createPackage = async (token, packageData) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/profile/packages`,
+      packageData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    )
+    return response.data.data
+  } catch (error) {
+    console.error('Error fetching package list:', error)
+    throw error
+  }
+}
+
+export const login = async ({ email, password }) => {
   try {
     const response = await axios.post(`${BASE_URL}/login`, {
       email, password
