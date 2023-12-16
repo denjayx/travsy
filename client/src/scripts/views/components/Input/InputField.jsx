@@ -29,7 +29,7 @@ const InputField = ({
   }
 
   const decrement = () => {
-    if (count > 1) {
+    if (count > 0) {
       setCount((prev) => prev - 1)
     }
   }
@@ -69,6 +69,11 @@ const InputField = ({
             onChange={(e) => {
               if (type === 'number') {
                 setCount(parseInt(e.target.value, 10))
+                let newValue = parseInt(e.target.value, 10)
+                if (!showCounter && newValue < 0) {
+                  newValue = 0
+                }
+                setCount(newValue)
                 onChange(e)
               } else {
                 onChange(e)
@@ -79,11 +84,11 @@ const InputField = ({
           {type === 'number' && showCounter && (
             <section className="flex">
               <button
-                className="absolute right-11 top-2.5 h-6 rounded-md bg-red/5 px-2 py-1"
+                className="bg-red/5 absolute right-11 top-2.5 h-6 rounded-md px-2 py-1"
                 type="button"
                 onClick={decrement}
               >
-                <FaMinus className="items-center text-red" size={15} />
+                <FaMinus className="text-red items-center" size={15} />
               </button>
               <button
                 className="absolute right-2 top-2.5 h-6 rounded-md bg-primary-50 px-2 py-1"
@@ -114,7 +119,7 @@ const InputField = ({
 
   return (
     <div className="w-full">
-      <label>{label}</label>
+      <label className="text-primary-950">{label}</label>
       <div className="relative w-full">{generateInputField(type)}</div>
     </div>
   )
