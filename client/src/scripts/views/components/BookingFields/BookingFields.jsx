@@ -32,6 +32,7 @@ const BookingFields = ({ onDateChange }) => {
           <div className="flex w-full items-center gap-2">
             <DatePicker
               selected={startDate}
+              minDate={new Date()}
               onChange={(date) => setStartDate(date)}
               placeholderText="Mulai kapan kamu pergi?"
               className="w-full appearance-none rounded-lg border border-gray-200 px-4 py-3 outline-none focus:outline-none focus:ring-1 focus:ring-primary-300"
@@ -41,7 +42,7 @@ const BookingFields = ({ onDateChange }) => {
             <DatePicker
               selected={endDate}
               onChange={(date) => setEndDate(date)}
-              minDate={startDate}
+              minDate={startDate || new Date()}
               placeholderText="Sampai kapan kamu pergi?"
               className="w-full appearance-none rounded-lg border border-gray-200 px-4 py-3 outline-none focus:outline-none focus:ring-1 focus:ring-primary-300"
               wrapperClassName="w-full"
