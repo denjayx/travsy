@@ -60,18 +60,19 @@ export const getProfilePackageDetail = async (token, id) => {
   }
 }
 
-export const createPackage = async (token, packageData) => {
+export const createPackage = async (token, formData) => {
   try {
     const response = await axios.post(
       `${BASE_URL}/profile/packages`,
-      packageData,
+      formData,
       {
         headers: {
           Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
         },
       },
     )
-    return response.data.data
+    return response.data.message
   } catch (error) {
     console.error('Error fetching package list:', error)
     throw error

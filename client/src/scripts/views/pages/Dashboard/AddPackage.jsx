@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
-import { NavLink, useOutletContext } from 'react-router-dom'
+import { NavLink, useNavigate, useOutletContext } from 'react-router-dom'
 import uploadImgIcon from '../../../../assets/upload-img.svg'
 import InputField from '../../components/Input/InputField'
 import DestinationInput from '../../components/Details/DestinationInput'
 import InputImage from '../../components/Input/InputImage'
 import Button from '../../components/Buttons/Button'
+import { createPackage } from '../../../data/api'
+import ErrorAlert from '../../components/Alerts/ErrorAlert'
 
 const AddPackage = () => {
   const [packageData, setPackageData] = useState({
@@ -18,6 +20,8 @@ const AddPackage = () => {
   const { user } = useOutletContext()
   const [destinationCount, setDestinationCount] = useState(0)
   const [destinationComponents, setDestinationComponents] = useState([])
+  const [errorMessage, setErrorMessage] = useState('')
+  const navigate = useNavigate()
 
   const handleInputChange = (event) => {
     const { name, value } = event.target
@@ -57,6 +61,38 @@ const AddPackage = () => {
     ])
   }
 
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const { token } = user
+    const formData = new FormData()
+
+    for (let key in packageData) {
+      if (packageData.hasOwnProperty(key)) {
+        if (key === 'destinations') {
+          packageData[key].forEach((destination, index) => {
+            Object.keys(destination).forEach((destinationKey) => {
+              formData.append(
+                `${key}[${index}][${destinationKey}]`,
+                destination[destinationKey],
+              )
+            })
+          })
+        } else {
+          formData.append(key, packageData[key])
+        }
+      }
+    }
+
+    if (token) {
+      try {
+        await createPackage(token, formData)
+        navigate('/dashboard')
+      } catch (error) {
+        setErrorMessage(error.response.data.message)
+      }
+    }
+  }
+
   return (
     <>
       {/* breadcrumb */}
@@ -65,7 +101,7 @@ const AddPackage = () => {
           <li className="inline-flex items-center">
             <a
               href="#"
-              className="hover:text-blue-600 inline-flex items-center text-sm font-medium text-gray-700 dark:text-gray-400 dark:hover:text-white"
+              className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white"
             >
               <svg
                 className="me-2.5 h-3 w-3"
@@ -97,7 +133,7 @@ const AddPackage = () => {
                 />
               </svg>
               <NavLink to="/dashboard/packages/">
-                <a className="hover:text-blue-600 ms-1 text-sm font-medium text-gray-700 dark:text-gray-400 dark:hover:text-white md:ms-2">
+                <a className="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white md:ms-2">
                   Dashboard
                 </a>
               </NavLink>
@@ -130,7 +166,10 @@ const AddPackage = () => {
 
       {/* form detail */}
       <div className="mt-8">
-        <form className="colum mb-4 flex flex-col gap-3 rounded bg-white px-8 pb-8 pt-6 shadow-md">
+        <form
+          className="colum mb-4 flex flex-col gap-3 rounded bg-white px-8 pb-8 pt-6 shadow-md"
+          onSubmit={handleSubmit}
+        >
           <InputField
             type="text"
             name="packageName"
@@ -172,15 +211,12 @@ const AddPackage = () => {
           >
             Tambah Destination
           </Button>
+          {errorMessage ? <ErrorAlert message={errorMessage} /> : <></>}
           <div className="flex justify-between">
             <NavLink to="/dashboard/packages">
-              <button className="bg-red-500 rounded px-4 py-2 font-bold text-white hover:bg-primary-600">
-                Batalkan
-              </button>
+              <Button variant={'secondary'}>Batalkan</Button>
             </NavLink>
-            <button className="rounded bg-primary-500 px-4 py-2 font-bold text-white hover:bg-primary-600">
-              Simpan
-            </button>
+            <Button variant={'primary'}>Simpan</Button>
           </div>
         </form>
       </div>
