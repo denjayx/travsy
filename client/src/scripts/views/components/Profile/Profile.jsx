@@ -28,13 +28,15 @@ const Profile = ({ user }) => {
             className="h-full w-full object-cover"
           />
         </div>
-        <span>{`${fullName}`}</span>
+        <span>{`${fullName == undefined || user?.username}`}</span>
         <FaCaretDown />
       </button>
       <ul
         className={`${
-          !isOpen ? 'hidden' : 'block'
-        } absolute right-0 mt-6 flex flex-col gap-4 rounded-xl bg-white p-6 text-center md:mt-4`}
+          !isOpen
+            ? 'pointer-events-none scale-95 transform opacity-0'
+            : 'pointer-events-auto scale-100 transform opacity-100'
+        }  absolute right-0 mt-6 flex flex-col gap-4 rounded-xl bg-white p-6 text-center transition-all duration-100 ease-in-out md:mt-4`}
       >
         <li>
           <NavLink className="font-medium text-primary-700" to={'/'}>
@@ -50,7 +52,11 @@ const Profile = ({ user }) => {
           </NavLink>
         </li>
         <li>
-          <Button variant="text" className="text-red/75" onClick={handleLogout}>
+          <Button
+            variant="text"
+            className="text-red-600 font-medium"
+            onClick={handleLogout}
+          >
             Keluar
           </Button>
         </li>
