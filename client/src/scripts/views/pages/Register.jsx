@@ -54,12 +54,12 @@ const Register = () => {
 
   const roleOptions = [
     {
-      label: state.role === 'tourist' ? 'Tourist' : 'Tour Guide',
-      value: state.role === 'tourist' ? 'tourist' : 'tour guide',
+      label: state?.role === 'tourist' ? 'Tourist' : 'Tour Guide',
+      value: state?.role === 'tourist' ? 'tourist' : 'tour guide',
     },
     {
-      label: state.role !== 'tourist' ? 'Tourist' : 'Tour Guide',
-      value: state.role !== 'tourist' ? 'tourist' : 'tour guide',
+      label: state?.role !== 'tourist' ? 'Tourist' : 'Tour Guide',
+      value: state?.role !== 'tourist' ? 'tourist' : 'tour guide',
     },
   ]
 
