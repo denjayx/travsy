@@ -62,47 +62,59 @@ const Register = () => {
       value: state?.role !== 'tourist' ? 'tourist' : 'tour guide',
     },
   ]
-
   return (
-    <section className="flex flex-col gap-6 ">
+    <section className="flex flex-col gap-3 ">
       <h3 className="text-md font-bold text-primary-950">
-        Buat akun Travsy Anda.
+       Buat akun Travsy Anda.
       </h3>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-        <InputField
-          label="Email"
-          placeholder="cth:emailkamu@gmail.com"
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-        />
-        <InputField
-          label="Username"
-          placeholder="cth:namapengguna_"
-          type="text"
-          name="username"
-          value={formData.username}
-          onChange={handleChange}
-        />
-        <InputField
-          label="Kata Sandi"
-          placeholder="**********"
-          type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-        />
-        <InputSelect
-          label="Saya ingin mendaftar sebagai"
-          options={roleOptions}
-          onSelect={handleRoleChange}
-          value={formData.role}
-        />
+      <form className="flex flex-col gap-3">
+        <InputEmail
+          id="email"
+          label="email"
+          condition="default"
+          placeholder="emailkamu@mail.com"
+        >
+          Email
+        </InputEmail>
+        <InputText
+          condition="default"
+          label="username"
+          id="username"
+          placeholder="Buat Nama Pengguna"
+        >
+          Nama Pengguna
+        </InputText>
+        <InputPassword
+          condition="default"
+          label="password"
+          id="password"
+          placeholder="Masukkan Kata Sandi"
+        >
+          Kata Sandi
+        </InputPassword>
+        <InputPassword
+          condition="default"
+          label="confirm-password"
+          id="confirm-password"
+          placeholder="Konfirmasi Kata Sandi"
+        >
+          Konfirmasi Kata Sandi
+        </InputPassword>
 
-        <Button type="submit" variant="primary" className="mt-4">
+        <button
+          type="submit"
+          className="focus:ring-blue-300 container my-4 rounded-3xl bg-primary-500 px-6 py-3
+          text-center text-base font-medium text-white hover:bg-primary-600 focus:outline-none focus:ring-4"
+        >
           Buat Akun
-        </Button>
+        </button>
+
+        <label className="mt-3 block text-center text-base text-primary-950 ">
+          Daftar jadi Tour Guide {' '}
+          <span className="font-semibold  text-primary-700 underline underline-offset-2">
+            <a href="#">disini</a>
+          </span>
+        </label>
       </form>
       <label className="block text-center text-base text-primary-950 ">
         Masuk ke akun{' '}

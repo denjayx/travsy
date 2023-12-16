@@ -7,6 +7,7 @@ import {
 import RootLayout from '../views/layouts/RootLayout'
 import TourPackage from '../views/pages/TourPackage'
 import PackageHistory from '../views/pages/PackageHistory'
+import HistoryDetails from '../views/pages/HistoryDetails'
 import Login from '../views/pages/Login'
 import Register from '../views/pages/Register'
 import Homepage from '../views/pages/Homepage'
@@ -20,6 +21,7 @@ import AddPackage from '../views/pages/Dashboard/AddPackage'
 import AddOrder from '../views/pages/Dashboard/AddOrder'
 import DetailOrder from '../views/pages/Dashboard/DetailOrder'
 import Root from '../views/layouts/Root'
+import OrderDetails from '../views/pages/OrderDetail'
 import Profile from '../views/pages/Dashboard/Profile'
 import UpdateProfile from '../views/pages/Dashboard/UpdateProfile'
 
@@ -29,6 +31,7 @@ const router = createBrowserRouter(
       <Route element={<Root />}>
         <Route path="/" element={<RootLayout />}>
           <Route index element={<Homepage />}></Route>
+          <Route path="/order" element={<OrderDetails />}></Route>
           <Route path="packages" element={<TourPackage />}></Route>
           <Route path="packages/:id" element={<Detail />}></Route>
           <Route path="history" element={<PackageHistory />}></Route>

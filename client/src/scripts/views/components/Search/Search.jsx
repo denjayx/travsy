@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import SearchWisata from './SearchWisata'
 import { useState } from 'react'
 import Button from '../Buttons/Button'
 

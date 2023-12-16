@@ -3,11 +3,10 @@ import { useState } from 'react'
 import Button from '../Buttons/Button'
 import { NavLink } from 'react-router-dom'
 import Logo from '../Logo/Logo'
-import Profile from '../Profile/Profile'
+import Avatar from '../Avatar/Avatar'
 
 export default function Navbar({ user }) {
   const [isOpen, setIsOpen] = useState(false)
-
   return (
     <nav className="container fixed inset-x-0 top-0 z-50 flex w-full items-center justify-between gap-12 bg-primary-50 py-6">
       <div className="flex items-center">
@@ -37,6 +36,7 @@ export default function Navbar({ user }) {
         </button>
       </div>
       <div
+        onClick={() => setIsOpen(!isOpen)}
         className={`absolute right-4 top-16 justify-between max-lg:mt-4 lg:static lg:flex lg:w-full lg:items-center ${
           isOpen ? 'block' : 'hidden'
         }`}

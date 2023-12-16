@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { Outlet } from 'react-router-dom'
-import { revalidate } from '../../data/api'
 
 export default function Root() {
   const [user, setUser] = useState(null)
@@ -26,10 +25,7 @@ export default function Root() {
         })
       }
     }
-
-    fetchRevalidate()
   }, [])
-
   return (
     <>
       <Outlet context={{ user, setUser }} />

@@ -1,5 +1,6 @@
+import CardPackage from '../components/Details/CardPackage'
+import OrderData from '../components/Order/OrderData'
 import PackageDetails from '../components/Details/PackageDetails'
-
 
 export default function OrderDetails() {
  
@@ -8,9 +9,11 @@ export default function OrderDetails() {
       <h1 className="mb-8 text-2xl font-bold text-primary-950">
         <span className="text-primary-600">Yuk!</span> Cek Lagi Pesanan Kamu.
       </h1>
+      <div className="flex flex-col gap-4 lg:flex-row ">
+        <CardPackage />
+        <OrderData />
+      </div>
       <PackageDetails showImage={false} />
-    
-
     </section>
   )
 }
