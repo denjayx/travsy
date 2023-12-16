@@ -1,5 +1,4 @@
 import { Outlet, useNavigate, useOutletContext } from 'react-router-dom'
-import Sidebar from '../pages/Dashboard/Sidebar'
 import { useEffect, useState } from 'react'
 
 const Dashboard = () => {
