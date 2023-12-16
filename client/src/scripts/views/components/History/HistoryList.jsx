@@ -57,7 +57,7 @@ const HistoryList = () => {
             </div>
           </div>
           <div className="flex flex-row flex-wrap justify-between ">
-            <div className="h-3/4 rounded-full bg-primary-300 px-4 py-1">
+            <div className="h-3/4 rounded-full bg-green-300 text-green-800 px-4 py-1">
               <p className="text-base">Selesai</p>
             </div>
 
