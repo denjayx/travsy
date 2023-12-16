@@ -20,6 +20,7 @@ import AddOrder from '../views/pages/Dashboard/AddOrder'
 import DetailOrder from '../views/pages/Dashboard/DetailOrder'
 import Root from '../views/layouts/Root'
 import Profile from '../views/pages/Dashboard/Profile'
+import IndexDashboard from '../views/pages/Dashboard/IndexDashboard'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -31,6 +32,7 @@ const router = createBrowserRouter(
           <Route path="packages/:id" element={<Detail />}></Route>
           <Route path="history" element={<PackageHistory />}></Route>
           <Route path="dashboard" element={<Dashboard />}>
+            <Route index element={<IndexDashboard />} />
             <Route path="packages" element={<Packages />}></Route>
             <Route path="packages/add" element={<AddPackage />}></Route>
             <Route path="packages/:id" element={<PackagesDetail />}></Route>
