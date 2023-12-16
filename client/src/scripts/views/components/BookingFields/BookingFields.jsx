@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import Search from '../Search/Search'
 import DatePicker from 'react-datepicker'
-import InputField from '../Input/InputField'
 import moment from 'moment'
 
 const BookingFields = () => {
@@ -41,12 +40,6 @@ const BookingFields = () => {
               placeholderText="Sampai kapan kamu pergi?"
               className="w-full appearance-none rounded-lg border border-gray-200 px-4 py-3 outline-none focus:outline-none focus:ring-1 focus:ring-primary-300"
               wrapperClassName="w-full"
-            />
-            <InputField
-              type="number"
-              placeholder="Jumlah Tiket"
-              className="w-full"
-              showCounter
             />
           </div>
         </div>
