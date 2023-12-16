@@ -3,16 +3,8 @@ import { Outlet } from 'react-router-dom'
 import { revalidate } from '../../data/api'
 
 export default function Root() {
-  const [user, setUser] = useState({
-    token: '',
-    role: '',
-    user: {
-      username: '',
-      avatarUrl: '',
-      firstName: '',
-      lastName: '',
-    },
-  })
+  const [user, setUser] = useState(null)
+
   useEffect(() => {
     const fetchRevalidate = async () => {
       const token = localStorage.getItem('token')
@@ -21,6 +13,17 @@ export default function Root() {
         if (user) {
           setUser(user)
         }
+      } else {
+        setUser({
+          token: '',
+          role: '',
+          user: {
+            username: '',
+            avatarUrl: '',
+            firstName: '',
+            lastName: '',
+          },
+        })
       }
     }
 

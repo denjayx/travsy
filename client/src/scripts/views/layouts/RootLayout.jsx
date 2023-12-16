@@ -4,6 +4,7 @@ import Footer from '../components/Footer/Footer'
 
 export default function RootLayout() {
   const { user } = useOutletContext()
+
   return (
     <>
       <header>
@@ -11,7 +12,7 @@ export default function RootLayout() {
       </header>
 
       <main className="min-h-screen">
-        <Outlet />
+        <Outlet context={useOutletContext()} />
       </main>
 
       <footer className="mt-auto w-full bg-primary-500">

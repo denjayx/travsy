@@ -1,6 +1,21 @@
-import { NavLink } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { NavLink, useOutletContext, useParams } from 'react-router-dom'
+import { getProfilePackageDetail } from '../../../data/api'
 
 const PackagesDetail = () => {
+  const { id } = useParams()
+  const { user } = useOutletContext()
+  const [packageDetail, setPackageDetail] = useState({})
+
+  useEffect(() => {
+    const fetchPackageDetail = async () => {
+      const packageDetail = await getProfilePackageDetail(user.token, id)
+      setPackageDetail(packageDetail)
+    }
+
+    fetchPackageDetail()
+  }, [id, user])
+
   return (
     <>
       {/* breadcrumb */}
@@ -73,8 +88,25 @@ const PackagesDetail = () => {
       </nav>
 
       {/* form detail */}
-      <div className=" mt-8 ">
-        <form className="mb-4 rounded bg-white px-8 pb-8 pt-6 shadow-md">
+      <div className="mb-4 mt-8 rounded bg-white px-8 pb-8 pt-6 shadow-md">
+        <div className="mb-4">
+          <label
+            className="mb-2 block text-sm font-bold text-gray-700 underline"
+            htmlFor="username"
+          >
+            {packageDetail.id}
+          </label>
+        </div>
+        <div className="mb-4">
+          <label
+            className="mb-2 block text-sm font-bold text-gray-700"
+            htmlFor="namaPaket"
+          >
+            Package Name
+          </label>
+          <span>{packageDetail.packageName}</span>
+        </div>
+        {/* <form>
           <div className="mb-4">
             <label
               className="mb-2 block text-sm font-bold text-gray-700 underline"
@@ -286,7 +318,7 @@ const PackagesDetail = () => {
               Simpan Perubahan
             </button>
           </div>
-        </form>
+        </form> */}
       </div>
     </>
   )

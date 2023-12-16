@@ -33,7 +33,7 @@ const router = createBrowserRouter(
           <Route path="packages/:id" element={<Detail />}></Route>
           <Route path="history" element={<PackageHistory />}></Route>
           <Route path="dashboard" element={<Dashboard />}>
-            <Route index element={<Navigate to={'packages'} />}></Route>
+            <Route index element={<Navigate to={'packages'} />} />
             <Route path="packages" element={<Packages />}></Route>
             <Route path="packages/add" element={<AddPackage />}></Route>
             <Route path="packages/:id" element={<PackagesDetail />}></Route>

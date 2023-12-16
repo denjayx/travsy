@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 const Paragraph = ({ children, color, ...props }) => {
-  let textColor = 'text-gray-700'
+  let textColor = 'text-gray-600'
 
   if (color === 'white') {
     textColor = 'text-white'

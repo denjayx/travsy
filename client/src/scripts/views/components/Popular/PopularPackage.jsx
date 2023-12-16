@@ -15,10 +15,7 @@ const PopularPackage = ({ className }) => {
   }, [])
 
   return (
-    <section
-      id="popular"
-      className={`container flex flex-col gap-8 ${className}`}
-    >
+    <section id="popular" className={`flex flex-col gap-8 ${className}`}>
       <div id="popularText" className="flex flex-col gap-4 lg:w-6/12">
         <h3 className="text-xl font-bold text-primary-950">Paket Terpopuler</h3>
         <Paragraph>
@@ -26,7 +23,7 @@ const PopularPackage = ({ className }) => {
           oleh wisatawan lokal maupun mancanegara.
         </Paragraph>
       </div>
-      <section className="flex gap-8 overflow-x-scroll">
+      <section className="flex gap-4 overflow-x-scroll">
         {popularPackages.map((popularPackage) => (
           <Card
             key={popularPackage.package.id}

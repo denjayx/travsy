@@ -45,6 +45,39 @@ export const getProfilePackages = async (token) => {
     throw error
   }
 }
+
+export const getProfilePackageDetail = async (token, id) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/profile/packages/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data.data
+  } catch (error) {
+    console.error('Error fetching package list:', error)
+    throw error
+  }
+}
+
+export const createPackage = async (token, packageData) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/profile/packages`,
+      packageData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    )
+    return response.data.data
+  } catch (error) {
+    console.error('Error fetching package list:', error)
+    throw error
+  }
+}
+
 export const login = async ({ email, password }) => {
   try {
     const response = await axios.post(
@@ -103,5 +136,61 @@ export const register = async ({ user, account }) => {
   } catch (error) {
     console.error('Error fetching register:', error)
     throw error
+  }
+}
+
+export const filterPackages = async (
+  search,
+  city,
+  pmin,
+  pmax,
+  ndest,
+  sdate,
+  edate,
+) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/packages`, {
+      params: {
+        search,
+        city,
+        pmin,
+        pmax,
+        ndest,
+        sdate,
+        edate,
+      },
+    })
+
+    return response.data.data // Sesuaikan ini sesuai dengan format respons yang sebenarnya
+  } catch (error) {
+    console.error('Error fetching packages:', error)
+    throw error // Bisa dihapus jika tidak perlu dilemparkan ke luar
+  }
+}
+
+export const filtrePackages = async (
+  search,
+  city,
+  pmin,
+  pmax,
+  ndest,
+  sdate,
+  edate,
+) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/packages`, {
+      params: {
+        search,
+        city,
+        pmin,
+        pmax,
+        ndest,
+        sdate,
+        edate,
+      },
+    })
+    return response.data.data
+  } catch (error) {
+    console.error('Error fetching data:', error)
   }
 }
