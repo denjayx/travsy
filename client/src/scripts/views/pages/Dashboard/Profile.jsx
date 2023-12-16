@@ -1,4 +1,5 @@
 // import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 const Profile = () => {
   return (
@@ -51,9 +52,14 @@ const Profile = () => {
           </div>
         </div>
         <div className="float-right">
-          <button className="-mt-3 mb-4 mr-4 rounded bg-primary-500 px-4 py-2 font-bold text-white hover:bg-primary-600">
-            Ubah Profil
-          </button>
+          <NavLink to="/update-profile">
+            <button
+              className="-mt-3 mb-4 mr-4 rounded bg-primary-500 px-4 py-2 
+            font-bold text-white hover:bg-primary-600"
+            >
+              Ubah Profil
+            </button>
+          </NavLink>
         </div>
       </div>
     </>
