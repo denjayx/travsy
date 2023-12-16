@@ -61,6 +61,11 @@ const CitySelect = () => {
     gap: '16px',
   };
 
+  const labelStyle = {
+    width: '9rem', // Set the width as per your requirement
+    height: '1.5rem', // Set the height as per your requirement
+  };
+
   return (
     <section id="filterSection" className="container flex flex-col gap-8">
       <h3 className="text-xl font-bold text-primary-700">Filter</h3>
@@ -68,13 +73,17 @@ const CitySelect = () => {
 
       <div className="card" style={cardStyle}>
         <div className="relative">
-          <label className="block text-sm font-bold font-bold">Kota</label>
+          <label style={labelStyle} className="block text-sm font-bold font-bold">
+            Kota
+          </label>
           <select
             value={selectedCity}
             onChange={handleCityChange}
             className="rounded-md border border-gray-300 p-2 focus:border-primary-500 focus:outline-none focus:ring focus:ring-primary-200 focus:ring-opacity-50 w-full h-10"
           >
-            <option value="" disabled>Select a city</option>
+            <option value="" disabled>
+              Select a city
+            </option>
             {baliCities.map((city) => (
               <option key={city.value} value={city.value}>
                 {city.label}
@@ -84,7 +93,9 @@ const CitySelect = () => {
         </div>
 
         <div className="relative">
-          <label className="block text-sm font-bold font-bold">Jumlah Destinasi</label>
+          <label style={labelStyle} className="block text-sm font-bold font-bold">
+            Jumlah Destinasi
+          </label>
           <input
             type="number"
             value={numberDestinations}
@@ -95,7 +106,9 @@ const CitySelect = () => {
         </div>
 
         <div className="relative">
-          <label className="block text-sm font-bold font-bold">Harga Minimal</label>
+          <label style={labelStyle} className="block text-sm font-bold font-bold">
+            Harga Minimal
+          </label>
           <input
             type="text"
             value={minPrice}
@@ -106,7 +119,9 @@ const CitySelect = () => {
         </div>
 
         <div className="relative">
-          <label className="block text-sm font-bold font-bold">Harga Maksimal</label>
+          <label style={labelStyle} className="block text-sm font-bold font-bold">
+            Harga Maksimal
+          </label>
           <input
             type="text"
             value={maxPrice}
