@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import InputSelect from '../Input/InputSelect'
 import InputField from '../Input/InputField'
 
-export default function DestinationInput({ key, packageData, setPackageData }) {
+export default function DestinationInput({ id, setPackageData }) {
   const [openAccordion, setOpenAccordion] = useState(true)
   const [destinationData, setDestinationData] = useState({
     destinationName: '',
@@ -63,19 +63,21 @@ export default function DestinationInput({ key, packageData, setPackageData }) {
   }
 
   useEffect(() => {
-    setPackageData({
-      ...packageData,
-      destinations: packageData.destinations.map((destination, index) => {
-        if (key === index) {
-          return destinationData
-        }
-        return destination
-      }),
+    setPackageData((prevData) => {
+      return {
+        ...prevData,
+        destinations: prevData.destinations.map((destination, index) => {
+          if (id === index) {
+            return destinationData
+          }
+          return destination
+        }),
+      }
     })
   }, [destinationData])
 
   return (
-    <div className="flex flex-col gap-6 py-7">
+    <div className="flex flex-col gap-6">
       <div className="py-2">
         <button
           onClick={() => setOpenAccordion(!openAccordion)}

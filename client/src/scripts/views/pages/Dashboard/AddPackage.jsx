@@ -1,41 +1,60 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { NavLink, useOutletContext } from 'react-router-dom'
 import uploadImgIcon from '../../../../assets/upload-img.svg'
 import InputField from '../../components/Input/InputField'
 import DestinationInput from '../../components/Details/DestinationInput'
+import InputImage from '../../components/Input/InputImage'
+import Button from '../../components/Buttons/Button'
 
 const AddPackage = () => {
-  const selectedImage = useRef()
-  const inputImage = useRef()
   const [packageData, setPackageData] = useState({
     packageName: '',
     thumbnail: '',
-    price: '',
+    price: 0,
     description: '',
-    serviceDuration: '',
+    serviceDuration: 0,
     destinations: [],
   })
   const { user } = useOutletContext()
+  const [destinationCount, setDestinationCount] = useState(0)
+  const [destinationComponents, setDestinationComponents] = useState([])
 
-  const displayImage = () => {
-    if (inputImage.current.files && inputImage.current.files[0]) {
-      const reader = new FileReader()
-
-      reader.onload = (e) => {
-        selectedImage.current.src = e.target.result
-      }
-
-      reader.readAsDataURL(inputImage.current.files[0])
-    }
+  const handleInputChange = (event) => {
+    const { name, value } = event.target
+    setPackageData({
+      ...packageData,
+      [name]: ['price', 'serviceDuration'].includes(name)
+        ? parseInt(value, 10)
+        : value,
+    })
   }
 
-  useEffect(() => {
-    console.log(packageData)
-  }, [packageData])
+  const handleImageChange = (event) => {
+    const { name, files } = event.target
+    setPackageData({ ...packageData, [name]: files[0] })
+  }
 
-  const handleChange = (event) => {
-    const { name, value } = event.target
-    setPackageData({ ...packageData, [name]: value })
+  const addDestination = () => {
+    setPackageData({
+      ...packageData,
+      destinations: [...packageData.destinations, {}],
+    })
+
+    const newDestinationComponent = (
+      <DestinationInput
+        key={destinationCount}
+        id={destinationCount}
+        packageData={packageData}
+        setPackageData={setPackageData}
+      />
+    )
+
+    setDestinationCount(() => destinationCount + 1)
+
+    setDestinationComponents([
+      ...destinationComponents,
+      newDestinationComponent,
+    ])
   }
 
   return (
@@ -118,7 +137,7 @@ const AddPackage = () => {
             label="Nama Paket"
             value={packageData.packageName}
             placeholder="masukkan nama paket"
-            onChange={handleChange}
+            onChange={handleInputChange}
           />
           <InputField
             type="textArea"
@@ -126,7 +145,7 @@ const AddPackage = () => {
             label="Deskripsi Paket"
             value={packageData.description}
             placeholder="masukkan deskripsi paket"
-            onChange={handleChange}
+            onChange={handleInputChange}
           />
           <InputField
             type="number"
@@ -135,40 +154,27 @@ const AddPackage = () => {
             label="Durasi Layanan"
             value={packageData.serviceDuration}
             placeholder="0 hari"
-            onChange={handleChange}
+            onChange={handleInputChange}
           />
-          <div className="mb-4">
-            <label
-              className="mb-2 block text-sm font-bold text-gray-700"
-              htmlFor="thumbnail"
-            >
-              Gambar Thumbnail
-            </label>
-            <div className="flex items-start justify-start">
-              <label
-                className="hover:bg-blue flex w-64 cursor-pointer flex-col items-center rounded-lg border px-4 py-6 tracking-wide shadow-lg"
-                htmlFor="selectImage"
-              >
-                <img
-                  ref={selectedImage}
-                  src={uploadImgIcon}
-                  alt="selectedImage"
-                  className="w-48"
-                />
-                Upload Image
-              </label>
-              <input
-                ref={inputImage}
-                onChange={displayImage}
-                type="file"
-                className="hidden"
-                id="selectImage"
-              />
-            </div>
-          </div>
+          <InputImage
+            label={'Gambar Thumbnail'}
+            name={'thumbnail'}
+            onChange={handleImageChange}
+            placeholderImage={uploadImgIcon}
+            placeholderWords={'Upload Thumbnail'}
+          />
+          {destinationComponents.map((component) => component)}
+          <Button
+            variant={'text'}
+            className={`self-end`}
+            type="button"
+            onClick={addDestination}
+          >
+            Tambah Destination
+          </Button>
           <div className="flex justify-between">
             <NavLink to="/dashboard/packages">
-              <button className="rounded bg-primary-500 px-4 py-2 font-bold text-white hover:bg-primary-600">
+              <button className="bg-red-500 rounded px-4 py-2 font-bold text-white hover:bg-primary-600">
                 Batalkan
               </button>
             </NavLink>

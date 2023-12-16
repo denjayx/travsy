@@ -62,13 +62,14 @@ const InputField = ({
               type === 'number'
                 ? inputNumberValue === 0
                   ? placeholder
-                  : inputNumberValue
+                  : count
                 : value
             }
             placeholder={placeholder}
             onChange={(e) => {
               if (type === 'number') {
                 setCount(parseInt(e.target.value, 10))
+                onChange(e)
               } else {
                 onChange(e)
               }
