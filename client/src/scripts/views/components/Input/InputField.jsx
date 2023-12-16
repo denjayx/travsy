@@ -16,7 +16,7 @@ const InputField = ({
   ...props
 }) => {
   const [showPassword, setShowPassword] = useState(false)
-  const [count, setCount] = useState(null)
+  const [count, setCount] = useState(0)
 
   const inputNumberValue = type === 'number' ? count : value
 
@@ -48,7 +48,13 @@ const InputField = ({
             className={`${defaultClassName} ${className}`}
             type={!isPassword ? type : showPassword ? 'text' : 'password'}
             name={name}
-            value={type === 'number' ? inputNumberValue : value}
+            value={
+              type === 'number'
+                ? inputNumberValue === 0
+                  ? placeholder
+                  : inputNumberValue
+                : value
+            }
             placeholder={placeholder}
             onChange={(e) => {
               if (type === 'number') {
