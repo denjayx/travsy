@@ -10,8 +10,8 @@ const CitySelect = () => {
     // Add more cities as needed
   ];
 
-  const [selectedCity, setSelectedCity] = useState('');
-  const [numDestinations, setNumDestinations] = useState(0);
+  const [selectedCity, setSelectedCity] = useState(null);
+  const [numberDestinations, setNumberDestinations] = useState(0);
   const [minPrice, setMinPrice] = useState('Rp.');
   const [maxPrice, setMaxPrice] = useState('Rp.');
 
@@ -19,17 +19,14 @@ const CitySelect = () => {
     setSelectedCity(e.target.value);
   };
 
-  const handleNumDestinationsChange = (e) => {
-    setNumDestinations(e.target.value);
+  const handleNumberDestinationsChange = (e) => {
+    setNumberDestinations(e.target.value);
   };
 
   const handleMinPriceChange = (e) => {
     let value = e.target.value.trim();
-
-    // Check if the value is empty, if so, set it to 'Rp.'
     value = value || 'Rp.';
 
-    // Check if the value starts with "Rp.", if not, add it
     if (!value.startsWith('Rp.')) {
       value = 'Rp.' + value;
     }
@@ -40,12 +37,10 @@ const CitySelect = () => {
   const handleMaxPriceChange = (e) => {
     let value = e.target.value.trim();
 
-    // Check if the value starts with "Rp.", if not, add it
     if (!value.startsWith('Rp.')) {
       value = 'Rp.' + value;
     }
 
-    // Check if maxPrice is less than minPrice, if so, set it to minPrice
     if (parseInt(value.replace('Rp.', '')) < parseInt(minPrice.replace('Rp.', ''))) {
       value = minPrice;
     }
@@ -53,30 +48,25 @@ const CitySelect = () => {
     setMaxPrice(value);
   };
 
+  const cardStyle = {
+    width: '100%', // Adjusted width for responsiveness
+    maxWidth: '400px', // Added max-width for larger screens
+    padding: '24px',
+    borderRadius: '16px',
+    backgroundColor: 'white',
+    boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+    margin: '8px auto', // Centered the card horizontally
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '16px',
+  };
+
   return (
-    <section
-      id="filterSection"
-      className="container flex flex-col gap-8"
-    >
-      <h3 className="text-xl font-bold text-primary-950">Filter</h3>
+    <section id="filterSection" className="container flex flex-col gap-8">
+      <h3 className="text-xl font-bold text-primary-700">Filter</h3>
       <Paragraph>Sesuaikan liburanmu dengan kebutuhan kamu</Paragraph>
 
-      <div
-        className="card"
-        style={{
-          width: '292px',
-          height: '400px',
-          padding: '24px',
-          borderRadius: '16px',
-          backgroundColor: 'white',
-          boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-          margin: '8px',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '16px',
-          marginLeft: 'auto',
-        }}
-      >
+      <div className="card" style={cardStyle}>
         <div className="relative">
           <label className="block text-sm font-bold font-bold">Kota</label>
           <select
@@ -97,8 +87,8 @@ const CitySelect = () => {
           <label className="block text-sm font-bold font-bold">Jumlah Destinasi</label>
           <input
             type="number"
-            value={numDestinations}
-            onChange={handleNumDestinationsChange}
+            value={numberDestinations}
+            onChange={handleNumberDestinationsChange}
             placeholder="Enter the number of destinations"
             className="rounded-md border border-gray-300 p-2 focus:border-primary-500 focus:outline-none focus:ring focus:ring-primary-200 focus:ring-opacity-50 w-full h-10"
           />
