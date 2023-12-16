@@ -8,7 +8,7 @@ import InputSelect from '../components/Input/InputSelect'
 
 const Register = () => {
   const { state } = useLocation()
-  const [postData, setPostData] = useState(null)
+  const [setPostData] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
   const [formData, setFormData] = useState({
     email: '',
@@ -93,7 +93,7 @@ const Register = () => {
         />
         {errorMessage && (
           <div
-            className="mb-4 rounded-lg bg-red-50 p-4 text-red-800"
+            className="bg-red-50 text-red-800 mb-4 rounded-lg p-4"
             role="alert"
           >
             <div className="flex flex-col gap-2">
