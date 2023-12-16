@@ -9,7 +9,7 @@ export default function Homepage() {
   return (
     <>
       <Hero />
-      <PopularPackage className="mt-24" />
+      <PopularPackage className="container mt-24" />
       <Scale />
       <WhyUs />
       <Steps />

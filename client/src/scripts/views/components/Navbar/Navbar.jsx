@@ -63,7 +63,7 @@ export default function Navbar({ user }) {
               Riwayat
             </NavLink>
           </li>
-          <div className="bg-red-200 flex flex-col md:hidden">
+          <div className="flex flex-col bg-red-200 md:hidden">
             {user.token ? (
               <Profile user={user.user} />
             ) : (

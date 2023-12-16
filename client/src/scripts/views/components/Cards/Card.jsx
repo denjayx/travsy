@@ -40,9 +40,15 @@ const Card = ({ packagesData, tourguideData, cardId }) => {
         <span className="text-md font-semibold text-primary-600">
           {`${formatCurrency(packagesData.price)}`}
         </span>
-        <footer>
+        <footer className="flex overflow-x-scroll">
           {packagesData.destinations.map((destination, index) => {
-            return <Labels key={index} city={destination.city} />
+            return (
+              <Labels
+                className="flex-shrink-0"
+                key={index}
+                city={destination.city}
+              />
+            )
           })}
         </footer>
       </NavLink>

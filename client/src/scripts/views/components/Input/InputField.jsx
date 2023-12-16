@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react'
+import { FaMinus, FaPlus } from 'react-icons/fa6'
 import { HiOutlineEyeOff } from 'react-icons/hi'
 import { HiOutlineEye } from 'react-icons/hi'
 
@@ -11,29 +12,35 @@ const InputField = ({
   name,
   value,
   onChange,
+  showCounter = false,
   ...props
 }) => {
   const [showPassword, setShowPassword] = useState(false)
+  const [count, setCount] = useState(null)
+
+  const inputNumberValue = type === 'number' ? count : value
+
   const handleShowPassword = () => {
     setShowPassword(!showPassword)
   }
+
+  const increment = () => {
+    setCount((prev) => prev + 1)
+  }
+
+  const decrement = () => {
+    if (count > 1) {
+      setCount((prev) => prev - 1)
+    }
+  }
+
   const defaultClassName =
-    'border py-3 rounded-lg px-4 w-full outline-none focus:outline-none focus:ring focus:ring-violet-300 '
+    'border py-3 rounded-lg appearance-none px-4 w-full border-gray-200 outline-none focus:outline-none focus:ring-1 focus:ring-primary-300 '
   const isPassword = type === 'password'
 
   const generateInputField = (type) => {
     if (type === 'textArea') {
-      return (
-        <textarea
-          className={`${defaultClassName} ${className}`}
-          name={name}
-          placeholder={placeholder}
-          onChange={onChange}
-          {...props}
-        >
-          {value}
-        </textarea>
-      )
+      return <textarea>{value}</textarea>
     } else {
       return (
         <>
@@ -41,11 +48,33 @@ const InputField = ({
             className={`${defaultClassName} ${className}`}
             type={!isPassword ? type : showPassword ? 'text' : 'password'}
             name={name}
-            value={value}
+            value={type === 'number' ? inputNumberValue : value}
             placeholder={placeholder}
-            onChange={onChange}
+            onChange={(e) => {
+              if (type === 'number') {
+                setCount(parseInt(e.target.value, 10))
+              } else {
+                onChange(e)
+              }
+            }}
             {...props}
           />
+          {type === 'number' && showCounter && (
+            <section className="flex">
+              <button
+                className="absolute right-11 top-2.5 h-6 rounded-md bg-red/5 px-2 py-1"
+                onClick={decrement}
+              >
+                <FaMinus className="items-center text-red" size={15} />
+              </button>
+              <button
+                className="absolute right-2 top-2.5 h-6 rounded-md bg-primary-50 px-2 py-1"
+                onClick={increment}
+              >
+                <FaPlus className="text-primary-800" size={15} />
+              </button>
+            </section>
+          )}
           {isPassword && (
             <button
               className="absolute inset-y-0 right-4 text-gray-600"
@@ -53,9 +82,9 @@ const InputField = ({
               onClick={handleShowPassword}
             >
               {showPassword ? (
-                <HiOutlineEye size={22} />
+                <HiOutlineEye size={22} className="text-gray-400" />
               ) : (
-                <HiOutlineEyeOff size={22} />
+                <HiOutlineEyeOff size={22} className="text-gray-400" />
               )}
             </button>
           )}
@@ -65,9 +94,9 @@ const InputField = ({
   }
 
   return (
-    <div className="space-y-2">
+    <div className="w-full space-y-2">
       <label>{label}</label>
-      <div className="relative">{generateInputField(type)}</div>
+      <div className="relative w-full">{generateInputField(type)}</div>
     </div>
   )
 }

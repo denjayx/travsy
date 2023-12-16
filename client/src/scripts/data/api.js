@@ -138,3 +138,59 @@ export const register = async ({ user, account }) => {
     throw error
   }
 }
+
+export const filterPackages = async (
+  search,
+  city,
+  pmin,
+  pmax,
+  ndest,
+  sdate,
+  edate,
+) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/packages`, {
+      params: {
+        search,
+        city,
+        pmin,
+        pmax,
+        ndest,
+        sdate,
+        edate,
+      },
+    })
+
+    return response.data.data // Sesuaikan ini sesuai dengan format respons yang sebenarnya
+  } catch (error) {
+    console.error('Error fetching packages:', error)
+    throw error // Bisa dihapus jika tidak perlu dilemparkan ke luar
+  }
+}
+
+export const filtrePackages = async (
+  search,
+  city,
+  pmin,
+  pmax,
+  ndest,
+  sdate,
+  edate,
+) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/packages`, {
+      params: {
+        search,
+        city,
+        pmin,
+        pmax,
+        ndest,
+        sdate,
+        edate,
+      },
+    })
+    return response.data.data
+  } catch (error) {
+    console.error('Error fetching data:', error)
+  }
+}
