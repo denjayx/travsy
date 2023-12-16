@@ -1,7 +1,26 @@
-import { Outlet, useOutletContext } from 'react-router-dom'
+import { Outlet, useNavigate, useOutletContext } from 'react-router-dom'
 import Sidebar from '../pages/Dashboard/Sidebar'
+import { useEffect, useState } from 'react'
 
 const Dashboard = () => {
+  const [loadContext, setLoadContext] = useState(true)
+  const { user } = useOutletContext()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (user) {
+      setLoadContext(false)
+    }
+  }, [user])
+
+  useEffect(() => {
+    if (!loadContext) {
+      if (!user.token) {
+        navigate('/')
+      }
+    }
+  }, [loadContext, user, navigate])
+
   return (
     <>
       <div className="mt-32 p-4 sm:ml-64">

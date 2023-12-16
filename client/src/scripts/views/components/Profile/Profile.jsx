@@ -42,10 +42,7 @@ const Profile = ({ user }) => {
           </NavLink>
         </li>
         <li>
-          <NavLink
-            className="font-medium text-primary-700"
-            to={'/dashboard/packages'}
-          >
+          <NavLink className="font-medium text-primary-700" to={'/dashboard'}>
             Dashboard
           </NavLink>
         </li>
