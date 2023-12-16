@@ -52,7 +52,7 @@ const InputField = ({
               type === 'number'
                 ? inputNumberValue === 0
                   ? placeholder
-                  : inputNumberValue
+                  : count
                 : value
             }
             placeholder={placeholder}
@@ -63,6 +63,7 @@ const InputField = ({
                   newValue = 0
                 }
                 setCount(newValue)
+                onChange(e)
               } else {
                 onChange(e)
               }

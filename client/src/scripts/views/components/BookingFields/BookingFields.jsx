@@ -1,19 +1,24 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react/prop-types */
 import { useState } from 'react'
 import Search from '../Search/Search'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
+import { useEffect } from 'react'
 
-const BookingFields = () => {
+const BookingFields = ({ onDateChange }) => {
   const [startDate, setStartDate] = useState(null)
   const [endDate, setEndDate] = useState(null)
+  const [searchData, setSearchData] = useState('')
 
   const formatDate = (date) => {
     return date ? moment(date).format('YYYY-MM-DD') : null
   }
 
-  console.log('Formatted Start Date:', formatDate(startDate))
-  console.log('Formatted End Date:', formatDate(endDate))
-
+  useEffect(() => {
+    onDateChange(formatDate(startDate), formatDate(endDate), searchData)
+  }, [startDate, endDate, searchData])
+  console.log(searchData)
   return (
     <section className="space-y-4">
       <div className="container">
@@ -31,19 +36,20 @@ const BookingFields = () => {
               placeholderText="Mulai kapan kamu pergi?"
               className="w-full appearance-none rounded-lg border border-gray-200 px-4 py-3 outline-none focus:outline-none focus:ring-1 focus:ring-primary-300"
               wrapperClassName="w-full"
+              dateFormat="d MMMM yyyy"
             />
             <DatePicker
               selected={endDate}
               onChange={(date) => setEndDate(date)}
               minDate={startDate}
-              dateFormat="dd/MM/yyyy"
               placeholderText="Sampai kapan kamu pergi?"
               className="w-full appearance-none rounded-lg border border-gray-200 px-4 py-3 outline-none focus:outline-none focus:ring-1 focus:ring-primary-300"
               wrapperClassName="w-full"
+              dateFormat="d MMMM yyyy"
             />
           </div>
         </div>
-        <Search />
+        <Search onSearchChange={setSearchData} />
       </div>
     </section>
   )
