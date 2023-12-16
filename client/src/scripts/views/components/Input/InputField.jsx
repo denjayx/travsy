@@ -94,7 +94,7 @@ const InputField = ({
   }
 
   return (
-    <div className="w-full space-y-2">
+    <div className="w-full">
       <label>{label}</label>
       <div className="relative w-full">{generateInputField(type)}</div>
     </div>

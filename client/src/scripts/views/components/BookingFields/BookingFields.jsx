@@ -23,7 +23,7 @@ const BookingFields = () => {
               onChange={(date) => setStartDate(date)}
               dateFormat="dd/MM/yyyy"
               placeholderText="Mulai kapan kamu pergi?"
-              className="w-full rounded-lg border px-4 py-3 outline-none focus:outline-none focus:ring-1 focus:ring-primary-300 "
+              className="w-full appearance-none rounded-lg border border-gray-200 px-4 py-3 outline-none focus:outline-none focus:ring-1 focus:ring-primary-300"
               wrapperClassName="w-full"
             />
             <DatePicker
@@ -32,7 +32,7 @@ const BookingFields = () => {
               minDate={startDate}
               dateFormat="dd/MM/yyyy"
               placeholderText="Sampai kapan kamu pergi?"
-              className="w-full rounded-lg border px-4 py-3 outline-none focus:outline-none focus:ring-1 focus:ring-primary-300 "
+              className="w-full appearance-none rounded-lg border border-gray-200 px-4 py-3 outline-none focus:outline-none focus:ring-1 focus:ring-primary-300"
               wrapperClassName="w-full"
             />
             <InputField
