@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 const Profile = () => {
   return (
     <>
-      <div className="mx-auto max-w-md overflow-hidden rounded-xl bg-white shadow-md md:max-w-2xl">
+      <div className="m-16 mx-auto max-w-md overflow-hidden rounded-xl bg-white shadow-md md:max-w-2xl">
         <center>
           <div className="m-2 text-xl font-extrabold">Profile Anda</div>
         </center>
