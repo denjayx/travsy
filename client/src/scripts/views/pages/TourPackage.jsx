@@ -18,12 +18,12 @@ export default function TourPackage() {
             <SideBarFilter packageList={packageList} className="xl:w-3/12" />
           </>
         ) : (
-          <section className="flex flex-col gap-8">
+          <section className="flex w-full flex-col gap-8">
             <h4 className="text-xl font-bold text-primary-950">
               Hasil Pencarian Kamu
             </h4>
             <div className="flex gap-4 max-xl:flex-col-reverse max-xl:gap-14">
-              <div className="flex gap-4 overflow-x-scroll">
+              <div className="flex gap-4 overflow-x-scroll lg:grid lg:grid-cols-3">
                 {packageList.map((packageData) => (
                   <Card
                     key={packageData.package.id}

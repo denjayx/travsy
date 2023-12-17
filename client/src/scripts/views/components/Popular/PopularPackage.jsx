@@ -23,7 +23,7 @@ const PopularPackage = ({ className }) => {
           oleh wisatawan lokal maupun mancanegara.
         </Paragraph>
       </div>
-      <section className="flex gap-4 overflow-x-scroll">
+      <section className="flex gap-4 overflow-x-scroll lg:grid lg:grid-cols-4">
         {popularPackages.map((popularPackage) => (
           <Card
             key={popularPackage.package.id}

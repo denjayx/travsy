@@ -8,7 +8,8 @@ import InputSelect from '../components/Input/InputSelect'
 
 const Register = () => {
   const { state } = useLocation()
-  const [setPostData] = useState(null)
+  // eslint-disable-next-line no-unused-vars
+  const [postData, setPostData] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
   const [formData, setFormData] = useState({
     email: '',
@@ -93,7 +94,7 @@ const Register = () => {
         />
         {errorMessage && (
           <div
-            className="bg-red-50 text-red-800 mb-4 rounded-lg p-4"
+            className="mb-4 rounded-lg bg-red-50 p-4 text-red-800"
             role="alert"
           >
             <div className="flex flex-col gap-2">
