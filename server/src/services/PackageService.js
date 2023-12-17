@@ -62,7 +62,7 @@ class PackageService extends BaseService {
           );
 
           whereConditionsPackage.push({
-            package_id: {
+            id: {
               [Op.in]: packageIds,
             },
           });
@@ -162,6 +162,7 @@ class PackageService extends BaseService {
 
         return packageWithTourGuideList;
       } catch (error) {
+        console.error(error);
         if (error instanceof BaseResponseError) {
           throw error;
         }
