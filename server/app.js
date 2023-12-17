@@ -30,16 +30,25 @@ const {
   deletePackageController,
 } = require('./src/controllers');
 
-// Define routes
-const router = express.Router();
+// Create Express app
+const app = express();
 
-router.route('/register').post(registerController);
+// Middlewares
+app.use(cors({ credentials: true }));
+app.use(express.json());
+app.use(express.static('upload'));
+app.use('/', swaggerUi.serve);
 
-router.route('/login').post(loginController);
+// Routes
+app.get('/', swaggerUi.setup(apiContract));
 
-router.route('/revalidate').get(verifyAuthorization(), revalidateController);
+app.route('/register').post(registerController);
 
-router
+app.route('/login').post(loginController);
+
+app.route('/revalidate').get(verifyAuthorization(), revalidateController);
+
+app
   .route('/profile')
   .get(verifyAuthorization(), getUserProfileController)
   .put(
@@ -48,7 +57,7 @@ router
     updateUserProfileController,
   );
 
-router
+app
   .route('/profile/packages')
   .post(
     verifyAuthorization(),
@@ -57,7 +66,7 @@ router
   )
   .get(verifyAuthorization(), getUserPackageListController);
 
-router
+app
   .route('/profile/packages/:id')
   .get(verifyAuthorization(), getUserPackageDetailController)
   .put(
@@ -67,46 +76,30 @@ router
   )
   .delete(verifyAuthorization(), deletePackageController);
 
-router.route('/packages').get(getPackageListController);
+app.route('/packages').get(getPackageListController);
 
-router.route('/packages/popular').get(getPopularPackageListController);
+app.route('/packages/popular').get(getPopularPackageListController);
 
-router.route('/packages/:id').get(getPackageDetailController);
+app.route('/packages/:id').get(getPackageDetailController);
 
-router
+app
   .route('/packages/:id/pay')
   .post(verifyAuthorization(), createTransactionController);
 
-router
+app
   .route('/profile/histories')
   .get(verifyAuthorization(), getHistoryListController);
 
-router
+app
   .route('/profile/histories/:id')
   .get(verifyAuthorization(), getHistoryDetailController);
 
-router
-  .route('/profile/orders')
-  .get(verifyAuthorization(), getOrderListController);
+app.route('/profile/orders').get(verifyAuthorization(), getOrderListController);
 
-router
+app
   .route('/profile/orders/:id')
   .get(verifyAuthorization(), getOrderDetailController)
   .patch(verifyAuthorization(), patchOrderStatusController);
-
-router.get('/', swaggerUi.setup(apiContract));
-
-router.use('/', swaggerUi.serve);
-
-// Create Express app
-const app = express();
-
-// Middlewares
-app.use(cors({ credentials: true }));
-app.use(express.json());
-app.use(express.static('upload'));
-
-app.use('/api', router);
 
 // Error handler
 app.use(errorHandler());
