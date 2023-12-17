@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const BASE_URL = 'http://172.188.98.99:3000'
+const BASE_URL = import.meta.env.VITE_BASE_URL
 
 export const getPopularPackages = async () => {
   try {

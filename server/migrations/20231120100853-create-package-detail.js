@@ -36,7 +36,7 @@ module.exports = {
       name: 'fk_package_details_package_id',
       references: {
         table: 'packages',
-        field: 'package_id',
+        field: 'id',
       },
       onDelete: 'cascade',
       onUpdate: 'cascade',
@@ -48,7 +48,7 @@ module.exports = {
       name: 'fk_package_details_destination_id',
       references: {
         table: 'destinations',
-        field: 'destination_id',
+        field: 'id',
       },
       onDelete: 'cascade',
       onUpdate: 'cascade',
