@@ -26,7 +26,7 @@ const uploadImage = (destination, fileKey) => {
       } else {
         if (req.file) {
           req.body[`${fileKey}Url`] =
-            `http://${host}:${port}/${fileKey}/${req.file.filename}`;
+            `http://${host}:${port}/api/${fileKey}/${req.file.filename}`;
         }
         next();
       }
