@@ -25,8 +25,8 @@ const Register = () => {
     setFormData({ ...formData, [name]: value })
   }
 
-  const handleRoleChange = (selectedRole) => {
-    setFormData({ ...formData, role: selectedRole })
+  const handleRoleChange = (name, value) => {
+    setFormData({ ...formData, [name]: value })
   }
 
   const handleSubmit = async (event) => {
@@ -90,7 +90,7 @@ const Register = () => {
             },
           ]}
           onSelect={handleRoleChange}
-          value={formData.role}
+          name={formData.role}
         />
         {errorMessage && (
           <div

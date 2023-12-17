@@ -1,6 +1,8 @@
 import axios from 'axios'
 
-const BASE_URL = import.meta.env.VITE_BASE_URL
+const BASE_URL = import.meta.env.VITE_DEV_BASE_URL || '/api'
+
+export const BASE_IMAGEURL = import.meta.env.VITE_DEV_BASE_IMAGE_URL || ''
 
 export const getPopularPackages = async () => {
   try {
@@ -71,16 +73,14 @@ export const createPackage = async (token, formData) => {
 
 export const getProfile = async (token) => {
   try {
-    const response = await axios.get(
-      `${BASE_URL}/profile`, {
-        headers : {
-          Authorization: `Bearer ${token}`
-        }
-      }
-    )
+    const response = await axios.get(`${BASE_URL}/profile`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
     return response.data.data
   } catch (error) {
-    console.error('Error fetching profile:', error);
+    console.error('Error fetching profile:', error)
   }
 }
 
