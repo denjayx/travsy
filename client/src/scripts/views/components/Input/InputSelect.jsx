@@ -8,7 +8,6 @@ const InputSelect = ({ label, options, onSelect, name, isDisabled }) => {
   const handleChange = (event) => {
     const value = event.target.value
     setSelectedValue(value)
-
     if (onSelect) {
       onSelect(name, value)
     }

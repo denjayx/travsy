@@ -3,19 +3,15 @@
 import { useState } from 'react'
 import Search from '../Search/Search'
 import DatePicker from 'react-datepicker'
-import moment from 'moment'
 import { useEffect } from 'react'
 import { getPackageList } from '../../../data/api'
+import { formatDate } from '../../../../utils/utils'
 
 const BookingFields = ({ setPackageList }) => {
   const [startDate, setStartDate] = useState(null)
   const [endDate, setEndDate] = useState(null)
   const [searchData, setSearchData] = useState('')
   const [queryParams, setQueryParams] = useState({})
-
-  const formatDate = (date) => {
-    return date ? moment(date).format('YYYY-MM-DD') : null
-  }
 
   useEffect(() => {
     if (startDate) {
