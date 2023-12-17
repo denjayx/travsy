@@ -2,20 +2,19 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('destinations', {
-      destinationId: {
-        allowNull: false,
+      id: {
         primaryKey: true,
         type: Sequelize.UUID,
-        field: 'destination_id',
+        field: 'id',
+      },
+      packageId: {
+        type: Sequelize.UUID,
+        field: 'package_id',
       },
       destinationName: {
         allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(50),
         field: 'destination_name',
-      },
-      imageUrl: {
-        type: Sequelize.STRING,
-        field: 'image_url',
       },
       city: {
         allowNull: false,
@@ -23,7 +22,7 @@ module.exports = {
         field: 'city',
       },
       description: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         field: 'description',
       },
       createdAt: {
@@ -43,8 +42,25 @@ module.exports = {
         field: 'deleted_at',
       },
     });
+
+    await queryInterface.addConstraint('destinations', {
+      fields: ['package_id'],
+      type: 'foreign key',
+      name: 'fk_destination_package_id',
+      references: {
+        table: 'packages',
+        field: 'id',
+      },
+      onDelete: 'cascade',
+      onUpdate: 'cascade',
+    });
   },
   async down(queryInterface) {
+    await queryInterface.removeConstraint(
+      'destinations',
+      'fk_destination_package_id',
+    );
+
     await queryInterface.dropTable('destinations');
   },
 };

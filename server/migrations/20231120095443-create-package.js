@@ -2,11 +2,10 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('packages', {
-      packageId: {
-        allowNull: false,
+      id: {
         primaryKey: true,
         type: Sequelize.UUID,
-        field: 'package_id',
+        field: 'id',
       },
       tourGuideId: {
         allowNull: false,
@@ -15,7 +14,7 @@ module.exports = {
       },
       packageName: {
         allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(50),
         field: 'package_name',
       },
       thumbnailUrl: {
@@ -35,6 +34,18 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER,
         field: 'service_duration',
+      },
+      destinationCount: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+        field: 'destination_count',
+      },
+      transactionCount: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+        field: 'transaction_count',
       },
       createdAt: {
         allowNull: false,
