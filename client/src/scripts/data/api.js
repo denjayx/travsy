@@ -129,17 +129,29 @@ export const register = async ({ user, account }) => {
   }
 }
 
-export const getPackageList = async (
-  queryParams
-) => {
+export const getPackageList = async (queryParams) => {
   try {
     const response = await axios.get(`${BASE_URL}/packages`, {
       params: {
-        ...queryParams
+        ...queryParams,
       },
     })
     return response.data.data
   } catch (error) {
     console.error('Error fetching data:', error)
+  }
+}
+
+export const deletePackage = async ({ token, id }) => {
+  try {
+    const response = await axios.delete(`${BASE_URL}/profile/packages/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data.message
+  } catch (error) {
+    console.error('Error fetching package list:', error)
+    throw error
   }
 }

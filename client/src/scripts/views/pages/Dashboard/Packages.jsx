@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, useOutletContext } from 'react-router-dom'
-import { getProfilePackages } from '../../../data/api'
+import { deletePackage, getProfilePackages } from '../../../data/api'
 
 const Packages = () => {
   const [packageList, setPackageList] = useState([])
@@ -11,9 +11,18 @@ const Packages = () => {
       const result = await getProfilePackages(token)
       setPackageList(result)
     }
-    const token = localStorage.getItem('token')
-    fetchPackageList(token)
+
+    if (user?.token) {
+      fetchPackageList(user.token)
+    }
   }, [user])
+
+  const handleDelete = async (id) => {
+    const { token } = user
+    await deletePackage({ token, id })
+    const result = await getProfilePackages(token)
+    setPackageList(result)
+  }
 
   return (
     <>
@@ -22,8 +31,8 @@ const Packages = () => {
         <ol className="inline-flex items-center space-x-1 rtl:space-x-reverse md:space-x-2">
           <li className="inline-flex items-center">
             <a
-              className="hover:text-blue-600 inline-flex items-center text-sm font-medium 
-              text-gray-700 dark:text-gray-400 dark:hover:text-white"
+              className="inline-flex items-center text-sm font-medium text-gray-700 
+              hover:text-blue-600 dark:text-gray-400 dark:hover:text-white"
             >
               <svg
                 className="me-2.5 h-3 w-3"
@@ -55,7 +64,7 @@ const Packages = () => {
                 />
               </svg>
               <a
-                className="hover:text-blue-600 ms-1 text-sm font-medium text-gray-700 
+                className="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 
                 dark:text-gray-400 dark:hover:text-white md:ms-2"
               >
                 Dashboard
@@ -152,7 +161,11 @@ const Packages = () => {
                     </svg>
                   </button>
                 </NavLink> */}
-                <button className="mx-1 my-2">
+                <button
+                  className="mx-1 my-2"
+                  type="button"
+                  onClick={() => handleDelete(packageData.id)}
+                >
                   <svg
                     className="h-6 w-6 text-gray-800 dark:text-white"
                     aria-hidden="true"
@@ -186,7 +199,7 @@ const Packages = () => {
           </a>
           <a
             href="#"
-            className="hover:bg-blue-600 bg-gray-400 px-3 py-2 text-gray-900"
+            className="bg-gray-400 px-3 py-2 text-gray-900 hover:bg-blue-600"
           >
             1
           </a>
