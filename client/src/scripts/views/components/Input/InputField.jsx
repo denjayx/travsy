@@ -18,8 +18,6 @@ const InputField = ({
   const [showPassword, setShowPassword] = useState(false)
   const [count, setCount] = useState(0)
 
-  const inputNumberValue = type === 'number' ? count : value
-
   const handleShowPassword = () => {
     setShowPassword(!showPassword)
   }
@@ -58,37 +56,28 @@ const InputField = ({
             className={`${defaultClassName} ${className}`}
             type={!isPassword ? type : showPassword ? 'text' : 'password'}
             name={name}
-            value={
-              type === 'number'
-                ? inputNumberValue === 0
-                  ? placeholder
-                  : count
-                : value
-            }
+            value={type === 'number' ? (count === 0 ? '' : count) : value}
             placeholder={placeholder}
             onChange={(e) => {
               if (type === 'number') {
-                setCount(parseInt(e.target.value, 10))
                 let newValue = parseInt(e.target.value, 10)
                 if (!showCounter && newValue < 0) {
                   newValue = 0
                 }
                 setCount(newValue)
-                onChange(e)
-              } else {
-                onChange(e)
               }
+              onChange(e)
             }}
             {...props}
           />
           {type === 'number' && showCounter && (
             <section className="flex">
               <button
-                className="bg-red/5 absolute right-11 top-2.5 h-6 rounded-md px-2 py-1"
+                className="absolute right-11 top-2.5 h-6 rounded-md bg-red-50 px-2 py-1"
                 type="button"
                 onClick={decrement}
               >
-                <FaMinus className="text-red items-center" size={15} />
+                <FaMinus className="items-center text-red-600" size={15} />
               </button>
               <button
                 className="absolute right-2 top-2.5 h-6 rounded-md bg-primary-50 px-2 py-1"

@@ -1,3 +1,4 @@
+/* eslint-disable no-prototype-builtins */
 import { useState } from 'react'
 import { NavLink, useNavigate, useOutletContext } from 'react-router-dom'
 import uploadImgIcon from '../../../../assets/upload-img.svg'
