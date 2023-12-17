@@ -37,33 +37,22 @@ class PackageService extends BaseService {
             );
           }
 
-          const availablePackageList = await packageModel.findAll({
-            include: [
-              {
-                model: transactionModel,
-                attributes: ['startDate', 'endDate'],
-                where: {
-                  startDate: {
-                    [Op.lt]: sdate,
-                  },
-                  endDate: {
-                    [Op.gt]: edate,
-                  },
-                },
-                required: true,
-              },
-            ],
-            attributes: ['id'],
+          const bookedOrder = await transactionModel.findAll({
+            attributes: ['packageId', 'startDate', 'endDate'],
+            where: {
+              startDate: { [Op.gt]: sdate },
+              endDate: { [Op.lt]: edate },
+            },
             transaction,
           });
 
-          const packageIds = availablePackageList.map(
-            (packageObj) => packageObj.id,
+          const bookedPackageIdList = bookedOrder.map(
+            (order) => order.packageId,
           );
 
           whereConditionsPackage.push({
             id: {
-              [Op.in]: packageIds,
+              [Op.notIn]: bookedPackageIdList,
             },
           });
         }
