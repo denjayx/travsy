@@ -1,6 +1,5 @@
 const multer = require('multer');
 const fs = require('fs');
-const { host, port } = require('../../config/application');
 const ServerError = require('../errors/ServerError');
 
 const uploadImage = (destination, fileKey) => {
@@ -25,8 +24,7 @@ const uploadImage = (destination, fileKey) => {
         throw new ServerError();
       } else {
         if (req.file) {
-          req.body[`${fileKey}Url`] =
-            `http://${host}:${port}/api/${fileKey}/${req.file.filename}`;
+          req.body[`${fileKey}Url`] = `/${fileKey}/${req.file.filename}`;
         }
         next();
       }
