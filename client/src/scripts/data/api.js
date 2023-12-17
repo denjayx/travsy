@@ -69,6 +69,21 @@ export const createPackage = async (token, formData) => {
   }
 }
 
+export const getProfile = async (token) => {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/profile`, {
+        headers : {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    )
+    return response.data.data
+  } catch (error) {
+    console.error('Error fetching profile:', error);
+  }
+}
+
 export const login = async ({ email, password }) => {
   try {
     const response = await axios.post(

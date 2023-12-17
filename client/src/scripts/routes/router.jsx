@@ -22,8 +22,8 @@ import AddOrder from '../views/pages/Dashboard/AddOrder'
 import DetailOrder from '../views/pages/Dashboard/DetailOrder'
 import Root from '../views/layouts/Root'
 import OrderDetails from '../views/pages/OrderDetail'
-import Profile from '../views/pages/Dashboard/Profile'
-import UpdateProfile from '../views/pages/Dashboard/UpdateProfile'
+import Profile from '../views/pages/Profile'
+// import UpdateProfile from '../views/pages/UpdateProfile'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -45,19 +45,14 @@ const router = createBrowserRouter(
             <Route path="orders/add" element={<AddOrder />}></Route>
             <Route path="orders/:id" element={<DetailOrder />}></Route>
           </Route>
+          <Route path="/profile" element={<Profile />}></Route>
+          {/* <Route path="/profile/update" element={<UpdateProfile />}></Route> */}
         </Route>
         <Route element={<Auth />}>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>
         </Route>
       </Route>
-
-      {/* <Route path="/detail-packages" element={<DetailPackages />}></Route>
-        <Route path="/add-packages" element={<AddPackages />}></Route>
-        <Route path="/bookings" element={<Bookings />}></Route>
-        <Route path="/confirmation" element={<Confirmation />}></Route> */}
-      <Route path="/profile" element={<Profile />}></Route>
-      <Route path="/update-profile" element={<UpdateProfile />}></Route>
     </>,
   ),
 )

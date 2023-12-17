@@ -39,7 +39,7 @@ const Profile = ({ user }) => {
         }  absolute right-0 mt-6 flex flex-col gap-4 rounded-xl bg-white p-6 text-center transition-all duration-100 ease-in-out md:mt-4`}
       >
         <li>
-          <NavLink className="font-medium text-primary-700" to={'/'}>
+          <NavLink className="font-medium text-primary-700" to={'/profile'}>
             Profil
           </NavLink>
         </li>
@@ -51,7 +51,7 @@ const Profile = ({ user }) => {
         <li>
           <Button
             variant="text"
-            className="text-red-600 font-medium"
+            className="font-medium text-red-600"
             onClick={handleLogout}
           >
             Keluar

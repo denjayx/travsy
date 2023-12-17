@@ -60,7 +60,7 @@ export default function Login() {
         />
         {errorMessage && (
           <div
-            className="text-red-800 bg-red-50 mt-4 rounded-lg p-4"
+            className="mt-4 rounded-lg bg-red-50 p-4 text-red-800"
             role="alert"
           >
             <div className="flex flex-col gap-2">
@@ -74,8 +74,8 @@ export default function Login() {
         )}
         <button
           type="submit"
-          className="focus:ring-blue-300 container my-4 rounded-3xl bg-primary-500 px-6 py-3
-          text-center text-base font-medium text-white hover:bg-primary-600 focus:outline-none focus:ring-4"
+          className="container my-4 rounded-3xl bg-primary-500 px-6 py-3 text-center
+          text-base font-medium text-white hover:bg-primary-600 focus:outline-none focus:ring-4 focus:ring-blue-300"
         >
           Masuk
         </button>

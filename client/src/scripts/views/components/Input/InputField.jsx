@@ -12,6 +12,7 @@ const InputField = ({
   name,
   value,
   onChange,
+  isDisabled = false,
   showCounter = false,
   ...props
 }) => {
@@ -42,11 +43,12 @@ const InputField = ({
     if (type === 'textArea') {
       return (
         <textarea
-          className={`${defaultClassName} ${className}`}
+          className={`${defaultClassName} ${className} mt-2`}
           name={name}
           placeholder={placeholder}
           onChange={onChange}
           {...props}
+          disabled={isDisabled}
         >
           {value}
         </textarea>
@@ -79,6 +81,7 @@ const InputField = ({
                 onChange(e)
               }
             }}
+            disabled={isDisabled}
             {...props}
           />
           {type === 'number' && showCounter && (
