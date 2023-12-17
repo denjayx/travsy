@@ -7,10 +7,30 @@ import InputSelect from '../components/Input/InputSelect'
 
 const Profile = () => {
   const [isDisabled, setIsDisabled] = useState(true)
+  const [formData, setFormData] = useState({
+    email: '',
+    avatarUrl: '',
+    firstName: '',
+    lastName: '',
+    biography: '',
+    nik: '',
+    phone: '',
+    gender: '',
+  })
+
   const genderOptions = [
     { label: 'Laki - laki', value: 'L' },
     { label: 'Perempuan', value: 'P' },
   ]
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target
+    setFormData({ ...formData, [name]: value })
+  }
+
+  const handleSelectChange = (name, value) => {
+    setFormData({ ...formData, [name]: value })
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -37,6 +57,7 @@ const Profile = () => {
             type="text"
             placeholder="Masukkan nama depan"
             isDisabled={isDisabled}
+            onChange={handleInputChange}
           />
           <InputField
             name="lastName"
@@ -44,6 +65,7 @@ const Profile = () => {
             type="text"
             placeholder="Masukkan nama belakang"
             isDisabled={isDisabled}
+            onChange={handleInputChange}
           />
           <InputField
             name="email"
@@ -52,20 +74,15 @@ const Profile = () => {
             value="denyw602@gmail.com"
             placeholder="Masukkan email"
             isDisabled={isDisabled}
+            onChange={handleInputChange}
           />
           <InputField
             name="phone"
             label="No. Telepon"
             type="number"
-            placeholder="Masukkan nomor telepon"
+            placeholder="62xxxx"
             isDisabled={isDisabled}
-          />
-          <InputField
-            name="rek"
-            label="No. Rek"
-            type="number"
-            placeholder="Masukkan nomor rekening"
-            isDisabled={isDisabled}
+            onChange={handleInputChange}
           />
           <InputField
             name="nik"
@@ -73,19 +90,22 @@ const Profile = () => {
             type="number"
             placeholder="Masukkan Nomor Induk KTP"
             isDisabled={isDisabled}
+            onChange={handleInputChange}
           />
           <InputSelect
             label="Jenis Kelamin"
             name="gender"
             options={genderOptions}
             isDisabled={isDisabled}
+            onSelect={handleSelectChange}
           />
           <InputField
-            name="bio"
+            name="biography"
             label="Deskripsi diri"
             type="textArea"
             placeholder="Deskripsi diri / Bio"
             isDisabled={isDisabled}
+            onChange={handleInputChange}
           />
         </div>
         <div className="flex w-full justify-end">
