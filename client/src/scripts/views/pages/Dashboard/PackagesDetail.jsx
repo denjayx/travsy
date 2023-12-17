@@ -1,11 +1,28 @@
 import { useEffect, useState } from 'react'
 import { NavLink, useOutletContext, useParams } from 'react-router-dom'
 import { getProfilePackageDetail } from '../../../data/api'
+import DestinationDetails from '../../components/Details/DestinationDetails'
 
 const PackagesDetail = () => {
   const { id } = useParams()
   const { user } = useOutletContext()
-  const [packageDetail, setPackageDetail] = useState({})
+  const [packageDetail, setPackageDetail] = useState({
+    id: '',
+    packageName: '',
+    thumbnailUrl: '',
+    price: 0,
+    description: '',
+    serviceDuration: 0,
+    destinations: [],
+  })
+
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+      minimumFractionDigits: 0,
+    }).format(amount)
+  }
 
   useEffect(() => {
     const fetchPackageDetail = async () => {
@@ -14,6 +31,7 @@ const PackagesDetail = () => {
     }
 
     fetchPackageDetail()
+    console.log(packageDetail)
   }, [id, user])
 
   return (
@@ -24,7 +42,7 @@ const PackagesDetail = () => {
           <li className="inline-flex items-center">
             <a
               href="#"
-              className="hover:text-blue-600 inline-flex items-center text-sm font-medium text-gray-700 dark:text-gray-400 dark:hover:text-white"
+              className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white"
             >
               <svg
                 className="me-2.5 h-3 w-3"
@@ -56,7 +74,7 @@ const PackagesDetail = () => {
                 />
               </svg>
               <NavLink to="/dashboard/packages">
-                <a className="hover:text-blue-600 ms-1 text-sm font-medium text-gray-700 dark:text-gray-400 dark:hover:text-white md:ms-2">
+                <a className="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white md:ms-2">
                   Dashboard
                 </a>
               </NavLink>
@@ -87,239 +105,41 @@ const PackagesDetail = () => {
         </ol>
       </nav>
 
-      {/* form detail */}
-      <div className="mb-4 mt-8 rounded bg-white px-8 pb-8 pt-6 shadow-md">
-        <div className="mb-4">
-          <label
-            className="mb-2 block text-sm font-bold text-gray-700 underline"
-            htmlFor="username"
-          >
-            {packageDetail.id}
-          </label>
+      <section
+        id="packagedetails"
+        className=" flex w-full flex-col items-center gap-6 rounded-xl lg:flex-row "
+      >
+        <div className="h-full w-full overflow-hidden rounded-lg md:rounded-l-lg lg:w-5/12">
+          <img
+            src={packageDetail.thumbnailUrl}
+            alt="Thumbnail Card"
+            className=" h-full w-full object-cover "
+          />
         </div>
-        <div className="mb-4">
-          <label
-            className="mb-2 block text-sm font-bold text-gray-700"
-            htmlFor="namaPaket"
-          >
-            Package Name
-          </label>
-          <span>{packageDetail.packageName}</span>
-        </div>
-        {/* <form>
-          <div className="mb-4">
-            <label
-              className="mb-2 block text-sm font-bold text-gray-700 underline"
-              htmlFor="username"
-            >
-              0aeaef33-40ae-3a30-ae0e-307ae2de4c1e
-            </label>
-          </div>
-          <div className="mb-4">
-            <label
-              className="mb-2 block text-sm font-bold text-gray-700"
-              htmlFor="namaPaket"
-            >
-              Package Name
-            </label>
-            <input
-              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-              id="namaPaket"
-              type="text"
-              placeholder="masukan nama paket"
-            ></input>
-          </div>
-          <div className="mb-4">
-            <label
-              className="mb-2 block text-sm font-bold text-gray-700"
-              htmlFor="deskripsiPaket"
-            >
-              Deskripsi Package
-            </label>
-            <input
-              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-              id="deskripsiPaket"
-              type="text"
-              placeholder="deskripsi paket"
-            ></input>
-          </div>
-          <div className="mb-4">
-            <label
-              className="mb-2 block text-sm font-bold text-gray-700"
-              htmlFor="price"
-            >
-              Harga Paket Per Orang
-            </label>
-            <input
-              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-              id="username"
-              type="number"
-              placeholder="harga paket nya yang per orang"
-            ></input>
-          </div>
-          <div className="mb-4">
-            <label
-              className="mb-2 block text-sm font-bold text-gray-700"
-              htmlFor="thumbnail"
-            >
-              Gambar Thumbnail
-            </label>
-            <div className="flex items-start justify-start">
-              <label className="hover:bg-blue flex w-64 cursor-pointer flex-col items-center rounded-lg border px-4 py-6 uppercase tracking-wide shadow-lg">
-                <svg
-                  className="h-6 w-6 text-white dark:text-gray-800"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 20 18"
-                >
-                  <path
-                    fill="currentColor"
-                    d="M13 5.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0ZM7.565 7.423 4.5 14h11.518l-2.516-3.71L11 13 7.565 7.423Z"
-                  />
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M18 1H2a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z"
-                  />
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M13 5.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0ZM7.565 7.423 4.5 14h11.518l-2.516-3.71L11 13 7.565 7.423Z"
-                  />
-                </svg>
-                <span className="mt-2 text-base leading-normal">
-                  pilih gambar
-                </span>
-                <input type="file" className="hidden" id="image" />
-              </label>
-            </div>
-          </div>
-          <div className="mb-4">
-            <label
-              className="mb-2 block text-sm font-bold text-gray-700"
-              htmlFor="deskripsi"
-            >
-              Durasi Layanan
-            </label>
-            <input
-              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-              id="durasiLayanan"
-              type="number"
-              placeholder="Berapa Hari"
-            ></input>
-          </div>
-          <div className="mb-4">
-            <label
-              className="mb-2 block text-sm font-bold text-gray-700"
-              htmlFor="deskripsi"
-            >
-              Nama Destinasi
-            </label>
-            <input
-              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-              id="namaDestinasi"
-              type="text"
-              placeholder="Nama destinasi"
-            ></input>
-          </div>
-          <div className="mb-4">
-            <label
-              className="mb-2 block text-sm font-bold text-gray-700"
-              htmlFor="deskripsi"
-            >
-              Kota
-            </label>
-            <div className="relative">
-              <select
-                id="kota"
-                name="kota"
-                className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight 
-                text-gray-700 shadow focus:outline-none"
-              >
-                <option value="" disabled selected>
-                  Pilih kota
-                </option>
-                <option value="jakarta">Jakarta</option>
-                <option value="surabaya">Surabaya</option>
-                <option value="bandung">Bandung</option>
-              </select>
-            </div>
-          </div>
-          <div className="mb-4">
-            <label
-              className="mb-2 block text-sm font-bold text-gray-700"
-              htmlFor="thumbnail"
-            >
-              Gambar
-            </label>
-            <div className="flex items-start justify-start">
-              <label className="hover:bg-blue aspect-w-1 aspect-h-1 flex w-64 cursor-pointer flex-col items-center rounded-lg border px-4 py-6 uppercase tracking-wide shadow-lg">
-                <svg
-                  className="h-6 w-6 text-white dark:text-gray-800"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 20 18"
-                >
-                  <path
-                    fill="currentColor"
-                    d="M13 5.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0ZM7.565 7.423 4.5 14h11.518l-2.516-3.71L11 13 7.565 7.423Z"
-                  />
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M18 1H2a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z"
-                  />
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M13 5.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0ZM7.565 7.423 4.5 14h11.518l-2.516-3.71L11 13 7.565 7.423Z"
-                  />
-                </svg>
-                <span className="mt-2 text-base leading-normal">
-                  pilih gambar
-                </span>
-                <input type="file" className="hidden" id="image" />
-              </label>
-            </div>
-          </div>
-          <div className="mb-4">
-            <label
-              className="mb-2 block text-sm font-bold text-gray-700"
-              htmlFor="deskripsi"
-            >
-              Deskripsi
-            </label>
-            <textarea
-              className="focus:shadow-outline w-full appearance-none 
-              rounded border px-3 py-2 leading-tight text-gray-700 shadow 
-              focus:outline-none"
-              id="deskripsi"
-              rows="4"
-              placeholder="masukan desksripsi"
-            ></textarea>
-          </div>
-          <div className="flex justify-between">
-            <NavLink to="/dashboard/packages">
-              <button className="rounded bg-primary-500 px-4 py-2 font-bold text-white hover:bg-primary-600">
-                Batalkan
-              </button>
-            </NavLink>
-            <button className="rounded bg-primary-500 px-4 py-2 font-bold text-white hover:bg-primary-600">
-              Simpan Perubahan
-            </button>
-          </div>
-        </form> */}
-      </div>
+        <section className="flex h-full w-full flex-col justify-between gap-1 rounded-lg border-gray-200 bg-white p-5 md:rounded-l-lg">
+          <h5 className="mb-2 text-xl font-bold tracking-tight text-primary-950">
+            {packageDetail.packageName}
+          </h5>
+          <p className="mb-3 font-normal text-gray-700 ">
+            {packageDetail.description}
+          </p>
+          <p className="mb-3 font-normal text-primary-950">
+            <span className="font-bold">
+              {packageDetail.serviceDuration} Hari
+            </span>{' '}
+            Layanan
+          </p>
+          <section className="mb-4 flex flex-col items-center justify-between gap-2  md:flex-row">
+            <h4 className="text-xl font-bold text-primary-500">
+              {formatCurrency(packageDetail.price)},-
+            </h4>
+          </section>
+        </section>
+      </section>
+      {packageDetail.destinations.length !== 0 &&
+        packageDetail.destinations.map((destination, index) => (
+          <DestinationDetails key={index} destinationData={destination} />
+        ))}
     </>
   )
 }

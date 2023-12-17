@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-export default function DestinationDetails() {
+export default function DestinationDetails({ destinationData }) {
   const [openAccordion, setOpenAccordion] = useState(true)
 
   useEffect(() => {
@@ -15,7 +15,7 @@ export default function DestinationDetails() {
           className=" flex w-full items-center justify-between rounded-2xl border-2 border-primary-200 bg-white p-5  text-lg font-semibold text-primary-900"
           type="button"
         >
-          <span>Pura Tanah Lot</span>
+          <span>{destinationData.destinationName}</span>
           {openAccordion ? (
             <svg
               className="h-[16px] w-[16px] text-primary-900 "
@@ -51,11 +51,10 @@ export default function DestinationDetails() {
           )}
         </button>
         <div
-          className={`oveflow-hidden flex flex-col gap-6 rounded-xl bg-white px-5 ${
+          className={`oveflow-hidden flex flex-col gap-6 rounded-xl bg-white p-5 ${
             openAccordion ? 'hidden' : 'block'
           }`}
         >
-          <div className="flex flex-col gap-5 md:flex-row"></div>
           <div className=" flex w-fit items-center gap-1 rounded-3xl bg-primary-50 px-3 py-2">
             <svg
               className="h-[16px] w-[16px] text-primary-900"
@@ -66,14 +65,11 @@ export default function DestinationDetails() {
             >
               <path d="M8 0a7.992 7.992 0 0 0-6.583 12.535 1 1 0 0 0 .12.183l.12.146c.112.145.227.285.326.4l5.245 6.374a1 1 0 0 0 1.545-.003l5.092-6.205c.206-.222.4-.455.578-.7l.127-.155a.934.934 0 0 0 .122-.192A8.001 8.001 0 0 0 8 0Zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" />
             </svg>
-            <span className="text-base text-primary-800">Bali</span>
+            <span className="text-base text-primary-800">
+              {destinationData.city}
+            </span>
           </div>
-          <div className="text-primary-950 ">
-            Lorem ipsum dolor sit amet consectetur. Convallis montes nulla cras
-            in. Ut viverra odio et pharetra dictum nunc ultrices. Mattis lorem
-            amet egestas blandit ut. Sed hendrerit convallis scelerisque arcu
-            pulvinar id at.
-          </div>
+          <div className="text-primary-950 ">{destinationData.description}</div>
         </div>
       </div>
     </div>
