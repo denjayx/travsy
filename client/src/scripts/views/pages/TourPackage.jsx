@@ -7,7 +7,6 @@ import Card from '../components/Cards/Card'
 
 export default function TourPackage() {
   const [packageList, setPackageList] = useState([])
-  // const [filterData, setFilterData] = useState({})
 
   return (
     <section className="mt-32">

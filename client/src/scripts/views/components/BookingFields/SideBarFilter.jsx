@@ -8,11 +8,6 @@ import Paragraph from '../Paragraph/Paragraph'
 
 const SideBarFilter = ({ className, packageList, setPackageList }) => {
   const [filterFormData, setFilterFormData] = useState({})
-  // const [optionalParams, setOptionalParams] = useState({
-  //   search: '',
-  //   sdate: '',
-  //   edate: '',
-  // })
 
   useEffect(() => {
     console.log(filterFormData)

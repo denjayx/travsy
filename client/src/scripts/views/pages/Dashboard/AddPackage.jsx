@@ -96,7 +96,6 @@ const AddPackage = () => {
 
   return (
     <>
-      {/* breadcrumb */}
       <nav className="flex" aria-label="Breadcrumb">
         <ol className="inline-flex items-center space-x-1 rtl:space-x-reverse md:space-x-2">
           <li className="inline-flex items-center">
