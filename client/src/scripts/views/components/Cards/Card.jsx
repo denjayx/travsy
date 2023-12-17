@@ -14,7 +14,9 @@ const Card = ({ packagesData, tourguideData, cardId }) => {
   }
 
   return (
-    <article className="flex flex-col gap-4 rounded-2xl bg-white p-6 max-xl:flex-shrink-0 max-md:w-full md:w-6/12 lg:w-4/12">
+    <article
+      className={`flex flex-col gap-4 rounded-2xl bg-white p-6 max-lg:flex-shrink-0`}
+    >
       <NavLink to={`/packages/${cardId}`} className="flex flex-col gap-3">
         <figure className="h-64 w-full overflow-hidden rounded-lg">
           <img
