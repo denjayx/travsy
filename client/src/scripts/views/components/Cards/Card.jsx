@@ -48,7 +48,7 @@ const Card = ({ packagesData, tourguideData, cardId }) => {
               <Labels
                 className="flex-shrink-0"
                 key={index}
-                city={destination.city}
+                city={destination.destinationName}
               />
             )
           })}

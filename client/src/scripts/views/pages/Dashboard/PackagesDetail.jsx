@@ -31,7 +31,6 @@ const PackagesDetail = () => {
     }
 
     fetchPackageDetail()
-    console.log(packageDetail)
   }, [id, user])
 
   return (

@@ -12,10 +12,10 @@ export const getPopularPackages = async () => {
   }
 }
 
-export const packageDetail = async (id) => {
+export const getPackageDetail = async (id) => {
   try {
-    const response = axios(`${BASE_URL}/packages/${id}`)
-    return response
+    const response = await axios(`${BASE_URL}/packages/${id}`)
+    return response.data.data
   } catch (error) {
     console.error('Error fetching package detail:', error)
     throw error
