@@ -24,11 +24,11 @@ export default function DestinationInput({ id, setPackageData }) {
       label: 'Buleleng',
     },
     {
-      value: '',
+      value: 'gianyar',
       label: 'Gianyar',
     },
     {
-      value: '',
+      value: 'jembrana',
       label: 'Jembrana',
     },
     {

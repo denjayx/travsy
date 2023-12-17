@@ -179,6 +179,14 @@ const AddPackage = () => {
             onChange={handleInputChange}
           />
           <InputField
+            type="number"
+            name="price"
+            label="Harga Paket"
+            value={packageData.price}
+            placeholder="Rp."
+            onChange={handleInputChange}
+          />
+          <InputField
             type="textArea"
             name="description"
             label="Deskripsi Paket"
