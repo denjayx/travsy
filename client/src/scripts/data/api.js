@@ -131,7 +131,8 @@ export const register = async ({ user, account }) => {
 
 export const getPackageList = async (
   queryParams
-) => {
+  ) => {
+  console.log(queryParams);
   try {
     const response = await axios.get(`${BASE_URL}/packages`, {
       params: {

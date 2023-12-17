@@ -7,6 +7,7 @@ import Card from '../components/Cards/Card'
 
 export default function TourPackage() {
   const [packageList, setPackageList] = useState([])
+  // const [filterData, setFilterData] = useState({})
 
   return (
     <section className="mt-32">
@@ -15,7 +16,11 @@ export default function TourPackage() {
         {packageList.length === 0 ? (
           <>
             <PopularPackage />
-            <SideBarFilter packageList={packageList} className="xl:w-3/12" />
+            <SideBarFilter
+              setPackageList={setPackageList}
+              packageList={packageList}
+              className="xl:w-3/12"
+            />
           </>
         ) : (
           <section className="flex w-full flex-col gap-8">
@@ -33,7 +38,11 @@ export default function TourPackage() {
                   />
                 ))}
               </div>
-              <SideBarFilter packageList={packageList} className="xl:w-3/12" />
+              <SideBarFilter
+                setPackageList={setPackageList}
+                packageList={packageList}
+                className="xl:w-3/12"
+              />
             </div>
           </section>
         )}

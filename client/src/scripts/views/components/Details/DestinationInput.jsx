@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react'
 import InputSelect from '../Input/InputSelect'
 import InputField from '../Input/InputField'
