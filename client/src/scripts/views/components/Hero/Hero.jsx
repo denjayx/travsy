@@ -17,7 +17,7 @@ const Hero = () => {
           menunggu untuk Anda temukan.Yuk segera pesan layanan kami.
         </Paragraph>
         <div className="flex gap-2">
-          <NavLink to="/package">
+          <NavLink to="/packages">
             <Button variant="secondary">Mulai Trip</Button>
           </NavLink>
           <NavLink to="/register" state={{ status: 'tour guide' }}>

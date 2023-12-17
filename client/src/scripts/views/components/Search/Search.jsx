@@ -32,7 +32,6 @@ const Search = ({ onSearchChange }) => {
           className="block w-full rounded-xl border border-primary-300 bg-white px-6 py-3 text-gray-900 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-300"
           placeholder="Lagi pingin liburan kemana nih?"
           onChange={handleSearchChange}
-          required
         />
       </div>
       <Button
