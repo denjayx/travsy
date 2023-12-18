@@ -32,7 +32,7 @@ const PackageDetails = ({ packageData, token }) => {
         />
       </div>
       <section className="flex h-full w-full flex-col justify-between gap-1 rounded-lg border-gray-200 bg-white p-5 md:rounded-l-lg">
-        <div className="flex items-center">
+        <div className="mb-3 flex items-center gap-3">
           <img
             src={
               packageData.tourGuide.avatarUrl
@@ -44,9 +44,13 @@ const PackageDetails = ({ packageData, token }) => {
             className="avatar"
           />
           <span>
-            {packageData.tourGuide.firstName +
-              ' ' +
-              packageData.tourGuide.lastName}
+            {`${
+              packageData.tourGuide.firstName
+                ? packageData.tourGuide.firstName +
+                  ' ' +
+                  (packageData.tourGuide.lastName || '')
+                : packageData.tourGuide.username
+            }`}
           </span>
         </div>
         <h5 className="mb-2 text-xl font-bold tracking-tight text-primary-950">
