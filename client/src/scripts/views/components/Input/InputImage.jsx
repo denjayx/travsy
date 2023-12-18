@@ -30,7 +30,7 @@ const InputImage = ({
     <div className={`mb-4 flex w-fit flex-col gap-2 ${wrapperClassName}`}>
       <label className="">{label}</label>
       <div className="flex w-full items-end justify-start">
-        <label htmlFor={name} className="relative">
+        <label htmlFor={name} className="relative cursor-pointer">
           <div className="h-32 w-32 overflow-hidden rounded-xl border border-dashed border-gray-300">
             <img
               ref={selectedImage}
