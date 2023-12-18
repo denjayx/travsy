@@ -1,15 +1,16 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useEffect, useRef, useState } from 'react'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { FaCalendarDays } from 'react-icons/fa6'
 import { FaPlus, FaMinus } from 'react-icons/fa6'
+import { pay } from '../../../data/api'
+import { formatDate } from '../../../../utils/utils'
 
-const OrderForm = () => {
+const OrderForm = ({ packageData, token }) => {
   const [startDate, setStartDate] = useState(null)
   const [endDate, setEndDate] = useState(null)
   const [jumlahTiket, setJumlahTiket] = useState(1)
-  const navigate = useNavigate()
+  const payButton = useRef()
 
   const tambahTiket = () => {
     setJumlahTiket((prev) => prev + 1)
@@ -21,16 +22,36 @@ const OrderForm = () => {
     }
   }
 
-  const handleConfirm = () => {
-    // Periksa apakah startDate, endDate, dan jumlahTiket telah terisi
-    if (startDate && endDate > 0) {
-      // Lakukan navigasi hanya jika semua form terisi
-      navigate('/order')
-    } else {
-      // Tampilkan pesan kesalahan atau lakukan tindakan lain sesuai kebutuhan
-      console.error('Harap isi semua formulir sebelum pesan.')
+  useEffect(() => {
+    const script = document.createElement('script')
+    script.src = 'https://app.sandbox.midtrans.com/snap/snap.js'
+    script.dataset.clientKey = 'SB-Mid-client-61XuGAwQ8Bj8LxSS'
+    document.body.appendChild(script)
+  }, [])
+
+  const handleConfirm = async () => {
+    if (token) {
+      const requestData = {
+        startDate: formatDate(startDate),
+        endDate: formatDate(endDate),
+        totalPerson: jumlahTiket,
+        totalPrice: jumlahTiket * packageData.price,
+      }
+      const responseData = await pay({
+        token,
+        id: packageData.id,
+        data: requestData,
+      })
+
+      window.snap.pay(responseData.paymentToken)
     }
   }
+
+  useEffect(() => {
+    console.log(startDate)
+    console.log(endDate)
+    console.log(jumlahTiket)
+  }, [startDate, endDate, jumlahTiket])
 
   return (
     <div className=" mx-auto flex w-full flex-col gap-1 rounded-xl bg-white p-6 lg:w-5/12 xl:w-4/12">
@@ -108,6 +129,7 @@ const OrderForm = () => {
               : 'bg-primary-500'
           }`}
           onClick={handleConfirm}
+          ref={payButton}
           disabled={!startDate || !endDate || jumlahTiket <= 0}
         >
           Pesan Sekarang

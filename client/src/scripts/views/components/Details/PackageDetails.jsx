@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { BASE_IMAGEURL } from '../../../data/api'
 import defaultUser from '../../../../assets/default-user.svg'
 
-const PackageDetails = ({ packageData }) => {
+const PackageDetails = ({ packageData, token }) => {
   const [showOrderForm, setShowOrderForm] = useState(false)
 
   const handlePesanSekarang = () => {
@@ -78,7 +78,9 @@ const PackageDetails = ({ packageData }) => {
           )}
         </section>
       </section>
-      {showOrderForm && <OrderForm />}
+      {showOrderForm && (
+        <OrderForm packageData={packageData.package} token={token} />
+      )}
     </section>
   )
 }

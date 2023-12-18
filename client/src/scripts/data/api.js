@@ -170,3 +170,18 @@ export const deletePackage = async ({ token, id }) => {
     throw error
   }
 }
+
+export const pay = async ({ token, id, data }) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/packages/${id}/pay`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    })
+    return response.data.data
+  } catch (error) {
+    console.error('Error fetching package list:', error)
+    throw error
+  }
+}
