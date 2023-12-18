@@ -13,9 +13,7 @@ const updateUserProfileController = async (req, res, next) => {
         .messages({
           'string.email': 'Invalid email format',
         }),
-      avatarUrl: Joi.string().allow('').uri().messages({
-        'string.uri': 'Invalid image URL',
-      }),
+      avatarUrl: Joi.string().allow(''),
       firstName: Joi.string().allow('').max(15).messages({
         'string.max':
           'First name must consist maximum of 15 characters without numbers, spaces, or symbols',

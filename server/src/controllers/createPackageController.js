@@ -12,7 +12,9 @@ const createPackageController = async (req, res, next) => {
         'string.min': 'package name must be consist of minimum 3 characters',
         'string.max': 'package name must be consist of maximum 50 characters',
       }),
-      thumbnailUrl: Joi.string().allow(''),
+      thumbnailUrl: Joi.string().messages({
+        'string.empty': 'Image cannot be empty',
+      }),
       price: Joi.number().messages({ 'number.empty': 'Price cannot be empty' }),
       description: Joi.string().allow(''),
       serviceDuration: Joi.number().messages({

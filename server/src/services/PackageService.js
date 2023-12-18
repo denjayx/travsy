@@ -130,7 +130,7 @@ class PackageService extends BaseService {
         const packageWithTourGuideList = await Promise.all(
           packageList.map(async (tourPackage) => {
             const tourGuide = await tourPackage.getTourGuide({
-              attributes: ['avatarUrl', 'firstName', 'lastName'],
+              attributes: ['username', 'avatarUrl', 'firstName', 'lastName'],
               transaction,
             });
 
@@ -194,7 +194,7 @@ class PackageService extends BaseService {
         const packageWithTourGuideList = await Promise.all(
           packageList.map(async (tourPackage) => {
             const tourGuide = await tourPackage.getTourGuide({
-              attributes: ['avatarUrl', 'firstName', 'lastName'],
+              attributes: ['username', 'avatarUrl', 'firstName', 'lastName'],
             });
 
             return {
@@ -252,7 +252,7 @@ class PackageService extends BaseService {
         }
 
         const tourGuide = await packageDetail.getTourGuide({
-          attributes: ['avatarUrl', 'firstName', 'lastName'],
+          attributes: ['username', 'avatarUrl', 'firstName', 'lastName'],
           transaction,
         });
 
