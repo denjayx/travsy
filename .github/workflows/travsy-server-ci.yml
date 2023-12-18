@@ -2,9 +2,9 @@ name: Travsy Server CI
 
 on:
     push:
-        branches: ["be-dev"]
+        branches: ["be-dev", "stage", "main"]
     pull_request:
-        branches: ["be-dev"]
+        branches: ["be-dev", "stage", "main"]
 
 jobs:
     test:
