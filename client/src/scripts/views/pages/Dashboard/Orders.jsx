@@ -1,6 +1,23 @@
+import { useEffect, useState } from 'react'
 import Button from '../../components/Buttons/Button'
+import { useOutletContext } from 'react-router-dom'
+import { getOrderList } from '../../../data/api'
 
 const Orders = () => {
+  const [orderList, setOrderList] = useState([])
+  const { user } = useOutletContext()
+
+  useEffect(() => {
+    const fetchOrderList = async (token) => {
+      const result = await getOrderList(token)
+      setOrderList(result)
+    }
+
+    if (user?.token) {
+      fetchOrderList(user.token)
+    }
+  }, [user])
+
   return (
     <div className="flex w-full flex-col gap-3 p-10">
       {/* breadcrumb */}
@@ -71,30 +88,35 @@ const Orders = () => {
             </tr>
           </thead>
           <tbody className="leading-5">
-            <tr className="border-b bg-white hover:bg-primary-50 ">
-              <th
-                scope="row"
-                className="whitespace-nowrap px-6 py-4 font-medium text-primary-900 "
+            {orderList.map((orderData) => (
+              <tr
+                key={orderData.transaction.id}
+                className="border-b bg-white hover:bg-primary-50 "
               >
-                paket wisata tanah lot
-              </th>
-              <td className="px-6 py-4">rahman islam</td>
-              <td className="px-6 py-4">pending</td>
-              <td className="px-6 py-4">10/12/2023</td>
-              <td className="flex justify-center gap-1 px-6 py-4">
-                <Button variant={'primary'}>Konfirmasi</Button>
-                <Button
-                  text-white
-                  shadow-btn
-                  duration-300
-                  ease-in-out
-                  variant={'primary'}
-                  className={`border-red-500 bg-red-500 hover:bg-red-600`}
+                <th
+                  scope="row"
+                  className="whitespace-nowrap px-6 py-4 font-medium text-primary-900 "
                 >
-                  Tolak
-                </Button>
-              </td>
-            </tr>
+                  {orderData.transaction.package.packageName}
+                </th>
+                <td className="px-6 py-4">{orderData.tourist.username}</td>
+                <td className="px-6 py-4">{orderData.transaction.status}</td>
+                <td className="px-6 py-4">{orderData.transaction.orderDate}</td>
+                <td className="flex justify-center gap-1 px-6 py-4">
+                  <Button variant={'primary'}>Konfirmasi</Button>
+                  <Button
+                    text-white
+                    shadow-btn
+                    duration-300
+                    ease-in-out
+                    variant={'primary'}
+                    className={`border-red-500 bg-red-500 hover:bg-red-600`}
+                  >
+                    Tolak
+                  </Button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
