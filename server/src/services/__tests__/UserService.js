@@ -60,6 +60,7 @@ describe('user service', () => {
     afterEach(() => {
       expect(user.findByPk).toHaveBeenCalledWith(mockUsername, {
         attributes: [
+          'username',
           'avatarUrl',
           'firstName',
           'lastName',
