@@ -2,7 +2,7 @@ const { Op } = require('sequelize');
 const {
   package: packageModel,
   destination,
-  transaction: transactionModel,
+  // transaction: transactionModel,
 } = require('../../models');
 const BadRequestError = require('../../errors/BadRequestError');
 const ServerError = require('../../errors/ServerError');
@@ -65,7 +65,8 @@ describe('package service', () => {
       );
     });
 
-    // it('should throw BadRequestError when maximum price is lower than minimum date', async () => {
+    // it('should throw BadRequestError when maximum price is l
+    // ower than minimum date', async () => {
     //   const filter = {
     //     sdate: '2023-12-07',
     //     edate: '2023-12-08',
