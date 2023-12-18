@@ -139,7 +139,7 @@ class TransactionService extends BaseService {
         const mappedOrderList = await Promise.all(
           orderList.map(async (order) => {
             const tourist = await order.getTourist({
-              attributes: ['avatarUrl', 'firstName', 'lastName'],
+              attributes: ['username', 'avatarUrl', 'firstName', 'lastName'],
               transaction,
             });
 
