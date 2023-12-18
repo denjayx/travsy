@@ -215,3 +215,21 @@ export const getOrderList = async (token) => {
     throw error
   }
 }
+
+export const updateStatusOrder = async (token, id, status) => {
+  try {
+    const response = await axios.patch(
+      `${BASE_URL}/profile/orders/${id}`,
+      { status },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    )
+    return response.data.data
+  } catch (error) {
+    console.error('Error fetching package list:', error)
+    throw error
+  }
+}
