@@ -219,7 +219,7 @@ const AddPackage = () => {
           >
             Tambah Destination
           </Button>
-          {errorMessage ? <ErrorAlert message={errorMessage} /> : <></>}
+          {errorMessage && <ErrorAlert message={errorMessage} />}
           <div className="flex justify-between">
             <NavLink to="/dashboard/packages">
               <Button variant={'secondary'}>Batalkan</Button>

@@ -41,7 +41,7 @@ const InputField = ({
     if (type === 'textArea') {
       return (
         <textarea
-          className={`${defaultClassName} ${className} mt-2`}
+          className={`${defaultClassName} ${className}`}
           name={name}
           placeholder={placeholder}
           onChange={onChange}
@@ -112,7 +112,7 @@ const InputField = ({
   return (
     <div className="w-full">
       <label className="text-primary-950">{label}</label>
-      <div className="relative w-full">{generateInputField(type)}</div>
+      <div className="w-ful relative mt-2">{generateInputField(type)}</div>
     </div>
   )
 }

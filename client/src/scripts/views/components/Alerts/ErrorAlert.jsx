@@ -1,7 +1,7 @@
 const ErrorAlert = ({ message }) => {
   return (
     <div
-      className="mb-4 flex items-center rounded-lg bg-red-50 p-4 text-sm text-red-800 dark:bg-gray-800 dark:text-red-400"
+      className="mb-4 flex items-center rounded-lg bg-red-50 p-4 text-sm text-red-800"
       role="alert"
     >
       <svg

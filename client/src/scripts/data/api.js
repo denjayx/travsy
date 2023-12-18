@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const BASE_URL = 'http://172.188.98.99:3000'
+const BASE_URL = 'http://travsy.site:3000/api'
 
 export const getPopularPackages = async () => {
   try {
@@ -71,18 +71,36 @@ export const createPackage = async (token, formData) => {
 
 export const getProfile = async (token) => {
   try {
-    const response = await axios.get(
-      `${BASE_URL}/profile`, {
-        headers : {
-          Authorization: `Bearer ${token}`
+    const response = await axios.get(`${BASE_URL}/profile`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data.data
+  } catch (error) {
+    console.error('Error fetching profile:', error)
+    throw error
+  }
+}
+
+
+export const updateProfile = async (token, formData) => {
+  try {
+    const response = await axios.put(
+      `${BASE_URL}/profile`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
         }
       }
     )
     return response.data.data
   } catch (error) {
-    console.error('Error fetching profile:', error);
+    console.error('Error fetch put profile :', error)
+    throw error
   }
 }
+
 
 export const login = async ({ email, password }) => {
   try {
