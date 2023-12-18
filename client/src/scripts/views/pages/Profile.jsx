@@ -60,9 +60,10 @@ const Profile = () => {
     e.preventDefault()
     const { token } = user
     const formData = new FormData()
-    const filteredProfileData = Object.keys(profileData).map(
-      (key) => key != 'avatarUrl' && profileData[key],
-    )
+
+    const filteredProfileData = profileData
+    delete filteredProfileData['avatarUrl']
+
     for (let key in filteredProfileData) {
       formData.append(key, filteredProfileData[key])
     }
@@ -130,7 +131,7 @@ const Profile = () => {
             name="nik"
             label="No. KTP"
             type="number"
-            placeholder="Masukkan Nomor Induk KTP"
+            placeholder="Masukkan 16 Digit Nomor Induk KTP"
             isDisabled={isDisabled}
             onChange={handleInputChange}
             value={profileData.nik}
@@ -159,14 +160,14 @@ const Profile = () => {
             placeholderImage={UserImg}
             placeholderWords={'Upload Foto'}
             isDisabled={isDisabled}
-            value={profileData.avatar}
+            value={profileData.avatarUrl}
           />
         </div>
         {errorMessage && !isDisabled && <ErrorAlert message={errorMessage} />}
         <div className="flex w-full justify-end">
           {isDisabled ? (
             <div
-              className="rounded-full border border-primary-500 bg-primary-500 px-6 py-3 text-white shadow-btn duration-300 ease-in-out hover:bg-primary-600"
+              className="cursor-pointer rounded-full border border-primary-500 bg-primary-500 px-6 py-3 text-white shadow-btn duration-300 ease-in-out hover:bg-primary-600"
               onClick={() => setIsDisabled(!isDisabled)}
             >
               Edit Profil
@@ -174,12 +175,16 @@ const Profile = () => {
           ) : (
             <div className="flex gap-2">
               <div
-                className="rounded-full border border-primary-500 bg-white px-6 py-3 text-primary-500 shadow-btn duration-300 ease-in-out hover:bg-primary-100"
+                className="cursor-pointer rounded-full border border-primary-500 bg-white px-6 py-3 text-primary-500 shadow-btn duration-300 ease-in-out hover:bg-primary-100"
                 onClick={() => setIsDisabled(!isDisabled)}
               >
                 Batal
               </div>
-              <Button variant="primary" className="w-fit" type="submit">
+              <Button
+                variant="primary"
+                className="w-fit cursor-pointer"
+                type="submit"
+              >
                 Simpan
               </Button>
             </div>
