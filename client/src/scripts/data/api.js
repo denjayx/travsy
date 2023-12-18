@@ -201,3 +201,17 @@ export const pay = async ({ token, id, data }) => {
     throw error
   }
 }
+
+export const getOrderList = async (token) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/profile/orders`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data.data
+  } catch (error) {
+    console.error('Error fetching package list:', error)
+    throw error
+  }
+}
