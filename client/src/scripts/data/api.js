@@ -38,6 +38,34 @@ export const getProfilePackages = async (token) => {
   }
 }
 
+export const getTransactionHistory = async (token) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/profile/histories`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data.data
+  } catch (error) {
+    console.error('Error fetching histoory:', error)
+    throw error
+  }
+}
+
+export const getTransactionDetail = async (token, id) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/profile/histories/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data.data
+  } catch (error) {
+    console.error('Error fetching history detail:', error)
+    throw error
+  }
+}
+
 export const getProfilePackageDetail = async (token, id) => {
   try {
     const response = await axios.get(`${BASE_URL}/profile/packages/${id}`, {
@@ -48,6 +76,20 @@ export const getProfilePackageDetail = async (token, id) => {
     return response.data.data
   } catch (error) {
     console.error('Error fetching package list:', error)
+    throw error
+  }
+}
+
+export const getHistoryDetail = async (token, id) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/profile/histories/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data.data
+  } catch (error) {
+    console.error('Error fetching history detail:', error)
     throw error
   }
 }

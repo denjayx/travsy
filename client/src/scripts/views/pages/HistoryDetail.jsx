@@ -1,13 +1,51 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import CardImageFull from '../../../assets/images/card-image-full.png'
 import Avatar from '../../../assets/avatar.png'
 import { FaCalendarDays } from 'react-icons/fa6'
-import { useNavigate } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
+import { useState } from 'react'
+import { useEffect } from 'react'
+import { getHistoryDetail } from '../../data/api'
+import { useOutletContext } from 'react-router-dom'
 
-export default function HistoryDetails() {
-  const navigate = useNavigate()
-  const handleConfirm = () => {
-    navigate('/package')
-  }
+const HistoryDetail = () => {
+  const { id } = useParams()
+  const { user } = useOutletContext()
+  const [historyDetail, setHistoryDetail] = useState({
+    tourGuide: {
+      avatarUrl: '',
+      firstName: '',
+      lastName: '',
+    },
+    transaction: {
+      id: '',
+      package: {
+        packageName: '',
+      },
+      status: '',
+      orderDate: '',
+      startDate: '',
+      endDate: '',
+      totalPerson: 0,
+      totalPrice: 0,
+    },
+  })
+
+  useEffect(() => {
+    const fetchHistoryDetail = async () => {
+      const { token } = user
+      const historyDetail = await getHistoryDetail(token, id)
+      setHistoryDetail(historyDetail)
+    }
+    if (user?.token) {
+      fetchHistoryDetail()
+    }
+  }, [user, id])
+
+  useEffect(() => {
+    console.log(historyDetail)
+  }, [historyDetail])
+
   return (
     <div className="item container mt-32 flex flex-col gap-2 lg:flex-row ">
       <section
@@ -29,7 +67,7 @@ export default function HistoryDetails() {
               alt="tourguide avatar"
               className="avatar"
             />
-            <span>Abram Saris</span>
+            <span>{historyDetail.tourGuide.firstName}</span>
           </div>
           <h5 className="mb-2 text-xl font-bold tracking-tight text-primary-950">
             Pura Tanah Lot - Pura Uluwatu - Pantai Kuta
@@ -105,8 +143,8 @@ export default function HistoryDetails() {
         <div className="text-center">
           <button
             type="submit"
-            className="focus:ring-blue-300 w-full rounded-3xl bg-primary-500 px-6 py-3 text-center text-base font-normal text-white hover:bg-primary-600 focus:outline-none focus:ring-4 "
-            onClick={handleConfirm}
+            className="w-full rounded-3xl bg-primary-500 px-6 py-3 text-center text-base font-normal text-white hover:bg-primary-600 focus:outline-none focus:ring-4 focus:ring-blue-300 "
+            // onClick={handleConfirm}
           >
             Pesan Lagi
           </button>
@@ -115,3 +153,5 @@ export default function HistoryDetails() {
     </div>
   )
 }
+
+export default HistoryDetail

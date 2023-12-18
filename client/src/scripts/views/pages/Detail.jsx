@@ -22,14 +22,15 @@ export default function Details() {
       destinations: [],
     },
   })
+  
   const { user } = useOutletContext()
 
   useEffect(() => {
     const fetchPackageDetail = async () => {
       const packageDetail = await getPackageDetail(id)
       setPackageDetail(packageDetail)
+      console.log(packageDetail)
     }
-
     fetchPackageDetail()
   }, [id])
 
