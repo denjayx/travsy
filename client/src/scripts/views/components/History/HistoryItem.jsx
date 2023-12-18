@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import UserImg from '../../../../assets/default-user.svg'
 import { formatDate } from '../../../../utils/utils'
+import { BASE_IMAGEURL } from '../../../data/api'
 import Button from '../Buttons/Button'
 import { Link } from 'react-router-dom'
 
@@ -10,6 +11,7 @@ const HistoryItem = ({
   packageData,
   historyId,
 }) => {
+  console.log(BASE_IMAGEURL + tourGuideData.avatarUrl)
   return (
     <section className="text-primary-950">
       <div className="flex flex-col gap-6 rounded-xl bg-white p-8 lg:flex-row">
@@ -17,13 +19,18 @@ const HistoryItem = ({
           <h5 className="mb-2 text-lg font-semibold tracking-tight text-primary-950">
             {`${packageData.packageName}`}
           </h5>
-          <div className="flex items-center gap-3">
-            <img
-              src={UserImg}
-              width="32px"
-              alt="tourguide avatar"
-              className="avatar"
-            />
+          <div className="flex items-center gap-2">
+            <div className="flex w-8 items-center gap-2 overflow-hidden rounded-full">
+              <img
+                src={
+                  tourGuideData.avatarUrl
+                    ? BASE_IMAGEURL + tourGuideData.avatarUrl
+                    : UserImg
+                }
+                alt="tourguide avatar"
+                className="avatar"
+              />
+            </div>
             <span>{`${tourGuideData.firstName} ${tourGuideData.firstName}`}</span>
           </div>
 
