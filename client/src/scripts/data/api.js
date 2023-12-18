@@ -81,6 +81,22 @@ export const getProfile = async (token) => {
     return response.data.data
   } catch (error) {
     console.error('Error fetching profile:', error)
+    throw error
+  }
+}
+
+export const updateProfile = async (token, formData) => {
+  try {
+    const response = await axios.put(`${BASE_URL}/profile`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    return response.data.data
+  } catch (error) {
+    console.error('Error fetch put profile :', error)
+    throw error
   }
 }
 
