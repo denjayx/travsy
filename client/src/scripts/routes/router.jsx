@@ -35,7 +35,7 @@ const router = createBrowserRouter(
           <Route path="packages" element={<TourPackage />}></Route>
           <Route path="packages/:id" element={<Detail />}></Route>
           <Route path="history" element={<PackageHistory />}></Route>
-          <Route path="history/detail" element={<HistoryDetails />}></Route>
+          <Route path="history/:id" element={<HistoryDetails />}></Route>
           <Route path="dashboard" element={<Dashboard />}>
             <Route index element={<Navigate to={'packages'} />} />
             <Route path="packages" element={<Packages />}></Route>

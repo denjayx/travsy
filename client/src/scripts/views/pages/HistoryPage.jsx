@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import HistoryList from '../components/History/HistoryItem'
+import HistoryItem from '../components/History/HistoryItem'
 import { getTransactionHistory } from '../../data/api'
 import { useOutletContext } from 'react-router-dom'
 
@@ -29,11 +29,12 @@ export default function PackageHistory() {
       {histories.length === 0 && <span>Data kosong</span>}
       <div className="grid grid-cols-2 gap-6">
         {histories.map((history, index) => (
-          <HistoryList
+          <HistoryItem
             key={index}
             tourGuideData={history.tourGuide}
             transactionData={history.transaction}
             packageData={history.transaction.package}
+            historyId={history.transaction.id}
           />
         ))}
       </div>

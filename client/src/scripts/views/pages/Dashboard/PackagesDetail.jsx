@@ -103,7 +103,6 @@ const PackagesDetail = () => {
           </li>
         </ol>
       </nav>
-
       <section
         id="packagedetails"
         className=" flex w-full flex-col items-center gap-6 rounded-xl lg:flex-row "

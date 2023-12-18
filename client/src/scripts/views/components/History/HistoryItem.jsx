@@ -1,15 +1,15 @@
 /* eslint-disable react/prop-types */
 import UserImg from '../../../../assets/default-user.svg'
-import { useNavigate } from 'react-router-dom'
 import { formatDate } from '../../../../utils/utils'
 import Button from '../Buttons/Button'
+import { Link } from 'react-router-dom'
 
-const HistoryItem = ({ tourGuideData, transactionData, packageData }) => {
-  const navigate = useNavigate()
-  const showDetail = () => {
-    navigate('/history/detail')
-  }
-
+const HistoryItem = ({
+  tourGuideData,
+  transactionData,
+  packageData,
+  historyId,
+}) => {
   return (
     <section>
       <div className="flex flex-col gap-6 rounded-xl bg-white p-6 lg:flex-row">
@@ -49,14 +49,15 @@ const HistoryItem = ({ tourGuideData, transactionData, packageData }) => {
                 </div>
               </div>
             </div>
-            <Button
-              type="button"
-              variant="primary"
-              className="h-fit shadow-none"
-              onClick={showDetail}
-            >
-              Lihat Detail
-            </Button>
+            <Link to={`/history/${historyId}`}>
+              <Button
+                type="button"
+                variant="primary"
+                className="h-fit shadow-none"
+              >
+                Lihat Detail
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
