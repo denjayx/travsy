@@ -34,10 +34,14 @@ const Card = ({ packagesData, tourguideData, cardId }) => {
             }
             width="32px"
             alt="tourguide avatar"
-            className="avatar"
+            className="rounded-full"
           />
           <span className="text-sm text-primary-950">
-            {`${tourguideData.firstName} ${tourguideData.lastName}`}
+            {`${
+              tourguideData.firstName
+                ? tourguideData.firstName + ' ' + (tourguideData.lastName || '')
+                : tourguideData.username
+            }`}
           </span>
         </header>
         <h4 className="text-md font-semibold text-primary-950">

@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
-import UserImg from '../../../assets/default-user.svg'
 import Button from '../components/Buttons/Button'
 import InputField from '../components/Input/InputField'
 import InputSelect from '../components/Input/InputSelect'
 import InputImage from '../components/Input/InputImage'
-import { getProfile, updateProfile } from '../../data/api'
-import { useOutletContext } from 'react-router-dom'
+import { BASE_IMAGEURL, getProfile, updateProfile } from '../../data/api'
+import { useNavigate, useOutletContext } from 'react-router-dom'
 import ErrorAlert from '../components/Alerts/ErrorAlert'
+import defaultUser from '../../../assets/default-user.svg'
 
 const Profile = () => {
   const [isDisabled, setIsDisabled] = useState(true)
@@ -22,6 +22,7 @@ const Profile = () => {
     phone: '',
     gender: 'L',
   })
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchProfileData = async (token) => {
@@ -32,10 +33,6 @@ const Profile = () => {
       fetchProfileData(user.token)
     }
   }, [user])
-
-  useEffect(() => {
-    console.log(profileData)
-  }, [profileData])
 
   const genderOptions = [
     { label: 'Laki - laki', value: 'L' },
@@ -60,15 +57,18 @@ const Profile = () => {
     e.preventDefault()
     const { token } = user
     const formData = new FormData()
-    const filteredProfileData = Object.keys(profileData).map(
-      (key) => key != 'avatarUrl' && profileData[key],
-    )
+
+    const filteredProfileData = profileData
+    delete filteredProfileData['avatarUrl']
+    delete filteredProfileData['username']
+
     for (let key in filteredProfileData) {
       formData.append(key, filteredProfileData[key])
     }
     if (token) {
       try {
         await updateProfile(token, formData)
+        navigate(0)
       } catch (error) {
         setErrorMessage(error.response.data.message)
       }
@@ -82,11 +82,15 @@ const Profile = () => {
         <div className="h-12 w-12 overflow-hidden rounded-full">
           <img
             className="h-full w-full scale-125 object-cover"
-            src={UserImg}
+            src={
+              profileData.avatarUrl
+                ? `${BASE_IMAGEURL + profileData.avatarUrl}`
+                : defaultUser
+            }
             alt="default user image"
           />
         </div>
-        <h5 className="text-xl">denjayx</h5>
+        <h5 className="text-xl">{profileData.username}</h5>
       </div>
       <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
         <div className="grid grid-cols-2 gap-4">
@@ -121,7 +125,7 @@ const Profile = () => {
             name="phone"
             label="No. Telepon"
             type="text"
-            placeholder="+62xxxx"
+            placeholder="0812345678901"
             isDisabled={isDisabled}
             onChange={handleInputChange}
             value={profileData.phone}
@@ -129,8 +133,8 @@ const Profile = () => {
           <InputField
             name="nik"
             label="No. KTP"
-            type="number"
-            placeholder="Masukkan Nomor Induk KTP"
+            type="text"
+            placeholder="Masukkan 16 Digit Nomor Induk KTP"
             isDisabled={isDisabled}
             onChange={handleInputChange}
             value={profileData.nik}
@@ -156,7 +160,11 @@ const Profile = () => {
             label={'Foto profil'}
             name={'avatar'}
             onChange={handleImageChange}
-            placeholderImage={UserImg}
+            placeholderImage={
+              profileData.avatarUrl
+                ? `${BASE_IMAGEURL + profileData.avatarUrl}`
+                : defaultUser
+            }
             placeholderWords={'Upload Foto'}
             isDisabled={isDisabled}
             value={profileData.avatar}
@@ -166,7 +174,7 @@ const Profile = () => {
         <div className="flex w-full justify-end">
           {isDisabled ? (
             <div
-              className="rounded-full border border-primary-500 bg-primary-500 px-6 py-3 text-white shadow-btn duration-300 ease-in-out hover:bg-primary-600"
+              className="cursor-pointer rounded-full border border-primary-500 bg-primary-500 px-6 py-3 text-white shadow-btn duration-300 ease-in-out hover:bg-primary-600"
               onClick={() => setIsDisabled(!isDisabled)}
             >
               Edit Profil
@@ -174,12 +182,16 @@ const Profile = () => {
           ) : (
             <div className="flex gap-2">
               <div
-                className="rounded-full border border-primary-500 bg-white px-6 py-3 text-primary-500 shadow-btn duration-300 ease-in-out hover:bg-primary-100"
+                className="cursor-pointer rounded-full border border-primary-500 bg-white px-6 py-3 text-primary-500 shadow-btn duration-300 ease-in-out hover:bg-primary-100"
                 onClick={() => setIsDisabled(!isDisabled)}
               >
                 Batal
               </div>
-              <Button variant="primary" className="w-fit" type="submit">
+              <Button
+                variant="primary"
+                className="w-fit cursor-pointer"
+                type="submit"
+              >
                 Simpan
               </Button>
             </div>

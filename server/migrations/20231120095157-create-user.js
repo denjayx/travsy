@@ -3,9 +3,8 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('users', {
       username: {
-        allowNull: false,
         primaryKey: true,
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(15),
         field: 'username',
       },
       accountId: {
@@ -19,11 +18,11 @@ module.exports = {
         field: 'avatar_url',
       },
       firstName: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(15),
         field: 'first_name',
       },
       lastName: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(15),
         field: 'last_name',
       },
       biography: {
@@ -31,11 +30,11 @@ module.exports = {
         field: 'biography',
       },
       nik: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(16),
         field: 'nik',
       },
       phone: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(13),
         field: 'phone',
       },
       province: {
@@ -50,10 +49,6 @@ module.exports = {
         type: Sequelize.ENUM,
         values: ['L', 'P'],
         field: 'gender',
-      },
-      cardNumber: {
-        type: Sequelize.STRING,
-        field: 'card_number',
       },
       createdAt: {
         allowNull: false,
@@ -79,7 +74,7 @@ module.exports = {
       name: 'fk_users_account_id',
       references: {
         table: 'accounts',
-        field: 'account_id',
+        field: 'id',
       },
       onDelete: 'cascade',
       onUpdate: 'cascade',

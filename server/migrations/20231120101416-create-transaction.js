@@ -2,11 +2,10 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('transactions', {
-      transactionId: {
-        allowNull: false,
+      id: {
         primaryKey: true,
         type: Sequelize.UUID,
-        field: 'transaction_id',
+        field: 'id',
       },
       packageId: {
         allowNull: false,
@@ -23,11 +22,6 @@ module.exports = {
         type: Sequelize.ENUM,
         values: ['menunggu', 'terkonfirmasi', 'ditolak', 'selesai'],
         field: 'status',
-      },
-      orderDate: {
-        allowNull: false,
-        type: Sequelize.DATEONLY,
-        field: 'order_date',
       },
       startDate: {
         allowNull: false,
@@ -73,7 +67,7 @@ module.exports = {
       name: 'fk_transaction_package_id',
       references: {
         table: 'packages',
-        field: 'package_id',
+        field: 'id',
       },
       onDelete: 'cascade',
       onUpdate: 'cascade',

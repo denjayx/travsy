@@ -47,6 +47,7 @@ const InputField = ({
           onChange={onChange}
           {...props}
           disabled={isDisabled}
+          value={value}
         >
           {value}
         </textarea>
