@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { NavLink, useOutletContext, useParams } from 'react-router-dom'
 import { BASE_IMAGEURL, getProfilePackageDetail } from '../../../data/api'
 import DestinationDetails from '../../components/Details/DestinationDetails'
+import Button from '../../components/Buttons/Button'
 
 const PackagesDetail = () => {
   const { id } = useParams()
@@ -139,6 +140,9 @@ const PackagesDetail = () => {
         packageDetail.destinations.map((destination, index) => (
           <DestinationDetails key={index} destinationData={destination} />
         ))}
+      <div className="flex flex-row justify-end">
+        <Button variant={'primary'}>Edit</Button>
+      </div>
     </>
   )
 }

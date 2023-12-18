@@ -34,7 +34,7 @@ const Card = ({ packagesData, tourguideData, cardId }) => {
             }
             width="32px"
             alt="tourguide avatar"
-            className="avatar"
+            className="rounded-full"
           />
           <span className="text-sm text-primary-950">
             {`${
