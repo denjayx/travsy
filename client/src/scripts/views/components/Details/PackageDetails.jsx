@@ -3,20 +3,13 @@ import OrderForm from './OrderForm'
 import { useState } from 'react'
 import { BASE_IMAGEURL } from '../../../data/api'
 import defaultUser from '../../../../assets/default-user.svg'
+import { formatCurrency } from '../../../../utils/utils'
 
 const PackageDetails = ({ packageData, token }) => {
   const [showOrderForm, setShowOrderForm] = useState(false)
 
   const handlePesanSekarang = () => {
     setShowOrderForm(true)
-  }
-
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('id-ID', {
-      style: 'currency',
-      currency: 'IDR',
-      minimumFractionDigits: 0,
-    }).format(amount)
   }
 
   return (

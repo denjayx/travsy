@@ -11,8 +11,8 @@ const HistoryItem = ({
   historyId,
 }) => {
   return (
-    <section>
-      <div className="flex flex-col gap-6 rounded-xl bg-white p-6 lg:flex-row">
+    <section className="text-primary-950">
+      <div className="flex flex-col gap-6 rounded-xl bg-white p-8 lg:flex-row">
         <div className="flex w-full flex-col">
           <h5 className="mb-2 text-lg font-semibold tracking-tight text-primary-950">
             {`${packageData.packageName}`}
@@ -52,7 +52,7 @@ const HistoryItem = ({
             <Link to={`/history/${historyId}`}>
               <Button
                 type="button"
-                variant="primary"
+                variant="secondary"
                 className="h-fit shadow-none"
               >
                 Lihat Detail
