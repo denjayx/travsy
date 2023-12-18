@@ -1,6 +1,8 @@
 import axios from 'axios'
 
-const BASE_URL = 'http://travsy.site:3000/api'
+const BASE_URL = import.meta.env.VITE_DEV_BASE_URL || '/api'
+
+export const BASE_IMAGEURL = import.meta.env.VITE_DEV_BASE_IMAGE_URL || ''
 
 export const getPopularPackages = async () => {
   try {
@@ -83,24 +85,20 @@ export const getProfile = async (token) => {
   }
 }
 
-
 export const updateProfile = async (token, formData) => {
   try {
-    const response = await axios.put(
-      `${BASE_URL}/profile`, formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data',
-        }
-      }
-    )
+    const response = await axios.put(`${BASE_URL}/profile`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data',
+      },
+    })
     return response.data.data
   } catch (error) {
     console.error('Error fetch put profile :', error)
     throw error
   }
 }
-
 
 export const login = async ({ email, password }) => {
   try {
@@ -183,6 +181,21 @@ export const deletePackage = async ({ token, id }) => {
       },
     })
     return response.data.message
+  } catch (error) {
+    console.error('Error fetching package list:', error)
+    throw error
+  }
+}
+
+export const pay = async ({ token, id, data }) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/packages/${id}/pay`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    })
+    return response.data.data
   } catch (error) {
     console.error('Error fetching package list:', error)
     throw error

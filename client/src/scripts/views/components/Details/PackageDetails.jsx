@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
-import CardImage from '../../../../assets/images/card-image.png'
-import Avatar from '../../../../assets/avatar.png'
 import OrderForm from './OrderForm'
 import { useState } from 'react'
+import { BASE_IMAGEURL } from '../../../data/api'
+import defaultUser from '../../../../assets/default-user.svg'
 
-const PackageDetails = ({ packageData }) => {
+const PackageDetails = ({ packageData, token }) => {
   const [showOrderForm, setShowOrderForm] = useState(false)
 
   const handlePesanSekarang = () => {
@@ -26,7 +26,7 @@ const PackageDetails = ({ packageData }) => {
     >
       <div className="h-full w-full overflow-hidden rounded-lg md:rounded-l-lg lg:w-5/12">
         <img
-          src={packageData.package.thumbnailUrl}
+          src={BASE_IMAGEURL + packageData.package.thumbnailUrl}
           alt="Thumbnail Card"
           className=" h-full w-full object-cover "
         />
@@ -34,7 +34,11 @@ const PackageDetails = ({ packageData }) => {
       <section className="flex h-full w-full flex-col justify-between gap-1 rounded-lg border-gray-200 bg-white p-5 md:rounded-l-lg">
         <div className="flex items-center">
           <img
-            src={packageData.tourGuide.avatarUrl}
+            src={
+              packageData.tourGuide.avatarUrl
+                ? BASE_IMAGEURL + packageData.tourGuide.avatarUrl
+                : defaultUser
+            }
             width="32px"
             alt="tourguide avatar"
             className="avatar"
@@ -74,7 +78,9 @@ const PackageDetails = ({ packageData }) => {
           )}
         </section>
       </section>
-      {showOrderForm && <OrderForm />}
+      {showOrderForm && (
+        <OrderForm packageData={packageData.package} token={token} />
+      )}
     </section>
   )
 }

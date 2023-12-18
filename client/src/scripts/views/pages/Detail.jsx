@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { useOutletContext, useParams } from 'react-router-dom'
 import DestinationDetails from '../components/Details/DestinationDetails'
 import PackageDetails from '../components/Details/PackageDetails'
 import { useEffect, useState } from 'react'
@@ -22,6 +22,7 @@ export default function Details() {
       destinations: [],
     },
   })
+  const { user } = useOutletContext()
 
   useEffect(() => {
     const fetchPackageDetail = async () => {
@@ -34,7 +35,7 @@ export default function Details() {
 
   return (
     <section className="container mt-32">
-      <PackageDetails packageData={packageDetail} />
+      <PackageDetails token={user?.token} packageData={packageDetail} />
       {packageDetail.package.destinations.length !== 0 &&
         packageDetail.package.destinations.map((destination, index) => (
           <DestinationDetails key={index} destinationData={destination} />

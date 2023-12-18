@@ -1,9 +1,11 @@
 /* eslint-disable react/prop-types */
 import { FaCaretDown } from 'react-icons/fa'
-import AvatarImage from '../../../../assets/images/card-image.png'
+// import AvatarImage from '../../../../assets/images/card-image.png'
+import defaultUser from '../../../../assets/default-user.svg'
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import Button from '../Buttons/Button'
+import { BASE_IMAGEURL } from '../../../data/api'
 
 const Profile = ({ user }) => {
   const handleLogout = () => {
@@ -12,7 +14,9 @@ const Profile = ({ user }) => {
   }
   const [isOpen, setIsOpen] = useState(false)
   // eslint-disable-next-line no-unused-vars
-  const avatarUrl = user?.avatarUrl || AvatarImage
+  const avatarUrl = user?.avatarUrl
+    ? `${BASE_IMAGEURL + user?.avatarUrl}`
+    : defaultUser
   const fullName = `${user?.firstName || ''} ${user?.lastName || ''}`
 
   return (
@@ -23,7 +27,7 @@ const Profile = ({ user }) => {
       >
         <div className="h-10 w-10 overflow-hidden rounded-full outline outline-primary-400">
           <img
-            src={AvatarImage}
+            src={avatarUrl}
             alt={`${fullName} avatar`}
             className="h-full w-full object-cover"
           />
