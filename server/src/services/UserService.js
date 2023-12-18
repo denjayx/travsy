@@ -20,6 +20,7 @@ class UserService extends BaseService {
       try {
         const userProfile = await user.findByPk(username, {
           attributes: [
+            'username',
             'avatarUrl',
             'firstName',
             'lastName',
@@ -42,6 +43,7 @@ class UserService extends BaseService {
         }
 
         return {
+          username: userProfile.username,
           email: userProfile.account.email,
           avatarUrl: userProfile.avatarUrl,
           firstName: userProfile.firstName,

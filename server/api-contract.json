@@ -1403,6 +1403,10 @@
       },
       "profile": {
         "properties": {
+          "username": {
+            "type": "string",
+            "example": "731yrhi3nfhf9832hfnbvhgo02pjr3"
+          },
           "email": {
             "description": "Diterima jika: email sesuai format dan unik",
             "type": "string",
@@ -1460,6 +1464,10 @@
       "ownerName": {
         "type": "object",
         "properties": {
+          "username": {
+            "type": "string",
+            "example": "731yrhi3nfhf9832hfnbvhgo02pjr3"
+          },
           "avatarUrl": {
             "type": "string",
             "example": "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
