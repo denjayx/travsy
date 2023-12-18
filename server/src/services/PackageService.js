@@ -151,7 +151,6 @@ class PackageService extends BaseService {
 
         return packageWithTourGuideList;
       } catch (error) {
-        console.error(error);
         if (error instanceof BaseResponseError) {
           throw error;
         }
