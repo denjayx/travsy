@@ -22,7 +22,7 @@ export default function Details() {
       destinations: [],
     },
   })
-  
+
   const { user } = useOutletContext()
 
   useEffect(() => {
@@ -33,6 +33,10 @@ export default function Details() {
     }
     fetchPackageDetail()
   }, [id])
+
+  // useEffect(() => {
+  //   window.scrollTo(0, 0)
+  // }, [])
 
   return (
     <section className="container mt-32">

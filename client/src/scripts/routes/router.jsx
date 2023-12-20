@@ -23,7 +23,6 @@ import DetailOrder from '../views/pages/Dashboard/DetailOrder'
 import Root from '../views/layouts/Root'
 import OrderDetails from '../views/pages/OrderDetail'
 import Profile from '../views/pages/Profile'
-// import UpdateProfile from '../views/pages/UpdateProfile'
 
 const router = createBrowserRouter(
   createRoutesFromElements(

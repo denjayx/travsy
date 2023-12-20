@@ -1,6 +1,7 @@
 import {
   NavLink,
   Outlet,
+  useLocation,
   useNavigate,
   useOutletContext,
 } from 'react-router-dom'
@@ -12,6 +13,12 @@ const Dashboard = () => {
   const [loadContext, setLoadContext] = useState(true)
   const { user } = useOutletContext()
   const navigate = useNavigate()
+
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
 
   useEffect(() => {
     if (user) {
