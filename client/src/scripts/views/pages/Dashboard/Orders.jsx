@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import Button from '../../components/Buttons/Button'
-import { useOutletContext } from 'react-router-dom'
-import { getOrderList } from '../../../data/api'
+import { useNavigate, useOutletContext } from 'react-router-dom'
+import { getOrderList, updateStatusOrder } from '../../../data/api'
 
 const Orders = () => {
   const [orderList, setOrderList] = useState([])
   const { user } = useOutletContext()
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchOrderList = async (token) => {
@@ -17,6 +18,11 @@ const Orders = () => {
       fetchOrderList(user.token)
     }
   }, [user])
+
+  const handleChangeStatus = async (id, status) => {
+    await updateStatusOrder(user.token, id, status)
+    navigate(0)
+  }
 
   return (
     <div className="flex w-full flex-col gap-3 p-10">
@@ -77,9 +83,6 @@ const Orders = () => {
                 Nama Pemesan
               </th>
               <th scope="col" className="px-6 py-3">
-                Status
-              </th>
-              <th scope="col" className="px-6 py-3">
                 Tanggal
               </th>
               <th scope="col" className="px-6 py-3">
@@ -100,20 +103,50 @@ const Orders = () => {
                   {orderData.transaction.package.packageName}
                 </th>
                 <td className="px-6 py-4">{orderData.tourist.username}</td>
-                <td className="px-6 py-4">{orderData.transaction.status}</td>
                 <td className="px-6 py-4">{orderData.transaction.orderDate}</td>
                 <td className="flex justify-center gap-1 px-6 py-4">
-                  <Button variant={'primary'}>Konfirmasi</Button>
-                  <Button
-                    text-white
-                    shadow-btn
-                    duration-300
-                    ease-in-out
-                    variant={'primary'}
-                    className={`border-red-500 bg-red-500 hover:bg-red-600`}
-                  >
-                    Tolak
-                  </Button>
+                  {orderData.transaction.status !== 'menunggu' ? (
+                    <span
+                      className={`uppercase ${
+                        orderData.transaction.status === 'terkonfirmasi'
+                          ? 'text-primary-500'
+                          : 'text-red-500'
+                      }`}
+                    >
+                      {orderData.transaction.status}
+                    </span>
+                  ) : (
+                    <>
+                      <Button
+                        variant={'primary'}
+                        type={'button'}
+                        onClick={() =>
+                          handleChangeStatus(
+                            orderData.transaction.id,
+                            'terkonfirmasi',
+                          )
+                        }
+                      >
+                        Konfirmasi
+                      </Button>
+                      <Button
+                        text-white
+                        shadow-btn
+                        duration-300
+                        ease-in-out
+                        variant={'primary'}
+                        className={`border-red-500 bg-red-500 hover:bg-red-600`}
+                        onClick={() =>
+                          handleChangeStatus(
+                            orderData.transaction.id,
+                            'ditolak',
+                          )
+                        }
+                      >
+                        Tolak
+                      </Button>
+                    </>
+                  )}
                 </td>
               </tr>
             ))}

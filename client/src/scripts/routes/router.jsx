@@ -18,10 +18,7 @@ import Packages from '../views/pages/Dashboard/Packages'
 import Orders from '../views/pages/Dashboard/Orders'
 import PackagesDetail from '../views/pages/Dashboard/PackagesDetail'
 import AddPackage from '../views/pages/Dashboard/AddPackage'
-import AddOrder from '../views/pages/Dashboard/AddOrder'
-import DetailOrder from '../views/pages/Dashboard/DetailOrder'
 import Root from '../views/layouts/Root'
-import OrderDetails from '../views/pages/OrderDetail'
 import Profile from '../views/pages/Profile'
 
 const router = createBrowserRouter(
@@ -30,7 +27,6 @@ const router = createBrowserRouter(
       <Route element={<Root />}>
         <Route path="/" element={<RootLayout />}>
           <Route index element={<Homepage />}></Route>
-          <Route path="/order" element={<OrderDetails />}></Route>
           <Route path="packages" element={<TourPackage />}></Route>
           <Route path="packages/:id" element={<Detail />}></Route>
           <Route path="history" element={<PackageHistory />}></Route>
@@ -41,11 +37,8 @@ const router = createBrowserRouter(
             <Route path="packages/add" element={<AddPackage />}></Route>
             <Route path="packages/:id" element={<PackagesDetail />}></Route>
             <Route path="orders" element={<Orders />}></Route>
-            <Route path="orders/add" element={<AddOrder />}></Route>
-            <Route path="orders/:id" element={<DetailOrder />}></Route>
           </Route>
           <Route path="/profile" element={<Profile />}></Route>
-          {/* <Route path="/profile/update" element={<UpdateProfile />}></Route> */}
         </Route>
         <Route element={<Auth />}>
           <Route path="/login" element={<Login />}></Route>
