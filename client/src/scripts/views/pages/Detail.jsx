@@ -34,17 +34,15 @@ export default function Details() {
     fetchPackageDetail()
   }, [id])
 
-  // useEffect(() => {
-  //   window.scrollTo(0, 0)
-  // }, [])
-
   return (
     <section className="container mt-32">
       <PackageDetails token={user?.token} packageData={packageDetail} />
-      {packageDetail.package.destinations.length !== 0 &&
-        packageDetail.package.destinations.map((destination, index) => (
-          <DestinationDetails key={index} destinationData={destination} />
-        ))}
+      <section className="mt-12 space-y-4">
+        {packageDetail.package.destinations.length !== 0 &&
+          packageDetail.package.destinations.map((destination, index) => (
+            <DestinationDetails key={index} destinationData={destination} />
+          ))}
+      </section>
     </section>
   )
 }

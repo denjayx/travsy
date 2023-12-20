@@ -15,7 +15,7 @@ const PackageDetails = ({ packageData, token }) => {
   return (
     <section
       id="packagedetails"
-      className=" flex w-full flex-col items-center gap-6 rounded-xl lg:flex-row "
+      className="flex w-full flex-col items-center justify-between gap-6 rounded-xl lg:flex-row "
     >
       <div className="h-full w-full overflow-hidden rounded-lg md:rounded-l-lg lg:w-5/12">
         <img
